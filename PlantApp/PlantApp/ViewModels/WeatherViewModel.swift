@@ -16,12 +16,8 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var errorMessage: String?
 
     private let locationManager = CLLocationManager()
-    //    private var weatherService = WeatherService()
     private let weatherRepository = WeatherRepository()
-
-    //    @Published var citySuggestions: [City] = []
     private var suggestionTask: Task<Void, Never>?
-    let repository = WeatherRepository()
 
     @Published var currentCity: String {
         didSet {
@@ -39,7 +35,10 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyReduced  // Weniger genaue Ortung spart Batterie
+        // Dieser Aufruf fordert den Benutzer auf, die Berechtigung zu erteilen & löst einen System-Dialog aus.
         locationManager.requestWhenInUseAuthorization()
+        // Fordert eine einmalige Standortaktualisierung an, sobald die Berechtigung erteilt wurde oder wenn sie bereits erteilt ist.
+        locationManager.requestLocation()
 
         Task {
             await fetchWeatherForCurrentLocation()

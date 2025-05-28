@@ -24,7 +24,7 @@ struct WeatherView: View {
                 .resizable()
                 .scaledToFill()
                 .padding()
-                .frame(width: .infinity, height: 120)
+                .frame(maxWidth: .infinity, maxHeight: 120)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
 
             } else {
@@ -53,10 +53,7 @@ struct WeatherView: View {
                                 "\(weather.current.tempC, specifier: "%.1f")°C"
                             )
                             .font(.system(size: 40))
-                            //                            .bold()
                             .padding(.leading, 10)
-
-                            //                        Spacer()
 
                         }
                         .padding(.leading, 25)
@@ -85,13 +82,12 @@ struct WeatherView: View {
                     .padding()
                 }
 
-                .frame(width: .infinity, height: 120)
-                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, maxHeight: 120)                .foregroundStyle(.white)
 
             } else if weatherViewModel.isLoading {
                 ProgressView("Weather is loading...")
-                    .frame(width: .infinity, height: 120)
-                    .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity, maxHeight: 120)                    .foregroundStyle(.gray)
+                    .padding()
             } else if let error = weatherViewModel.errorMessage {
                 Text("Fehler. \(error)")
                     .foregroundColor(.red)
@@ -102,8 +98,7 @@ struct WeatherView: View {
                             Color.white.opacity(0.8)))
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 120)  // Sicherstellen, dass die ZStack die Höhe hält
-        .onAppear {
+        .frame(maxWidth: .infinity, maxHeight: 120)        .onAppear {
             // Beim Erscheinen der View versuchen, Wetterdaten zu laden (initial oder aktualisieren)
             // Das ViewModel tut dies bereits in init, aber ein manueller Aufruf ist hier auch gut,
             // falls die View mehrfach eingeblendet wird.
