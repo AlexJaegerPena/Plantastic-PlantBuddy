@@ -10,7 +10,7 @@ import CoreLocation  // Für Koordinaten
 
 class WeatherRepository {
     
-    private let apiKey = "5571480ca30a400996390022252705"
+
     private let baseURL = "https://api.weatherapi.com/v1/"
     
     
@@ -20,7 +20,7 @@ class WeatherRepository {
         
         // Füge grundlegende Query-Parameter hinzu
                 urlComponents.queryItems = [
-                    URLQueryItem(name: "key", value: apiKey)
+                    URLQueryItem(name: "key", value: weatherApiKey)
                 ]
 
         // Endpunkt Deklarieren

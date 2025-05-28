@@ -10,12 +10,11 @@ import Foundation
 class RemotePlantRepository: PlantRepository {
 
     private let speciesListURL = "https://perenual.com/api/v2/species-list"    
-    private let apiKey = "sk-kHxH683433840b40110663"
 
     func getPlantsList() async throws -> [Plant] {
 
         // Endpunkt Deklarieren
-        let urlString = "\(speciesListURL)?key=\(apiKey)"
+        let urlString = "\(speciesListURL)?key=\(plantApiKey)"
         
         // URL verifizieren
         guard let url = URL(string: urlString) else {
