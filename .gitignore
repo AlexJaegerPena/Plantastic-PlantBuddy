@@ -60,4 +60,6 @@ fastlane/test_output/
 *.swo
 *.swn
 
-# etc.
+# Meine API-Keys
+PlantApp/PlantApp/Utils/apiKeys.swift
+
