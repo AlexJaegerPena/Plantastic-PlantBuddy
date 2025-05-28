@@ -10,6 +10,9 @@ import SwiftUI
 struct NavigationView: View {
 
     @State private var weatherViewModel = WeatherViewModel()
+    @State private var hasAppeared = false
+    
+    @StateObject private var notificationsViewModel = NotificationsViewModel()
     
     var body: some View {
         TabView {
@@ -25,6 +28,12 @@ struct NavigationView: View {
             }
             Tab("Profile", systemImage: "person") {
                 ProfileView()
+            }
+        }
+        .onAppear {
+            if !hasAppeared {
+                notificationsViewModel.requestPermission()
+                hasAppeared = true
             }
         }
     }
