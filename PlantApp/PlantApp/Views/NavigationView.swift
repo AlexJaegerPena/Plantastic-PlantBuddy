@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct NavigationView: View {
+
+    @State private var weatherViewModel = WeatherViewModel()
+    
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
                 HomeView()
             }
-            Tab("Search", systemImage: "magnifyingglass") {
-                SearchView()
+           
+            Tab("Add", systemImage: "plus") {
+                SearchView(plantViewModel: PlantViewModel(plantRepository: RemotePlantRepository()))
+            }
+            Tab("Calendar", systemImage: "calendar") {
+                
             }
             Tab("Profile", systemImage: "person") {
                 ProfileView()

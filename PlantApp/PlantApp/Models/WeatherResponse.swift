@@ -20,25 +20,9 @@ struct Location: Codable {
     let localtime: String
 }
 
-// für Stadtsuche (/search.json)
-struct City: Decodable, Identifiable {
-    let id: Int?
-    let name: String
-    let region: String
-    let country: String
-    let lat: Double
-    let lon: Double
-    let url: String
-    
-    var identifier: String {
-        "\(name), \(country)"
-    }
-}
-
 struct CurrentWeather: Codable {
     let tempC: Double
     let condition: WeatherCondition
-    let windKph: Double
     let humidity: Int
     let precipMm: Double
     let cloud: Int
@@ -46,7 +30,6 @@ struct CurrentWeather: Codable {
     enum CodingKeys: String, CodingKey {
         case tempC = "temp_c"
         case condition
-        case windKph = "wind_kph"
         case humidity
         case precipMm = "precip_mm"
         case cloud
@@ -61,7 +44,7 @@ struct WeatherCondition: Codable {
 
 
 enum WeatherCategory {
-    case clear
+    case sunny
     case partlyCloudy
     case cloudy
     case mist
@@ -70,32 +53,35 @@ enum WeatherCategory {
     case snow
     case sleet
     case thunder
+    case unknown
     
     var systemImageName: String {
         switch self {
-        case .clear: return "sun.max.fill"
+        case .sunny: return "sun.max.fill"
         case .partlyCloudy: return "cloud.sun.fill"
         case .cloudy: return "cloud.fill"
         case .mist: return "cloud.fog.fill"
         case .rainLight: return "cloud.drizzle.fill"
         case .rainHeavy: return "cloud.rain.fill"
-        case .snow: return "snow"
+        case .snow: return "snowflake"
         case .sleet: return "cloud.sleet.fill"
         case .thunder: return "cloud.bolt.rain.fill"
+        case .unknown: return "questionmark"
         }
     }
   
     var backgroundImageName: String {
         switch self {
-        case .clear: return "clear"
-        case .partlyCloudy: return "partly-cloudy"
+        case .sunny: return "sunny"
+        case .partlyCloudy: return "cloudy"
         case .cloudy: return "cloudy"
         case .mist: return "mist"
         case .rainLight: return "rain"
-        case .rainHeavy: return "rain-2"
-        case .snow: return "snow-2"
-        case .sleet: return "snow-1"
+        case .rainHeavy: return "rainHeavy"
+        case .snow: return "snow"
+        case .sleet: return "snow"
         case .thunder: return "thunderstorm"
+        case .unknown: return "clear"
         }
     }
 }
@@ -104,7 +90,7 @@ extension WeatherCategory {
     static func from(code: Int) -> WeatherCategory {
         switch code {
         case 1000:
-            return .clear
+            return .sunny
         case 1003:
             return .partlyCloudy
         case 1006, 1009:
@@ -122,7 +108,7 @@ extension WeatherCategory {
         case 1087, 1273, 1276, 1279, 1282:
             return .thunder
         default:
-            return .clear
+            return .unknown
         }
     }
 }

@@ -12,11 +12,11 @@ struct PlantResponse: Codable {
 }
 
 
-struct Plant: Codable {
+struct Plant: Codable, Identifiable {
     let id: Int
-    let commonName: String
-    let scientificName: String
-    let imageUrl: String?
+    let commonName: String?
+    let scientificName: [String]?
+    let defaultImage: ImageDetails?
     let genus: String?
     let family: String?
 
@@ -24,17 +24,33 @@ struct Plant: Codable {
         case id
         case commonName = "common_name"
         case scientificName = "scientific_name"
-        case imageUrl = "default_image"
+        case defaultImage = "default_image"
         case genus
         case family
     }
 }
 
 
-struct PlantDetails: Codable {
+struct ImageDetails: Codable {
+    let originalUrl: String?
+    let regularUrl: String?
+    let mediumUrl: String?
+    let smallUrl: String?
+    let thumbnail: String?
+
+    enum CodingKeys: String, CodingKey {
+        case originalUrl = "original_url"
+        case regularUrl = "regular_url"
+        case mediumUrl = "medium_url"
+        case smallUrl = "small_url"
+        case thumbnail
+    }
+}
+
+struct PlantDetails: Codable, Identifiable {
     let id: Int
-    let commonName: String
-    let scientificName: String
+    let commonName: String?
+    let scientificName: String?
     let family: String?
     let genus: String?
     let type: String?
@@ -44,7 +60,7 @@ struct PlantDetails: Codable {
     let sunlight: [String]?
     let toxicity: String?
     let cycle: String?
-    let imageUrl: String?
+    let defaultImage: ImageDetails?
     let indoor: Bool?
     let cuisine: Bool?
     let poisonousToHumans: Bool?
@@ -64,7 +80,7 @@ struct PlantDetails: Codable {
         case sunlight
         case toxicity
         case cycle
-        case imageUrl = "default_image"
+        case defaultImage = "default_image"
         case indoor
         case cuisine
         case poisonousToHumans = "poisonous_to_humans"
