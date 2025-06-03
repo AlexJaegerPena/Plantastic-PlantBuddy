@@ -10,8 +10,8 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var weatherViewModel = WeatherViewModel()
-    @StateObject private var plantViewModel = PlantViewModel(plantRepository: RemotePlantRepository())
     
+    @EnvironmentObject var loginViewModel: LoginViewModel
     
     @State private var showProfile = false
     
@@ -30,12 +30,13 @@ struct HomeView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                            Text("Hey, Name!")
+                            Text("Hey, \(loginViewModel.username ?? "You")!")
                                 .font(.title3)
                         }
                     }
                     .navigationDestination(isPresented: $showProfile) {
-                        ProfileView()
+                        SettingsView()
+                            .environmentObject(loginViewModel)
                     }
                     .tint(.black)
                 }
@@ -47,4 +48,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(WeatherViewModel())
+        .environmentObject(LoginViewModel())
 }

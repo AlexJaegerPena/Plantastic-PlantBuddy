@@ -10,10 +10,12 @@ import Foundation
 
 protocol PlantRepository {
     
-    func getPlantsList() async throws -> [Plant]
+    func fetchPlantsList() async throws -> [Plant]
     
-//    func getPlantSuggestions(for query: String) async throws -> [Plant]
-//    
+    func fetchPlantSuggestions(for query: String) async throws -> [Plant]
+    
+    func fetchPlantsByName(for query: String) async throws -> [Plant]
+//
 //    func getPlantDetails() async throws -> Plant
     
 }

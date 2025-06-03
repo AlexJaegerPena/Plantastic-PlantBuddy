@@ -14,20 +14,21 @@ struct NavigationView: View {
     
     @StateObject private var notificationsViewModel = NotificationsViewModel()
     
+    @EnvironmentObject var loginViewModel: LoginViewModel
+
+    
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
                 HomeView()
+                    .environmentObject(loginViewModel)
             }
            
             Tab("Add", systemImage: "plus") {
-                SearchView(plantViewModel: PlantViewModel(plantRepository: RemotePlantRepository()))
+                PlantSearchView(plantViewModel: PlantViewModel(plantRepository: RemotePlantRepository()))
             }
             Tab("Calendar", systemImage: "calendar") {
                 
-            }
-            Tab("Profile", systemImage: "person") {
-                ProfileView()
             }
         }
         .onAppear {
@@ -41,4 +42,5 @@ struct NavigationView: View {
 
 #Preview {
     NavigationView()
+        .environmentObject(LoginViewModel())
 }
