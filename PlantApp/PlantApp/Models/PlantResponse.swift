@@ -16,22 +16,27 @@ struct Plant: Codable, Identifiable {
     let id: Int
     let commonName: String?
     let scientificName: [String]?
-    let defaultImage: ImageDetails?
-    let genus: String?
+    let otherName: [String]?
     let family: String?
+    let genus: String?
+    let defaultImage: PlantImages?
+
+
 
     enum CodingKeys: String, CodingKey {
         case id
         case commonName = "common_name"
         case scientificName = "scientific_name"
-        case defaultImage = "default_image"
+        case otherName = "other_name"
         case genus
         case family
+        case defaultImage = "default_image"
+
     }
 }
 
 
-struct ImageDetails: Codable {
+struct PlantImages: Codable {
     let originalUrl: String?
     let regularUrl: String?
     let mediumUrl: String?
@@ -60,7 +65,7 @@ struct PlantDetails: Codable, Identifiable {
     let sunlight: [String]?
     let toxicity: String?
     let cycle: String?
-    let defaultImage: ImageDetails?
+    let defaultImage: PlantImages?
     let indoor: Bool?
     let cuisine: Bool?
     let poisonousToHumans: Bool?

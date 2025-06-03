@@ -66,7 +66,7 @@ enum WeatherCategory {
         case .snow: return "snowflake"
         case .sleet: return "cloud.sleet.fill"
         case .thunder: return "cloud.bolt.rain.fill"
-        case .unknown: return "questionmark"
+        case .unknown: return "cloud.sun.fill"
         }
     }
   

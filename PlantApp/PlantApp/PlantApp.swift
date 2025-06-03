@@ -26,7 +26,7 @@ struct PlantApp: App {
 
   var body: some Scene {
     WindowGroup {
-        NavigationView()
+        LoginView()
     }
   }
 }

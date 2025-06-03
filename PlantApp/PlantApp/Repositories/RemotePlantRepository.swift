@@ -11,8 +11,8 @@ class RemotePlantRepository: PlantRepository {
 
     private let speciesListURL = "https://perenual.com/api/v2/species-list"    
 
-    func getPlantsList() async throws -> [Plant] {
-
+    
+    func fetchPlantsList() async throws -> [Plant] {
         // Endpunkt Deklarieren
         let urlString = "\(speciesListURL)?key=\(plantApiKey)"
         
@@ -27,6 +27,7 @@ class RemotePlantRepository: PlantRepository {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 200 {
                 print("Status Code: \(httpResponse.statusCode)")
+            } else {
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("Error Response: \(responseString)")
                 }
@@ -34,35 +35,64 @@ class RemotePlantRepository: PlantRepository {
             }
         }
         
+        // Bekommene Daten in gewünschtes Objekt decodieren
+        let plantResponse = try JSONDecoder().decode(PlantResponse.self, from: data)
+        
+        return plantResponse.data
+    }
+    
+    
+    func fetchPlantsByName(for query: String ) async throws -> [Plant] {
+        
+        // Endpunkt Deklarieren
+        let urlString = "\(speciesListURL)?key=\(plantApiKey)&q=\(query)"
+        
+        // URL verifizieren
+        guard let url = URL(string: urlString) else {
+            throw HTTPError.invalidURL
+        }
+        
+        // Daten von API ziehen (wird ein String sein)
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                print("Status Code: \(httpResponse.statusCode)")
+            } else {
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("Error Response: \(responseString)")
+                }
+                throw HTTPError.badResponse
+            }
+        }
         
         // Bekommene Daten in gewünschtes Objekt decodieren
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let plantResponse = try decoder.decode(PlantResponse.self, from: data)
-
+        let plantResponse = try JSONDecoder().decode(PlantResponse.self, from: data)
+        
         return plantResponse.data
-
     }
 
-    //    func getPlantSuggestions(for query: String) async throws -> [Plant] {
-    //
-    //        guard !query.isEmpty else { return [] }
-    //
-    //        let urlString = "\(baseURL)-list?key=\(apiKey)&order=asc"
-    //
-    //        guard let url = URL(string:urlString) else { throw HTTPError.invalidURL }
-    //
-    //        let (data, response) = try await URLSession.shared.data(from: url)
-    //
-    //        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
-    //            throw HTTPError.badResponse
-    //        }
-    //
-    //        let plantResponse = try JSONDecoder().decode(PlantResponse.self, from: data)
-    //        return plantResponse.data.plant
-    //    }
+    
+        func fetchPlantSuggestions(for query: String) async throws -> [Plant] {
+            guard !query.isEmpty else { return [] }
+            
+            let urlString = "\(speciesListURL)-list?key=\(plantApiKey)&order=asc"
+            
+            guard let url = URL(string:urlString) else { throw HTTPError.invalidURL }
+    
+            let (data, response) = try await URLSession.shared.data(from: url)
+    
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
+                throw HTTPError.badResponse
+            }
+            let plantResponse = try JSONDecoder().decode(PlantResponse.self, from: data)
+            return plantResponse.data
+        }
+    
+    
+    
 
-//    func getPlantDetails() async throws -> Plant {
+//    func fetchPlantDetails() async throws -> Plant {
 //        return
 //    }
 
