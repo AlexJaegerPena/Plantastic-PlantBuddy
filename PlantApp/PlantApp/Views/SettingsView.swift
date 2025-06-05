@@ -38,6 +38,8 @@ struct SettingsView: View {
             }
             Button("Logout") {
                 settingsViewModel.logout()
+                loginViewModel.email = ""
+                loginViewModel.password = ""
             }
         }
     }

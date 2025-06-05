@@ -12,10 +12,8 @@ protocol PlantRepository {
     
     func fetchPlantsList() async throws -> [Plant]
     
-    func fetchPlantSuggestions(for query: String) async throws -> [Plant]
-    
-    func fetchPlantsByName(for query: String) async throws -> [Plant]
-//
-//    func getPlantDetails() async throws -> Plant
+    func fetchPlantsByQuery(_ query: String) async throws -> [Plant]
+
+    func fetchPlantDetailsByID(_ id: Int) async throws -> PlantDetails
     
 }

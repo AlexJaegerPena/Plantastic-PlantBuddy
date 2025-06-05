@@ -14,14 +14,12 @@ struct PlantResponse: Codable {
 
 struct Plant: Codable, Identifiable {
     let id: Int
-    let commonName: String?
-    let scientificName: [String]?
+    let commonName: String
+    let scientificName: [String]
     let otherName: [String]?
     let family: String?
     let genus: String?
     let defaultImage: PlantImages?
-
-
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,7 +29,6 @@ struct Plant: Codable, Identifiable {
         case genus
         case family
         case defaultImage = "default_image"
-
     }
 }
 
@@ -52,18 +49,18 @@ struct PlantImages: Codable {
     }
 }
 
+
 struct PlantDetails: Codable, Identifiable {
     let id: Int
     let commonName: String?
-    let scientificName: String?
+    let scientificName: [String]?
     let family: String?
     let genus: String?
     let type: String?
-    let dimensions: [String]?
+    let dimensions: [DimensionItem]?
     let watering: String?
     let wateringBenchmark: WateringBenchmark?
     let sunlight: [String]?
-    let toxicity: String?
     let cycle: String?
     let defaultImage: PlantImages?
     let indoor: Bool?
@@ -71,7 +68,19 @@ struct PlantDetails: Codable, Identifiable {
     let poisonousToHumans: Bool?
     let poisonousToPets: Bool?
     let description: String?
-
+    let soil: [String]?
+    let origin: [String]?
+    let pruningMonth: [String]?
+    let invasive: Bool?
+    let careLevel: String?
+    let fruits: Bool?
+    let edibleFruit: Bool?
+    let harvestSeason: [String]?
+    let leaf: Bool?
+    let edibleLeaf: Bool?
+    let attracts: [String]?
+    let hardiness: Hardiness?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case commonName = "common_name"
@@ -83,7 +92,6 @@ struct PlantDetails: Codable, Identifiable {
         case watering
         case wateringBenchmark = "watering_general_benchmark"
         case sunlight
-        case toxicity
         case cycle
         case defaultImage = "default_image"
         case indoor
@@ -91,8 +99,40 @@ struct PlantDetails: Codable, Identifiable {
         case poisonousToHumans = "poisonous_to_humans"
         case poisonousToPets = "poisonous_to_pets"
         case description
+        case soil
+        case origin
+        case pruningMonth = "pruning_month"
+        case invasive
+        case careLevel = "care_level"
+        case fruits
+        case edibleFruit = "edible_fruit"
+        case harvestSeason = "harvest_season"
+        case leaf
+        case edibleLeaf = "edible_leaf"
+        case attracts
+        case hardiness
     }
 }
+
+
+struct Hardiness: Codable {
+    let min: String
+    let max: String
+}
+
+
+struct DimensionItem: Codable {
+    let minValue: Double?
+    let maxValue: Double?
+    let unit: String?
+    
+    enum CodingKeys: String, CodingKey {
+            case minValue = "min_value"
+            case maxValue = "max_value"
+            case unit
+        }
+}
+
 
 struct WateringBenchmark: Codable {
     let value: String

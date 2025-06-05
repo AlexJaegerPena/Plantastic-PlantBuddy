@@ -11,6 +11,7 @@ import Foundation
 struct WeatherResponse: Codable {
     let location: Location
     let current: CurrentWeather
+    let forecast: WeatherForecast?
 }
 
 struct Location: Codable {
@@ -33,6 +34,31 @@ struct CurrentWeather: Codable {
         case humidity
         case precipMm = "precip_mm"
         case cloud
+    }
+}
+
+struct WeatherForecast: Codable {
+    let forecastday: [ForecastDay]
+}
+
+struct ForecastDay: Codable {
+    let date: String
+    let day: DailyTemperatures
+}
+
+struct DailyTemperatures: Codable {
+    let avgTempC: Double
+    let totalPrecipMm: Double
+    let dailyWillItRain: Int
+    let dailyChanceOfRain: Int
+    let condition: WeatherCondition
+    
+    enum CodingKeys: String, CodingKey {
+        case avgTempC = "avgtemp_c"
+        case totalPrecipMm = "totalprecip_mm"
+        case dailyWillItRain = "daily_will_it_rain"
+        case dailyChanceOfRain = "daily_chance_of_rain"
+        case condition
     }
 }
 

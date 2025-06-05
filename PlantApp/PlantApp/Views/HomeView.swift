@@ -30,7 +30,7 @@ struct HomeView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                            Text("Hey, \(loginViewModel.username ?? "You")!")
+                            Text("Hey, \(loginViewModel.email.isEmpty ? "You" : loginViewModel.email)!")
                                 .font(.title3)
                         }
                     }
