@@ -25,7 +25,7 @@ struct NavigationView: View {
             }
            
             Tab("Add", systemImage: "plus") {
-                PlantSearchView(plantViewModel: PlantViewModel(plantRepository: RemotePlantRepository()))
+                PlantSearchView(plantViewModel: PlantListViewModel(plantRepository: RemotePlantRepository()))
             }
             Tab("Calendar", systemImage: "calendar") {
                 

@@ -54,24 +54,25 @@ struct WeatherView: View {
                             )
                             .font(.system(size: 40))
                             .padding(.leading, 10)
+                            
 
                         }
                         .padding(.leading, 25)
                         .padding(.vertical, 20)
                         Spacer()
                         VStack(alignment: .trailing) {
+                            Text(weather.location.name)
                             Text(
                                 Date.now.formatted(
                                     date: .omitted, time: .shortened)
                             )
                             .font(.largeTitle)
 
-                            Text(weather.location.name)
                         }
                         .padding(.trailing, 25)
 
                     }
-                    .frame(width: .infinity, height: 105)
+//                    .frame(width: .infinity, height: 105)
                     .background(.ultraThinMaterial.opacity(0.7))
 
                     .cornerRadius(20)
