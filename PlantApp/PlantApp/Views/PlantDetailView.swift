@@ -11,12 +11,8 @@ struct PlantDetailView: View {
     
     let selectedPlantId: Int
 
-    @StateObject private var plantDetailsViewModel: PlantDetailsViewModel
+    @ObservedObject var plantDetailsViewModel: PlantDetailsViewModel
 
-    init(selectedPlantId: Int) {
-        self.selectedPlantId = selectedPlantId
-        _plantDetailsViewModel = StateObject(wrappedValue: PlantDetailsViewModel(plantId: selectedPlantId, plantRepository: LocalPlantRepository()))
-    }
 
     var body: some View {
         VStack {
@@ -94,6 +90,6 @@ struct PlantDetailView: View {
 }
 
 #Preview {
-    PlantDetailView(selectedPlantId: 1)
+    PlantDetailView(selectedPlantId: 1, plantDetailsViewModel: PlantDetailsViewModel(plantId: 1, plantRepository: LocalPlantRepository()))
 }
 

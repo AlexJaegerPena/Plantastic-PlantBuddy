@@ -60,7 +60,7 @@ class WeatherRepository {
     }
     
     
-    func fetchWeatherForecast(for city: String? = nil, coordinates: CLLocationCoordinate2D? = nil) async throws -> [WeatherResponse] {
+    func fetchWeatherForecast(for city: String? = nil, coordinates: CLLocationCoordinate2D? = nil) async throws -> WeatherForecast {
         
         var urlComponents = URLComponents(string: "\(baseURL)/forecast.json")!
         
@@ -99,7 +99,7 @@ class WeatherRepository {
                         }
         
             // Bekommene Daten in gewünschtes Objekt decodieren
-            return try JSONDecoder().decode([WeatherResponse].self, from: data)
+            return try JSONDecoder().decode(WeatherForecast.self, from: data)
 
         } catch let decodingError as DecodingError {
                     throw WeatherAPIError.decodingError(decodingError)

@@ -12,6 +12,7 @@ import SwiftUI
 class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     @Published var weatherResponse: WeatherResponse?
+    @Published var weatherForecastResponse: WeatherForecast?
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
@@ -58,6 +59,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.requestLocation()
     }
 
+    
     // Holt Wetterdaten für eine spezifische Stadt
     @MainActor
     func fetchWeather(for city: String) async {
@@ -77,6 +79,29 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         isLoading = false
     }
+    
+    @MainActor
+    func fetchForecastWeather(for city: String) async {
+        isLoading = true
+        errorMessage = nil
+        do {
+            let response = try await weatherRepository.fetchWeatherForecast(
+                for: city)
+            self.weatherForecastResponse = response
+            self.errorMessage = nil
+        } catch {
+            self.weatherForecastResponse = nil
+            self.errorMessage = error.localizedDescription
+            print(
+                "Fehler beim Abrufen des Wetters für \(city): \(error.localizedDescription)"
+            )
+        }
+        isLoading = false
+    }
+
+    
+    
+
 
     // Wird aufgerufen, wenn neue Standortdaten verfügbar sind
     internal func locationManager(
@@ -131,6 +156,23 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
 
+    
+    // Hilfsfunktion, die Current Weather und FOrecast bündelt
+    private func _fetchWeatherData(for query: String?, coordinates: CLLocationCoordinate2D?) async {
+        isLoading = true
+        errorMessage = nil
+        if query == nil {
+            
+        } else if coordinates == nil {
+            
+        } else {
+            errorMessage = "Kein Standort für die Wetterabfrage verfügbar"
+        }
+        
+        
+        isLoading = false
+    }
+    
     
     func systemImageName(for code: Int) -> String {
         return WeatherCategory.from(code: code).systemImageName
