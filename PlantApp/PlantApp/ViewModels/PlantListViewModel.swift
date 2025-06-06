@@ -5,16 +5,14 @@
 //  Created by Alexandra Jäger on 26.05.25.
 //
 
-import Foundation // Foundation ist für Task und DispatchQeueue erforderlich
+import Foundation
 
-@MainActor // Stellt sicher, dass Änderungen an @Published Properties auf dem Main Thread erfolgen
+@MainActor
 class PlantListViewModel: ObservableObject {
 
     @Published var plants: [Plant] = []
     @Published var searchTerm: String = ""
     @Published var plantSuggestionList: [Plant] = []
-
-    @Published var isLoadingList: Bool = false
     @Published var listErrorMessage: String?
 
     // Private Task-Variable für die Debounce-Logik
@@ -28,16 +26,11 @@ class PlantListViewModel: ObservableObject {
 
     // Funktion zum Abrufen der initialen Pflanzenliste
     func apiPlantsList() {
-        // isLoadingList = true // Aktivieren, wenn du Ladeindikatoren verwenden möchtest
-        listErrorMessage = nil // Fehlermeldung zurücksetzen
+        listErrorMessage = nil
 
         Task {
-            // defer { isLoadingList = false } // Sicherstellen, dass isLoadingList zurückgesetzt wird
-
             do {
                 let response = try await plantRepository.fetchPlantsList()
-                // DispatchQueue.main.async ist hier dank @MainActor nicht strikt notwendig,
-                // aber schadet nicht und sorgt für explizite Thread-Sicherheit.
                 self.plants = Array(response.prefix(40)) // Begrenzung auf 40 Pflanzen
                 print("DEBUG: Successfully loaded \(self.plants.count) plants.")
             } catch {
@@ -66,16 +59,13 @@ class PlantListViewModel: ObservableObject {
         }
     }
 
-    // Funktion für die Suche nach Pflanzvorschlägen (Autovervollständigung)
-    // DIES IST EINE FUNKTION UND DARF KEIN @Published SEIN!
+
     func plantSuggestions(for query: String) {
         guard !query.isEmpty else {
-            // Wenn der Suchbegriff leer ist, lösche die Vorschläge
             self.plantSuggestionList = []
             return
         }
-
-        // Debounce-Logik (optional, aber empfohlen für Sucheingaben)
+        // Debounce-Logik
         // Bricht vorherige Suchanfrage ab und startet eine neue nach kurzer Verzögerung
         self.searchTask?.cancel() // Vorherige Task abbrechen
         self.searchTask = Task { // Neue Task starten
@@ -84,44 +74,35 @@ class PlantListViewModel: ObservableObject {
                 try Task.checkCancellation() // Prüfen, ob die Task abgebrochen wurde
 
                 let fetchedSuggestions = try await plantRepository.fetchPlantsByQuery(query)
-                // Aktualisiere die @Published plantSuggestionList auf dem MainActor
                 self.plantSuggestionList = fetchedSuggestions
 
             } catch is CancellationError {
                 print("DEBUG: Search suggestion task was cancelled.")
             } catch {
-                // Allgemeine Fehlerbehandlung für Vorschläge
                 self.listErrorMessage = "Fehler beim Laden der Vorschläge: \(error.localizedDescription)"
                 print("--- ERROR IN VIEWMODEL (plantSuggestions) ---")
                 print("Localized Description: \(error.localizedDescription)")
                 print("Full Error Object: \(error)")
-                // Detaillierte Fehlerprüfung wie oben hinzufügen, falls nötig
                 print("------------------------------------------")
             }
             self.searchTask = nil // Task nach Abschluss zurücksetzen
         }
     }
 
-    // Funktion für die finale Suche (z.B. nach Button-Klick)
+ 
     func searchPlantByName(for name: String) {
-        // isLoadingList = true // Aktivieren, wenn du Ladeindikatoren verwenden möchtest
-        listErrorMessage = nil // Fehlermeldung zurücksetzen
-
+        listErrorMessage = nil
         Task {
-            // defer { isLoadingList = false } // Sicherstellen, dass isLoadingList zurückgesetzt wird
-
             do {
                 let results = try await plantRepository.fetchPlantsByQuery(name)
-                // Aktualisiere die Haupt-Pflanzenliste mit den Suchergebnissen
+                // Hauptpflanzenliste aktualisieren
                 self.plants = results
                 print("DEBUG: Search results loaded: \(self.plants.count) plants for '\(name)'.")
             } catch {
-                // Fehlerbehandlung
                 self.listErrorMessage = "Fehler bei der Suche: \(error.localizedDescription)"
                 print("--- ERROR IN VIEWMODEL (searchPlantByName) ---")
                 print("Localized Description: \(error.localizedDescription)")
                 print("Full Error Object: \(error)")
-                // Detaillierte Fehlerprüfung wie oben hinzufügen, falls nötig
                 print("------------------------------------------")
             }
         }

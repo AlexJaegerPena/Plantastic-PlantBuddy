@@ -19,16 +19,16 @@ struct NavigationView: View {
     
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "house") {
+            Tab("Home", systemImage: "leaf.fill") {
                 HomeView()
                     .environmentObject(loginViewModel)
             }
            
-            Tab("Add", systemImage: "plus") {
-                PlantSearchView(plantViewModel: PlantListViewModel(plantRepository: RemotePlantRepository()))
+            Tab("Search", systemImage: "magnifyingglass") {
+                PlantSearchView(plantViewModel: PlantListViewModel(plantRepository: LocalPlantRepository()))
             }
             Tab("Calendar", systemImage: "calendar") {
-                
+                CalendarView()
             }
         }
         .onAppear {

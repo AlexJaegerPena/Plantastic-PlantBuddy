@@ -8,23 +8,41 @@
 import SwiftUI
 
 struct PlantSearchView: View {
-
+    
     @StateObject var plantViewModel = PlantListViewModel(
         plantRepository: RemotePlantRepository())
-
+    
     @State private var selectedPlantId: Int = 0
+    
+    private var displayedPlants: [Plant] {
+        if plantViewModel.searchTerm.isEmpty {
+            return plantViewModel.plants
+        } else {
+            return plantViewModel.plantSuggestionList
+        }
+    }
 
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
-                    TextField("Search", text: $plantViewModel.searchTerm)
-                        .padding(8)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .onChange(of: plantViewModel.searchTerm) { oldValue, newValue in
-                            plantViewModel.plantSuggestions(for: newValue)
-                        }
+                    HStack {
+                        TextField("Search", text: $plantViewModel.searchTerm)
+                            .padding(8)
+                            
+                            .onChange(of: plantViewModel.searchTerm) { oldValue, newValue in
+                                plantViewModel.plantSuggestions(for: newValue)
+                            }
+                        Button {
+                                plantViewModel.searchTerm = ""
+                            } label: {
+                                Image(systemName: "xmark.circle")
+                            }
+                            .tint(.black.opacity(0.8))
+                            .padding(.trailing, 10)
+                    }
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8)
 
                     Button {
                         plantViewModel.searchPlantByName(for: plantViewModel.searchTerm)
@@ -32,22 +50,15 @@ struct PlantSearchView: View {
                         Image(systemName: "magnifyingglass")
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(.black)
                 }
                 .padding(.horizontal)
 
-                if !plantViewModel.searchTerm.isEmpty {
-                    List(plantViewModel.plantSuggestionList) { plant in
+            
+                    List(displayedPlants) { plant in
+                        let detailViewModel = PlantDetailsViewModel(plantId: plant.id, plantRepository: LocalPlantRepository())
                         NavigationLink(
-                            destination: PlantDetailView(selectedPlantId: plant.id)
-                        ) {
-                            Text(plant.commonName)
-                        }
-                    }
-                    .listStyle(.plain)
-                } else {
-                    List(plantViewModel.plants) { plant in
-                        NavigationLink(
-                            destination: PlantDetailView(selectedPlantId: plant.id)
+                            destination: PlantDetailView(selectedPlantId: plant.id, plantDetailsViewModel: detailViewModel)
                         ) {
                             HStack {
                                 AsyncImage(
@@ -82,12 +93,12 @@ struct PlantSearchView: View {
                             }
                         }
                     }
-                   .listStyle(.plain)
-                }
+                    .listStyle(.plain)
             }
         }
         .onAppear {
             plantViewModel.apiPlantsList()
+            plantViewModel.searchTerm = ""
         }
     }
 }

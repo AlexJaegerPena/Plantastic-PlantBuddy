@@ -14,11 +14,12 @@ struct HomeView: View {
     @EnvironmentObject var loginViewModel: LoginViewModel
     
     @State private var showProfile = false
+    @State private var showSearch = false
+
     
     var body: some View {
         NavigationStack {
             VStack {
-                
                 WeatherView(weatherViewModel: weatherViewModel)
              Text("home")
                 Spacer()
@@ -39,6 +40,17 @@ struct HomeView: View {
                             .environmentObject(loginViewModel)
                     }
                     .tint(.black)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showSearch = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .tint(.black)
+                    .navigationDestination(isPresented: $showSearch) {
+                        PlantSearchView()
+                    }
                 }
             }
         }
