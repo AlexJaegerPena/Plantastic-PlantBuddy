@@ -16,7 +16,7 @@ class WeatherRepository {
     
     func fetchCurrentWeather(for city: String? = nil, coordinates: CLLocationCoordinate2D? = nil) async throws -> WeatherResponse {
         
-        var urlComponents = URLComponents(string: "\(baseURL)/current.json")!
+        var urlComponents = URLComponents(string: "\(baseURL)current.json")!
         
         // Füge grundlegende Query-Parameter hinzu
                 urlComponents.queryItems = [
@@ -41,6 +41,9 @@ class WeatherRepository {
         // Daten von API ziehen (wird ein String sein)
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
+            print(response)
+
+
             
             // HTTP-Antwort überprüfen
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -48,6 +51,8 @@ class WeatherRepository {
                             let errorMessage = (errorData?["error"] as? [String: Any])?["message"] as? String ?? "Unbekannter API-Fehler"
                             throw WeatherAPIError.apiError(errorMessage)
                         }
+
+
             
             // Bekommene Daten in gewünschtes Objekt decodieren
             return try JSONDecoder().decode(WeatherResponse.self, from: data)
@@ -62,7 +67,7 @@ class WeatherRepository {
     
     func fetchWeatherForecast(for city: String? = nil, coordinates: CLLocationCoordinate2D? = nil) async throws -> WeatherForecast {
         
-        var urlComponents = URLComponents(string: "\(baseURL)/forecast.json")!
+        var urlComponents = URLComponents(string: "\(baseURL)forecast.json")!
         
         // Füge grundlegende Query-Parameter hinzu
                 urlComponents.queryItems = [

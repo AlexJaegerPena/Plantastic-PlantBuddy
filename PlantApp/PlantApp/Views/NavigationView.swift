@@ -14,18 +14,18 @@ struct NavigationView: View {
     
     @StateObject private var notificationsViewModel = NotificationsViewModel()
     
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
 
     
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "leaf.fill") {
+            Tab("My Garden", systemImage: "skull") {
                 HomeView()
-                    .environmentObject(loginViewModel)
+                    .environmentObject(userViewModel)
             }
            
-            Tab("Search", systemImage: "magnifyingglass") {
-                PlantSearchView(plantViewModel: PlantListViewModel(plantRepository: LocalPlantRepository()))
+            Tab("Explore", systemImage: "magnifyingglass") {
+                PlantSearchView(plantViewModel: PlantListViewModel())
             }
             Tab("Calendar", systemImage: "calendar") {
                 CalendarView()
@@ -42,5 +42,5 @@ struct NavigationView: View {
 
 #Preview {
     NavigationView()
-        .environmentObject(LoginViewModel())
+        .environmentObject(UserViewModel())
 }

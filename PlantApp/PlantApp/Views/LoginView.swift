@@ -9,24 +9,29 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @StateObject private var loginViewModel = LoginViewModel()
+    @StateObject private var userViewModel = UserViewModel()
     @State private var showRegister = false
-    
+        
     
     var body: some View {
-        if loginViewModel.isLoggedIn {
+        if userViewModel.isLoggedIn {
             NavigationView()
-                .environmentObject(loginViewModel)
+                .environmentObject(userViewModel)
         } else {
             VStack {
-                TextField("Email", text: $loginViewModel.email)
+                TextField("Email", text: $userViewModel.email)
                     .textFieldStyle(.roundedBorder)
-                SecureField("Password", text: $loginViewModel.password)
+                SecureField("Password", text: $userViewModel.password)
                     .textFieldStyle(.roundedBorder)
                 Button(showRegister ? "Register" : "Login") {
-                    showRegister
-                    ? loginViewModel.registerWithEmailPassword()
-                    : loginViewModel.signInEmailPassword()
+                    Task {
+                        if showRegister {
+                            await userViewModel.registerWithEmailPassword()
+                        } else {
+                            await
+                            userViewModel.loginEmailPassword(email: userViewModel.email, password: userViewModel.password)
+                        }
+                    }
                 }
             }
             HStack {

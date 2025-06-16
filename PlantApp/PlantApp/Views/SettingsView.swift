@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     @StateObject var settingsViewModel = SettingsViewModel()
     
     
@@ -17,8 +17,8 @@ struct SettingsView: View {
         List {
             Section("Profile") {
 //                TextField("Username", text: $loginViewModel.username ?? "")
-                TextField("Email", text: $loginViewModel.email)
-                TextField("Password", text: $loginViewModel.password)
+                TextField("Email", text: $userViewModel.email)
+                TextField("Password", text: $userViewModel.password)
             }
             Section("App settings") {
                 Text("Darkmode")
@@ -38,8 +38,8 @@ struct SettingsView: View {
             }
             Button("Logout") {
                 settingsViewModel.logout()
-                loginViewModel.email = ""
-                loginViewModel.password = ""
+                userViewModel.email = ""
+                userViewModel.password = ""
             }
         }
     }
@@ -47,6 +47,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
-        .environmentObject(LoginViewModel())
+        .environmentObject(UserViewModel())
 
 }

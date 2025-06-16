@@ -1,0 +1,132 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%.1f°C" : {
+
+    },
+    "Add Plant View" : {
+
+    },
+    "App settings" : {
+
+    },
+    "Calendar" : {
+
+    },
+    "Care" : {
+
+    },
+    "Care Level: %@" : {
+
+    },
+    "Common Name: %@" : {
+
+    },
+    "Contact us" : {
+
+    },
+    "Continue" : {
+
+    },
+    "Cycle: %@" : {
+
+    },
+    "Darkmode" : {
+
+    },
+    "Description: %@" : {
+
+    },
+    "Email" : {
+
+    },
+    "Explore" : {
+
+    },
+    "Family: %@" : {
+
+    },
+    "Fehler. %@" : {
+
+    },
+    "Genus: %@" : {
+
+    },
+    "Got an account?" : {
+
+    },
+    "Hello, world!" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "Hello! How should we call you?" : {
+
+    },
+    "Hey, %@!" : {
+
+    },
+    "ID: %lld" : {
+
+    },
+    "info" : {
+
+    },
+    "Language preferences" : {
+
+    },
+    "Login" : {
+
+    },
+    "Logout" : {
+
+    },
+    "My Garden" : {
+
+    },
+    "Password" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Register" : {
+
+    },
+    "Register here" : {
+
+    },
+    "Search" : {
+
+    },
+    "Support" : {
+
+    },
+    "Tipe in a name" : {
+
+    },
+    "Type: %@" : {
+
+    },
+    "Watering: %@" : {
+
+    },
+    "WateringBenchmark: %@" : {
+
+    },
+    "WateringBenchmark: %@ |" : {
+
+    },
+    "Weather is loading..." : {
+
+    },
+    "Website" : {
+
+    }
+  },
+  "version" : "1.0"
+}

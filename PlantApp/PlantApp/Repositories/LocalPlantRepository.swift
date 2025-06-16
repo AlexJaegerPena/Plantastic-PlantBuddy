@@ -187,7 +187,7 @@ class LocalPlantRepository: PlantRepository {
         )],
         watering: "Frequent",
         wateringBenchmark: WateringBenchmark(
-            value: "5",
+            value: "5 - 7",
             unit: "days"
         ),
         sunlight: ["Part shade"],

@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class UserRepository {
     
-    private let collectionRef = FirebaseManager.shared.database.collection("user")
+    private let collectionRef = FirebaseManager.shared.database.collection("users")
     
     
     func createUser(_ user: FireUser) throws {

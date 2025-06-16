@@ -33,6 +33,21 @@ struct Plant: Codable, Identifiable {
 }
 
 
+extension Plant {
+    init(from plant: Plant) {
+        self.id = plant.id
+        self.commonName = plant.commonName
+        self.scientificName = plant.scientificName
+        self.otherName = plant.otherName
+        self.family = plant.family
+        self.genus = plant.genus
+        self.defaultImage = plant.defaultImage
+    }
+}
+
+
+
+
 struct PlantImages: Codable {
     let originalUrl: String?
     let regularUrl: String?
@@ -52,8 +67,8 @@ struct PlantImages: Codable {
 
 struct PlantDetails: Codable, Identifiable {
     let id: Int
-    let commonName: String?
-    let scientificName: [String]?
+    let commonName: String
+    let scientificName: [String]
     let family: String?
     let genus: String?
     let type: String?

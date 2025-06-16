@@ -148,9 +148,9 @@ struct WeatherView: View {
                         VStack(alignment: .trailing) {
                             Text(weather.location.name)
                             HStack {
-                                if let weatherForecast = weatherViewModel.weatherForecastResponse {
-                                    Text("Test")
-                                }
+//                                if let weatherForecast = weatherViewModel.weatherForecastResponse {
+//                                    
+//                                }
                             }
                         }
                         .padding(.trailing, 25)
@@ -186,7 +186,7 @@ struct WeatherView: View {
         .frame(maxWidth: .infinity, maxHeight: 120)
         .onAppear {
             Task { await weatherViewModel.fetchWeatherForCurrentLocation() }
-            Task { await weatherViewModel.fetchForecastWeather(for: "Cologne") }
+//            Task { await weatherViewModel.fetchForecastWeather(for: "Cologne") }
         }
     }
 }

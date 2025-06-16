@@ -11,7 +11,7 @@ struct HomeView: View {
     
     @StateObject var weatherViewModel = WeatherViewModel()
     
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     
     @State private var showProfile = false
     @State private var showSearch = false
@@ -21,8 +21,16 @@ struct HomeView: View {
         NavigationStack {
             VStack {
                 WeatherView(weatherViewModel: weatherViewModel)
-             Text("home")
+             Text("My Garden")
                 Spacer()
+                if userViewModel.favoritePlantsList.isEmpty {
+                    Text("No plants added yet")
+                } else {
+                    List(userViewModel.favoritePlantsList, id: \.id) { plant in
+                       
+                        FavPlantListItemView(plant: plant)
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -31,13 +39,13 @@ struct HomeView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                            Text("Hey, \(loginViewModel.email.isEmpty ? "You" : loginViewModel.email)!")
+                            Text("Hey, \(userViewModel.email.isEmpty ? "You" : userViewModel.email)!")
                                 .font(.title3)
                         }
                     }
                     .navigationDestination(isPresented: $showProfile) {
                         SettingsView()
-                            .environmentObject(loginViewModel)
+                            .environmentObject(userViewModel)
                     }
                     .tint(.black)
                 }
@@ -54,11 +62,14 @@ struct HomeView: View {
                 }
             }
         }
+        .onAppear {
+            userViewModel.fetchFavoritePlants()
+        }
     }
 }
 
 #Preview {
     HomeView()
         .environmentObject(WeatherViewModel())
-        .environmentObject(LoginViewModel())
+        .environmentObject(UserViewModel())
 }
