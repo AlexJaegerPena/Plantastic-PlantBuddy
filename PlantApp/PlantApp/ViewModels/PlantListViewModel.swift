@@ -18,11 +18,8 @@ class PlantListViewModel: ObservableObject {
     // Private Task-Variable für die Debounce-Logik
     private var searchTask: Task<Void, Error>?
 
-    private let plantRepository: PlantRepository
+    private let plantRepository: PlantRepository = LocalPlantRepository()
 
-    init(plantRepository: PlantRepository) {
-        self.plantRepository = plantRepository
-    }
 
     // Funktion zum Abrufen der initialen Pflanzenliste
     func apiPlantsList() {

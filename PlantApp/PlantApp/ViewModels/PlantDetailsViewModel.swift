@@ -15,11 +15,10 @@ class PlantDetailsViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let plantId: Int
-    private let plantRepository: PlantRepository
+    private let plantRepository: PlantRepository = LocalPlantRepository()
     
-    init(plantId: Int, plantRepository: PlantRepository) {
+    init(plantId: Int) {
         self.plantId = plantId
-        self.plantRepository = plantRepository
     }
     
     func fetchPlantByID(_ id: Int) {
@@ -38,7 +37,5 @@ class PlantDetailsViewModel: ObservableObject {
             }
         }
     }
-    
-    
     
 }

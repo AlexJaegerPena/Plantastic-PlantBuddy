@@ -11,20 +11,20 @@ struct WelcomeView: View {
 
     @State private var username: String = ""
 
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     
 
     var body: some View {
 
-        if loginViewModel.isRegistrationComplete {
+        if userViewModel.isRegistrationComplete {
             NavigationView()
-                .environmentObject(loginViewModel)
+                .environmentObject(userViewModel)
         } else {
             Text("Hello! How should we call you?")
             TextField("Tipe in a name", text: $username)
             Button("Continue") {
-                loginViewModel.updateUser(
-                    with: loginViewModel.user?.uid, username: username)
+                userViewModel.updateUsername(
+                    username: username)
                 
             }
         }
@@ -33,6 +33,6 @@ struct WelcomeView: View {
 
 #Preview {
     WelcomeView()
-        .environmentObject(LoginViewModel())
+        .environmentObject(UserViewModel())
 
 }

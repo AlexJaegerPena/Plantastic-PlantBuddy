@@ -10,32 +10,60 @@ import SwiftUI
 struct PlantDetailView: View {
     
     let selectedPlantId: Int
+    
+    @State private var isFavorite: Bool = false
 
+    @EnvironmentObject var userViewModel: UserViewModel
     @ObservedObject var plantDetailsViewModel: PlantDetailsViewModel
 
 
     var body: some View {
         VStack {
-            AsyncImage(
-                url: URL(string: plantDetailsViewModel.plantDetails?.defaultImage?.thumbnail ?? "")
-            ) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: .infinity, height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .shadow(color: .black.opacity(0.2), radius: 0.5, x:3, y: 3)
-            } placeholder: {
-                Image("placeholderPlant")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: .infinity, height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .foregroundColor(.gray)
+            ZStack {
+               
+                AsyncImage(
+                    url: URL(string: plantDetailsViewModel.plantDetails?.defaultImage?.thumbnail ?? "")
+                ) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: .infinity, height: 280)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: .black.opacity(0.2), radius: 0.5, x:3, y: 3)
+                    //                    .ignoresSafeArea()
+                } placeholder: {
+                    Image("placeholderPlant")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: .infinity, height: 280)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    //                    .ignoresSafeArea()
+                }
+                
+                Button {
+                    isFavorite.toggle()
+                    Task {
+                            if let plantDetails = plantDetailsViewModel.plantDetails {
+                                let firePlant = FirePlant(from: plantDetails) // Umwandlung in FirePlant
+                                await userViewModel.addPlantToFavorites(plant: firePlant)
+                            } else {
+                                print("Fehler: Pflanzendetails nicht geladen!")
+                            }
+                        }
+                    
+                } label: {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .font(.system(size: 30))
+                        .foregroundStyle(isFavorite ? .green : .white)
+                        .padding()
+                        .background(.black.opacity(0.2))
+                        .clipShape(.circle)
+                }
+                .padding(.leading, 300)
+                .padding(.bottom, 220)
             }
             Text("Common Name: \(plantDetailsViewModel.plantDetails?.commonName ?? "")")
             Text("Scientific Name: \(plantDetailsViewModel.plantDetails?.scientificName ?? [""])")
- 
         
 
             List {
@@ -76,20 +104,14 @@ struct PlantDetailView: View {
 
                 }
             }
-
-
-
-            
         }
         .onAppear {
             plantDetailsViewModel.fetchPlantByID(selectedPlantId)
         }
-      
     }
-       
 }
 
 #Preview {
-    PlantDetailView(selectedPlantId: 1, plantDetailsViewModel: PlantDetailsViewModel(plantId: 1, plantRepository: LocalPlantRepository()))
+    PlantDetailView(selectedPlantId: 1, plantDetailsViewModel: PlantDetailsViewModel(plantId: 1))
 }
 

@@ -13,4 +13,5 @@ struct FireUser: Codable, Identifiable {
     var username: String
     var email: String
     var password: String
+    var favoritePlants: [FirePlant]
 }

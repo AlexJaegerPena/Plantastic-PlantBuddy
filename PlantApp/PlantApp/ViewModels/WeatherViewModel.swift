@@ -35,11 +35,12 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 forKey: "lastSelectedCity") ?? "Cologne")
         super.init()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyReduced  // Weniger genaue Ortung spart Batterie
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest  // Genaue Ortung
         // Dieser Aufruf fordert den Benutzer auf, die Berechtigung zu erteilen & löst einen System-Dialog aus.
         locationManager.requestWhenInUseAuthorization()
         // Fordert eine einmalige Standortaktualisierung an, sobald die Berechtigung erteilt wurde oder wenn sie bereits erteilt ist.
         locationManager.requestLocation()
+        locationManager.startUpdatingLocation()
 
         Task {
             await fetchWeatherForCurrentLocation()
@@ -49,6 +50,8 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+    
+    
 
     @MainActor
     func fetchWeatherForCurrentLocation() async {
@@ -58,7 +61,6 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         // und dort wird dann die API aufgerufen.
         locationManager.requestLocation()
     }
-
     
     // Holt Wetterdaten für eine spezifische Stadt
     @MainActor
@@ -107,7 +109,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     internal func locationManager(
         _ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]
     ) {
-        guard let location = locations.first else {
+        guard let location = locations.last else {
             Task { @MainActor in
                 self.errorMessage = "Keine Standortdaten verfügbar."
                 self.isLoading = false
@@ -156,7 +158,6 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
 
-    
     // Hilfsfunktion, die Current Weather und FOrecast bündelt
     private func _fetchWeatherData(for query: String?, coordinates: CLLocationCoordinate2D?) async {
         isLoading = true
@@ -172,8 +173,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         isLoading = false
     }
-    
-    
+
     func systemImageName(for code: Int) -> String {
         return WeatherCategory.from(code: code).systemImageName
     }
