@@ -12,13 +12,34 @@ struct SettingsView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @StateObject var settingsViewModel = SettingsViewModel()
     
+    @State var showPassword: Bool = false
+    
     
     var body: some View {
         List {
             Section("Profile") {
-//                TextField("Username", text: $loginViewModel.username ?? "")
+                TextField("Username", text: $userViewModel.username)
                 TextField("Email", text: $userViewModel.email)
-                TextField("Password", text: $userViewModel.password)
+                VStack {
+                    if showPassword {
+                        TextField("Password", text: $userViewModel.password)
+                    } else {
+                        SecureField("Password", text: $userViewModel.password)
+                    }
+                        
+                }
+                .overlay {
+                    HStack {
+                        Spacer()
+                        Button {
+                            showPassword.toggle()
+                        } label: {
+                            Image(systemName: showPassword ? "eye.slash" : "eye")
+                        }
+                    }
+                }
+                
+
             }
             Section("App settings") {
                 Text("Darkmode")

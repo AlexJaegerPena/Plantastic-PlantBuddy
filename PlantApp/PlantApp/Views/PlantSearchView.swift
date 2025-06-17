@@ -65,7 +65,7 @@ struct PlantSearchView: View {
                             .background(
                                 NavigationLink(
                                     "",
-                                    destination: PlantDetailView(selectedPlantId: plant.id, plantDetailsViewModel: detailViewModel)
+                                    destination: PlantDetailView(selectedPlant: plant, selectedPlantId: plant.id, plantDetailsViewModel: detailViewModel)
                                 )
                                 .opacity(0)
                             )

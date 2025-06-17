@@ -19,8 +19,8 @@ struct FirePlant: Codable, Identifiable {
     let genus: String?
     let type: String?
     let dimensions: [DimensionItem]?
-    let watering: String?
-    let wateringBenchmark: WateringBenchmark?
+    let watering: Watering?
+//    let wateringBenchmark: WateringBenchmark?
     let sunlight: [String]?
     let cycle: String?
     let defaultImage: PlantImages?
@@ -41,10 +41,12 @@ struct FirePlant: Codable, Identifiable {
     let edibleLeaf: Bool?
     let attracts: [String]?
     let hardiness: Hardiness?
+    var timesWatered: WateringRecord?
 
+    
+    // Konstruktor ermöglicht, ein FirePlant-Objekt aus den API-Daten von PlantDetails zu erzeugen
     init(from plantDetails: PlantDetails) {
-        // Die Firestore Document ID wird zur String-Repräsentation der API-ID
-        self.id = String(plantDetails.id)
+
         self.apiPlantId = plantDetails.id
         self.commonName = plantDetails.commonName
         self.scientificName = plantDetails.scientificName
@@ -53,7 +55,7 @@ struct FirePlant: Codable, Identifiable {
         self.type = plantDetails.type
         self.dimensions = plantDetails.dimensions
         self.watering = plantDetails.watering
-        self.wateringBenchmark = plantDetails.wateringBenchmark
+//        self.wateringBenchmark = plantDetails.wateringBenchmark
         self.sunlight = plantDetails.sunlight
         self.cycle = plantDetails.cycle
         self.defaultImage = plantDetails.defaultImage
@@ -77,10 +79,12 @@ struct FirePlant: Codable, Identifiable {
     }
 }
 
-// Extension für den eigenen init. Im Gegensatz dazu oben der init für PlantDetails
+
+
+// Extension für den eigenen init
 extension FirePlant {
     init(
-        id: String? = nil,
+        id: String?,
         apiPlantId: Int,
         commonName: String,
         scientificName: [String],
@@ -88,8 +92,8 @@ extension FirePlant {
         genus: String?,
         type: String?,
         dimensions: [DimensionItem]?,
-        watering: String?,
-        wateringBenchmark: WateringBenchmark?,
+        watering: Watering?,
+//        wateringBenchmark: WateringBenchmark?,
         sunlight: [String]?,
         cycle: String?,
         defaultImage: PlantImages?,
@@ -109,7 +113,8 @@ extension FirePlant {
         leaf: Bool?,
         edibleLeaf: Bool?,
         attracts: [String]?,
-        hardiness: Hardiness?
+        hardiness: Hardiness?,
+        timesWatered: WateringRecord?
     ) {
         self.id = id
         self.apiPlantId = apiPlantId
@@ -120,7 +125,7 @@ extension FirePlant {
         self.type = type
         self.dimensions = dimensions
         self.watering = watering
-        self.wateringBenchmark = wateringBenchmark
+//        self.wateringBenchmark = wateringBenchmark
         self.sunlight = sunlight
         self.cycle = cycle
         self.defaultImage = defaultImage
@@ -141,5 +146,6 @@ extension FirePlant {
         self.edibleLeaf = edibleLeaf
         self.attracts = attracts
         self.hardiness = hardiness
+        self.timesWatered = timesWatered
     }
 }

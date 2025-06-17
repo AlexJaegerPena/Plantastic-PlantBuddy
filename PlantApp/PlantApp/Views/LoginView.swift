@@ -10,12 +10,17 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject private var userViewModel = UserViewModel()
+
     @State private var showRegister = false
-        
+
+    
     
     var body: some View {
+//        if !userViewModel.isAuthStatusChecked {
+//            ProgressView("Lade...")
+//        } else
         if userViewModel.isLoggedIn {
-            NavigationView()
+            NavView()
                 .environmentObject(userViewModel)
         } else {
             VStack {
@@ -26,7 +31,7 @@ struct LoginView: View {
                 Button(showRegister ? "Register" : "Login") {
                     Task {
                         if showRegister {
-                            await userViewModel.registerWithEmailPassword()
+                            await userViewModel.registerWithEmailPassword(email: userViewModel.email, password: userViewModel.password)
                         } else {
                             await
                             userViewModel.loginEmailPassword(email: userViewModel.email, password: userViewModel.password)
@@ -45,5 +50,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+   LoginView()
 }

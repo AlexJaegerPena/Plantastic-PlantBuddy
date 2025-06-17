@@ -10,6 +10,8 @@ import Foundation
 
 class LocalPlantRepository: PlantRepository {
     
+    @Published var favoritePlants: [FirePlant] = []
+    
     
     func fetchPlantsList() async throws -> [Plant] {
         return dummyPlantData.sorted { $0.commonName < $1.commonName }
@@ -30,6 +32,21 @@ class LocalPlantRepository: PlantRepository {
         }
         return filteredPlants
     }
+    
+    func addPlantToFav(newPlant: FirePlant) {
+        favoritePlants.append(newPlant)
+    }
+    
+    func removePlantFromFav(plant: FirePlant) {
+        favoritePlants.removeAll(where: { $0.id == plant.id } )
+    }
+    
+    
+    func fetchFavPlants() -> [FirePlant] {
+        return favoritePlants
+    }
+    
+    
     
     
     
@@ -185,11 +202,11 @@ class LocalPlantRepository: PlantRepository {
             maxValue: 1.5,
             unit: "feet"
         )],
-        watering: "Frequent",
-        wateringBenchmark: WateringBenchmark(
-            value: "5 - 7",
-            unit: "days"
-        ),
+        watering: Watering(rawValue: "frequent"),
+//        wateringBenchmark: WateringBenchmark(
+//            value: "5 - 7",
+//            unit: "days"
+//        ),
         sunlight: ["Part shade"],
         cycle: "Perennial",
         defaultImage: PlantImages(

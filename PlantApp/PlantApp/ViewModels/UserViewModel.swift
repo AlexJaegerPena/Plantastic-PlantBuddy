@@ -13,57 +13,59 @@ import FirebaseFirestore
 class UserViewModel: ObservableObject {
     @Published var user: User?
     @Published var userId: String?
-    @Published var username: String?
+    @Published var username: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var firePlant: FirePlant?
-    @Published var favoritePlantsList: [FirePlant] = []
+
     
+//    @Published var onboardingCompleted: Bool {
+//        didSet {
+//            UserDefaults.standard.set(onboardingCompleted, forKey: "onboardingCompleted")
+//        }
+//    }
+//    @Published var firePlant: FirePlant?
+//    @Published var favoritePlantsList: [FirePlant] = []
+    //    @Published var isAuthStatusChecked = false
+    
+    var isRegistrationComplete: Bool = false
     var isLoggedIn: Bool { user != nil }
-    var isRegistrationComplete: Bool { username != nil }
     
     private let auth = FirebaseManager.shared.auth
-    private let db = FirebaseManager.shared.database
+    
     private let userRepository = UserRepository()
     
     private var authListener: NSObjectProtocol?
     
     init() {
-        checkLogin()
+//        self.onboardingCompleted = UserDefaults.standard.set(forKey: "onboardingCompleted")
         addAuthListener()
     }
     
-    // Auth Listener sauber entfernen wenn ViewModel nicht mehr gebraucht wird
-    deinit {
-        if let authListener = authListener {
-            auth.removeStateDidChangeListener(authListener)
-        }
-    }
     
-    func checkLogin() {
-        try? auth.signOut() // Nutzer bei Start ausloggen
-        self.user = nil
-        self.userId = nil
-    }
+//    func checkLogin() {
+////        try? auth.signOut() // Nutzer bei Start ausloggen
+//        self.user = nil
+//        self.userId = nil
+//    }
 
     
     func loginEmailPassword(email: String, password: String) async {
+
         do {
-            let result = try await auth.signIn(withEmail: email, password: password)
-            self.user = result.user
-            print("Erfolgreich eingeloggt: \(result.user.email ?? "Unbekannt")")
+                try await auth.signIn(withEmail: email, password: password)
+                print("Erfolgreich eingeloggt:")
             
-        }  catch {
+        } catch {
             print("Fehler beim Einloggen:", error.localizedDescription)
         }
     }
     
     
-    func registerWithEmailPassword() async {
+    func registerWithEmailPassword(email: String, password: String) async {
         Task {
             do {
                 let result = try await auth.createUser(withEmail: email, password: password)
-                let fireUser = FireUser(id: result.user.uid, username: username ?? "", email: email, password: password, favoritePlants: [])
+                let fireUser = FireUser(id: result.user.uid, username: username, email: email, password: password, favoritePlants: [])
                 try userRepository.createUser(fireUser)
             } catch {
                 print(error)
@@ -86,72 +88,45 @@ class UserViewModel: ObservableObject {
     }
     
     func addAuthListener() {
+        // Schritt 1: Den Listener registrieren und eine Referenz speichern
         self.authListener = auth.addStateDidChangeListener { [weak self] auth, user in
-            if let user = user, !user.isAnonymous { // Prüft, ob User NICHT anonym ist
-                self?.user = user
-                self?.userId = user.uid
-            } else {
-                self?.user = nil
-                self?.userId = nil
+            
+            // Schritt 3: Wenn ein gültiger, nicht-anonymer Benutzer angemeldet ist...
+            self?.user = user // ..setze die veröffentlichte Eigenschaft 'user' auf den Firebase-Benutzer
+            self?.userId = user?.uid // // ...setze die veröffentlichte Eigenschaft 'userId' auf die UID des Benutzers
+            
+            // Schritt 4: Asynchronen Task starten, um zusätzliche Benutzerdaten abzurufen
+            Task {
+                if let userId = user?.uid {
+                    await self?.fetchUsername(userId: userId)
+                }
+//                self?.isAuthStatusChecked = true
             }
         }
     }
     
-//    func addListenerForUser(userId: String) {
-//        user(userId: userId).addSnapshotListener { querySnapshot, error in
-//            
-//        }
-//    }
+    func fetchUsername(userId: String) async {
+           do {
+               let fireUser = try await userRepository.getUserByID(userId)
+               self.username = fireUser.username
+           } catch {
+               print("Fehler beim Abrufen des Benutzernamens: \(error.localizedDescription)")
+           }
+       }
     
-    func addPlantToFavorites(plant: FirePlant) async {
-        guard let userId = self.userId else { return }
-
-        let userRef = db.collection("users").document(userId).collection("favoritePlants") // Collection für Favoriten
-
-        do {
-            try userRef.addDocument(from: plant) // Speichert direkt als FirePlant
-            print("Pflanze erfolgreich zu Favoriten hinzugefügt.")
-        } catch {
-            print("Fehler beim Speichern der Pflanze:", error.localizedDescription)
-        }
-    }
-    
-    // Aktualisieren der FavoritenListe
-    func fetchFavoritePlants() {
-        guard let userId = self.userId else { return }
-        
-        let userRef = db.collection("users").document(userId).collection("favoritePlants")
-
-        // Listener um Änderungen live zu verfolgen
-        userRef.addSnapshotListener { querySnapshot, error in
-            if let error {
-                print("Fehler beim Laden der Favoriten:", error.localizedDescription)
-                return
+    func signOut() {
+            do {
+                try auth.signOut()
+                // Der Auth-Listener wird ausgelöst und setzt die Properties auf nil
+                print("Benutzer erfolgreich abgemeldet.")
+            } catch {
+                print("Fehler beim Abmelden: \(error.localizedDescription)")
             }
-            // querySnapshot.documents enthält alle Dokumente die unter favoritePlants gespeichert sind
-            guard let documents = querySnapshot?.documents else {
-                print("Keine Favoriten gefunden")
-                return
-            }
-            // versucht jedes Dokument als FirePlant zu dekodieren
-            self.favoritePlantsList = documents.compactMap { try? $0.data(as: FirePlant.self) } // Direkt als Objekt laden
         }
-    }
-
-    func removePlantFromFavorites(plantId: String) async {
-        guard let userId = self.userId else { return }
-
-        let plantRef = db.collection("users").document(userId).collection("favoritePlants").document(plantId)
-
-        do {
-            try await plantRef.delete()
-            print("Pflanze erfolgreich aus Favoriten entfernt.")
-        } catch {
-            print("Fehler beim Entfernen:", error.localizedDescription)
-        }
-    }
 
 }
+
+
 
 
 

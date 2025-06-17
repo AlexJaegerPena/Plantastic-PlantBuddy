@@ -1,13 +1,16 @@
 //
-//  FavPlantListItemView.swift
+//  FavListItemView.swift
 //  PlantApp
 //
 //  Created by Alexandra Jäger on 13.06.25.
 //
 
 import SwiftUI
+import FirebaseCore
 
-struct FavPlantListItemView: View {
+struct FavListItemView: View {
+    
+    @EnvironmentObject var favPlantViewModel: FavPlantViewModel
     
     let plant: FirePlant
 
@@ -59,7 +62,7 @@ struct FavPlantListItemView: View {
 }
 
 #Preview {
-    FavPlantListItemView(
+    FavListItemView(
         plant: FirePlant(
             id: "1",
             apiPlantId: 1,
@@ -69,8 +72,8 @@ struct FavPlantListItemView: View {
             genus: "Abies",
             type: "tree",
             dimensions: [DimensionItem(minValue: 1, maxValue: 1.5, unit: "feet")],
-            watering: "Frequent",
-            wateringBenchmark: WateringBenchmark(value: "5 - 7", unit: "days"),
+            watering: .Frequent,
+//            wateringBenchmark: WateringBenchmark(value: "5", unit: "days"),
             sunlight: ["Part shade"],
             cycle: "Perennial",
             defaultImage: PlantImages(
@@ -96,8 +99,10 @@ struct FavPlantListItemView: View {
             leaf: true,
             edibleLeaf: false,
             attracts: ["bees", "birds"],
-            hardiness: Hardiness(min: "7", max: "7")
+            hardiness: Hardiness(min: "7", max: "7"),
+            timesWatered: WateringRecord(timestamp: Timestamp(date: Date()))
         )
         )
+    .environmentObject(FavPlantViewModel())
 }
 

@@ -1,5 +1,5 @@
 //
-//  NavigationView.swift
+//  NavView.swift
 //  PlantApp
 //
 //  Created by Alexandra Jäger on 26.05.25.
@@ -7,25 +7,28 @@
 
 import SwiftUI
 
-struct NavigationView: View {
+struct NavView: View {
 
     @State private var weatherViewModel = WeatherViewModel()
     @State private var hasAppeared = false
     
     @StateObject private var notificationsViewModel = NotificationsViewModel()
+    @StateObject private var favPlantViewModel = FavPlantViewModel()
     
     @EnvironmentObject var userViewModel: UserViewModel
 
     
     var body: some View {
         TabView {
-            Tab("My Garden", systemImage: "skull") {
-                HomeView()
-                    .environmentObject(userViewModel)
+            Tab("Garden", systemImage: "leaf.fill") {
+                    HomeView()
+                        .environmentObject(userViewModel)
+                        .environmentObject(favPlantViewModel)
             }
            
             Tab("Explore", systemImage: "magnifyingglass") {
                 PlantSearchView(plantViewModel: PlantListViewModel())
+                    .environmentObject(favPlantViewModel)
             }
             Tab("Calendar", systemImage: "calendar") {
                 CalendarView()
@@ -41,6 +44,6 @@ struct NavigationView: View {
 }
 
 #Preview {
-    NavigationView()
+    NavView()
         .environmentObject(UserViewModel())
 }
