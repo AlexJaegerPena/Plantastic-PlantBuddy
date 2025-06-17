@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var weatherViewModel = WeatherViewModel()
+    @StateObject var favPlantViewModel = FavPlantViewModel()
     
     @EnvironmentObject var userViewModel: UserViewModel
     
@@ -23,13 +24,11 @@ struct HomeView: View {
                 WeatherView(weatherViewModel: weatherViewModel)
              Text("My Garden")
                 Spacer()
-                if userViewModel.favoritePlantsList.isEmpty {
+                if favPlantViewModel.favPlantsList.isEmpty {
                     Text("No plants added yet")
                 } else {
-                    List(userViewModel.favoritePlantsList, id: \.id) { plant in
-                       
-                        FavPlantListItemView(plant: plant)
-                    }
+                    FavListView()
+                
                 }
             }
             .toolbar {
@@ -39,7 +38,7 @@ struct HomeView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                            Text("Hey, \(userViewModel.email.isEmpty ? "You" : userViewModel.email)!")
+                            Text("Hey, \(userViewModel.username.isEmpty ? "You" : userViewModel.username)!")
                                 .font(.title3)
                         }
                     }
@@ -63,7 +62,10 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            userViewModel.fetchFavoritePlants()
+            Task {
+                await favPlantViewModel.loadFavorites()
+    
+            }
         }
     }
 }
@@ -72,4 +74,5 @@ struct HomeView: View {
     HomeView()
         .environmentObject(WeatherViewModel())
         .environmentObject(UserViewModel())
+        .environmentObject(FavPlantViewModel())
 }

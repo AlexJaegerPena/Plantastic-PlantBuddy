@@ -31,7 +31,7 @@ class PlantDetailsViewModel: ObservableObject {
             defer { isLoading = false} // Stellt sicher, dass isLoading immer auf false gesetzt wird
             do {
                 self.plantDetails = try await plantRepository.fetchPlantDetailsByID(id)
-                print("Fetched Plant Details for ID \(id): \(self.plantDetails?.commonName ?? "N/A")")
+                print("Fetched Plant Details for ID \(id): \(self.plantDetails?.commonName ?? "Unknown name")")
             } catch {
                 print(error)
             }

@@ -13,7 +13,13 @@
     "App settings" : {
 
     },
+    "Attracts: %@" : {
+
+    },
     "Calendar" : {
+
+    },
+    "Cancel" : {
 
     },
     "Care" : {
@@ -52,6 +58,9 @@
     "Fehler. %@" : {
 
     },
+    "Garden" : {
+
+    },
     "Genus: %@" : {
 
     },
@@ -70,13 +79,13 @@
     "Hey, %@!" : {
 
     },
-    "ID: %lld" : {
-
-    },
     "info" : {
 
     },
     "Language preferences" : {
+
+    },
+    "Loading..." : {
 
     },
     "Login" : {
@@ -88,7 +97,19 @@
     "My Garden" : {
 
     },
+    "No plants added yet" : {
+
+    },
+    "no watering information" : {
+
+    },
+    "Ok" : {
+
+    },
     "Password" : {
+
+    },
+    "Plant has been added to your garden" : {
 
     },
     "Profile" : {
@@ -100,10 +121,16 @@
     "Register here" : {
 
     },
+    "Scientific Name: %@" : {
+
+    },
     "Search" : {
 
     },
     "Support" : {
+
+    },
+    "Sure you want to delete this plant from your garden?" : {
 
     },
     "Tipe in a name" : {
@@ -112,19 +139,19 @@
     "Type: %@" : {
 
     },
+    "Username" : {
+
+    },
     "Watering: %@" : {
-
-    },
-    "WateringBenchmark: %@" : {
-
-    },
-    "WateringBenchmark: %@ |" : {
 
     },
     "Weather is loading..." : {
 
     },
     "Website" : {
+
+    },
+    "Yes" : {
 
     }
   },

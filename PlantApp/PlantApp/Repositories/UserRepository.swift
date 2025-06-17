@@ -32,10 +32,6 @@ class UserRepository {
             .data(as: FireUser.self) else { throw FirestoreUserError.usernameNotFound }
         return user
     }
-    
-//    func loginUser()
-//    func logoutUser()
-    
 }
 
 enum FirestoreUserError: String, Error {

@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct WelcomeView: View {
-
-    @State private var username: String = ""
+    
 
     @EnvironmentObject var userViewModel: UserViewModel
+    
+    @State private var tempUsername: String = ""
     
 
     var body: some View {
 
-        if userViewModel.isRegistrationComplete {
-            NavigationView()
-                .environmentObject(userViewModel)
-        } else {
+        VStack {
             Text("Hello! How should we call you?")
-            TextField("Tipe in a name", text: $username)
+            TextField("Tipe in a name", text: $tempUsername)
             Button("Continue") {
+                userViewModel.username = tempUsername // username in VM aktualisieren
                 userViewModel.updateUsername(
-                    username: username)
-                
+                    username: tempUsername) // username in Firestore speichern
+                userViewModel.isRegistrationComplete = true
             }
+            .environmentObject(userViewModel)
         }
     }
 }

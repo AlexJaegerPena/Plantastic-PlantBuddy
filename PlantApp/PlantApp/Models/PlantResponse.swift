@@ -73,8 +73,8 @@ struct PlantDetails: Codable, Identifiable {
     let genus: String?
     let type: String?
     let dimensions: [DimensionItem]?
-    let watering: String?
-    let wateringBenchmark: WateringBenchmark?
+    let watering: Watering?
+//    let wateringBenchmark: WateringBenchmark?
     let sunlight: [String]?
     let cycle: String?
     let defaultImage: PlantImages?
@@ -105,7 +105,7 @@ struct PlantDetails: Codable, Identifiable {
         case type
         case dimensions
         case watering
-        case wateringBenchmark = "watering_general_benchmark"
+//        case wateringBenchmark = "watering_general_benchmark"
         case sunlight
         case cycle
         case defaultImage = "default_image"
@@ -149,9 +149,34 @@ struct DimensionItem: Codable {
 }
 
 
-struct WateringBenchmark: Codable {
-    let value: String
-    let unit: String
+//struct WateringBenchmark: Codable {
+//    let value: String
+//    let unit: String
+//}
+
+
+
+enum Watering: String, Codable {
+    case Frequent
+    case Average
+    case Minimum
+    case None
+    
+    var icon: String {
+        switch self {
+        case .None: return "drop.degreesign.slash.rtl"
+        default: return "drop.fill"
+        }
+    }
+    
+    var dropCount: Int {
+        switch self {
+        case .Frequent: return 3
+        case .Average: return 2
+        case .Minimum: return 1
+        case .None: return 0
+        }
+    }
 }
 
 

@@ -22,11 +22,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct PlantApp: App {
   // register app delegate for Firebase setup
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    
+    @StateObject var userViewModel = UserViewModel()
 
   var body: some Scene {
     WindowGroup {
-        LoginView()
+        RootView()
+            .environmentObject(userViewModel)
+
     }
   }
 }
