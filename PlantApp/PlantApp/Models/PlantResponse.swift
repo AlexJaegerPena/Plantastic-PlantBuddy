@@ -177,6 +177,16 @@ enum Watering: String, Codable {
         case .None: return 0
         }
     }
+    
+    var nextWatering: Double {
+        switch self {
+        case .Frequent: return 2
+        case .Average: return 5
+        case .Minimum: return 10
+        case .None: return 0
+        }
+    }
+    
 }
 
 

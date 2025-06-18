@@ -41,12 +41,16 @@ struct FirePlant: Codable, Identifiable {
     let edibleLeaf: Bool?
     let attracts: [String]?
     let hardiness: Hardiness?
-    var timesWatered: WateringRecord?
+    var lastWatering: Date?
+    var needsToBeWatered: Bool = true
+    var nextWatering: Date?
+    var waterings: [WateringRecord]?
+    var timesWatered: Int?
+    var userCategory: UserCategory?
 
     
     // Konstruktor ermöglicht, ein FirePlant-Objekt aus den API-Daten von PlantDetails zu erzeugen
     init(from plantDetails: PlantDetails) {
-
         self.apiPlantId = plantDetails.id
         self.commonName = plantDetails.commonName
         self.scientificName = plantDetails.scientificName
@@ -114,7 +118,12 @@ extension FirePlant {
         edibleLeaf: Bool?,
         attracts: [String]?,
         hardiness: Hardiness?,
-        timesWatered: WateringRecord?
+        lastWatering: Date?,
+        needsToBeWatered: Bool,
+        nextWatering: Date,
+        waterings: [WateringRecord]?,
+        timesWatered: Int?,
+        userCategory: UserCategory?
     ) {
         self.id = id
         self.apiPlantId = apiPlantId
@@ -146,6 +155,32 @@ extension FirePlant {
         self.edibleLeaf = edibleLeaf
         self.attracts = attracts
         self.hardiness = hardiness
+        self.lastWatering = lastWatering
+        self.needsToBeWatered = needsToBeWatered
+        self.nextWatering = lastWatering?.addingTimeInterval(watering!.nextWatering * 24 * 60 * 60) ?? Date()
+        self.waterings = waterings
         self.timesWatered = timesWatered
+        self.userCategory = userCategory
+    }
+}
+
+
+enum UserCategory: String, CaseIterable, Identifiable, Codable {
+    case all = "All plants"
+    case indoor = "Indoor"
+    case outdoor = "Outdoor"
+    case unmarked = "Unmarked"
+
+    var id: String {
+        rawValue
+    }
+    
+    var icon: String {
+        switch self {
+        case .all: return "list.bullet"
+        case .unmarked: return "questionmark.circle"
+        case .indoor: return "house.fill"
+        case .outdoor: return "tree.fill"
+        }
     }
 }

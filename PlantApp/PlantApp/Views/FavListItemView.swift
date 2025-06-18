@@ -43,17 +43,35 @@ struct FavListItemView: View {
                     .font(.system(size: 14))
                     .foregroundStyle(.gray)
                     .padding(.bottom, 3)
-                Text(plant.family ?? "")
-                    .font(.system(size: 14))
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 10)
-                    .foregroundStyle(.white)
-                    .background(
-                        (plant.family != nil)
-                            ? .cyan.opacity(0.8) : .cyan.opacity(0)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-
+                
+                if plant.needsToBeWatered {
+                    HStack {
+                        Image(systemName: "drop.triangle")
+                            .foregroundStyle(.orange)
+                            .font(.system(size: 24))
+                        Text("needs water")
+                            .font(.system(size: 14))
+                            .padding(.vertical, 4)
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 10)
+                            .background(.orange)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                    }
+                } else {
+                    HStack {
+                        Image(systemName: "drop.fill")
+                            .foregroundStyle(.cyan)
+                            .font(.system(size: 24))
+  //                    Text("Next watering: \(plant.nextWatering!.formatted(date: .abbreviated, time: .omitted))")
+                        Text("water in \(String(format: "%.0f", plant.watering?.nextWatering ?? 0)) days")
+                            .font(.system(size: 14))
+                            .padding(.vertical, 4)
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 10)
+                            .background(.cyan)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                    }
+                }
             }
             .padding(.leading, 10)
             Spacer()
@@ -100,7 +118,12 @@ struct FavListItemView: View {
             edibleLeaf: false,
             attracts: ["bees", "birds"],
             hardiness: Hardiness(min: "7", max: "7"),
-            timesWatered: WateringRecord(timestamp: Timestamp(date: Date()))
+            lastWatering: Date(),
+            needsToBeWatered: false,
+            nextWatering: Date() + TimeInterval(Watering.Average.nextWatering),
+            waterings: [WateringRecord(id: "1", timestamp: Timestamp(date: Date()))],
+            timesWatered: 0,
+            userCategory: .outdoor
         )
         )
     .environmentObject(FavPlantViewModel())

@@ -202,7 +202,7 @@ class LocalPlantRepository: PlantRepository {
             maxValue: 1.5,
             unit: "feet"
         )],
-        watering: Watering(rawValue: "frequent"),
+        watering: Watering(rawValue: "Frequent"),
 //        wateringBenchmark: WateringBenchmark(
 //            value: "5 - 7",
 //            unit: "days"

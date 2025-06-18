@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "******" : {
+
+    },
     "%.1f°C" : {
 
     },
@@ -40,7 +43,7 @@
     "Cycle: %@" : {
 
     },
-    "Darkmode" : {
+    "Dark mode" : {
 
     },
     "Description: %@" : {
@@ -97,6 +100,9 @@
     "My Garden" : {
 
     },
+    "needs water" : {
+
+    },
     "No plants added yet" : {
 
     },
@@ -140,6 +146,9 @@
 
     },
     "Username" : {
+
+    },
+    "water in %@ days" : {
 
     },
     "Watering: %@" : {

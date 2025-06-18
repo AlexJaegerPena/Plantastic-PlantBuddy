@@ -15,10 +15,34 @@ struct FavListView: View {
     @State private var animatingCard: Int? = nil
     @State private var navigateToDetail = false
     
+    @State private var selectedCategory: UserCategory = .all
+   
+    var plantsByCategory: [FirePlant] {
+        if selectedCategory == .all {
+            return favPlantViewModel.favPlantsList
+        } else {
+            return favPlantViewModel.favPlantsList.filter { $0.userCategory == selectedCategory}
+        }
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
+                HStack {
+                    Spacer()
+                    Picker("Title", selection: $selectedCategory) {
+                        ForEach(UserCategory.allCases) { category in
+                            HStack {
+
+                                Text(category.rawValue)
+                                Image(systemName: category.icon)
+                                    .padding(.trailing, 5)
+                            }
+                            .tag(category)
+                        }
+                    }
+                    .padding(.trailing, 20)
+                }
                 List(favPlantViewModel.favPlantsList) { plant in
                     
                     VStack {
