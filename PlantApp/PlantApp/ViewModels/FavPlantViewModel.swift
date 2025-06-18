@@ -80,18 +80,6 @@ class FavPlantViewModel: ObservableObject {
             print("Fehler beim Entfernen:", error)
         }
     }
-
-    
-    func trackWatering(for plant: FirePlant) async {
-        
-        let newRecord = WateringRecord(timestamp: Timestamp(date: Date()))
-        
-        do {
-            try await repo.trackWatering(for: plant, record: newRecord)
-        } catch {
-            print("Fehler beim Watering:", error)
-        }
-    }
     
     
     func addSnapshotListener() {
@@ -107,6 +95,29 @@ class FavPlantViewModel: ObservableObject {
         }
     }
 
+    
+    // Watering logic
+    func trackWatering(for plant: FirePlant, with id: String?) async {
+        
+//        guard let id else { return }
+        
+        let newRecord = WateringRecord(timestamp: Timestamp(date: Date()))
+        
+        do {
+            try await repo.trackWatering(for: plant, record: newRecord)
+        } catch {
+            print("Fehler beim Watering:", error)
+        }
+    }
+    
+    
+    func updatePlant(for plant: FirePlant, with id: String?) async {
+        
+//        guard let id else { return }
+        
+        
+        
+    }
     
 }
 
