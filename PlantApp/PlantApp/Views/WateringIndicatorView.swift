@@ -8,22 +8,21 @@
 import SwiftUI
 
 struct WateringIndicatorView: View {
-    
+
     let watering: Watering
-    
+
     var body: some View {
         HStack {
-                    if watering == .none {
-                        Image(systemName: watering.icon)
-                            .foregroundStyle(.gray)
-                    }
-            else {
-                        ForEach(0..<watering.dropCount, id: \.self) { _ in
-                            Image(systemName: watering.icon)
-                                .foregroundStyle(.cyan)
-                        }
-                    }
+            if watering.rawValue == "none" {
+                Image(systemName: watering.icon)
+                    .foregroundStyle(.gray)
+            } else {
+                ForEach(0..<watering.dropCount, id: \.self) { _ in
+                    Image(systemName: watering.icon)
+                        .foregroundStyle(.cyan)
                 }
+            }
+        }
     }
 }
 

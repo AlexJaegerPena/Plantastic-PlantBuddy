@@ -12,72 +12,98 @@ struct FavListItemView: View {
     
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
     
+    @State private var isClicked: Bool = false
+    @State private var showWateringMessage: Bool = false
+    
     let plant: FirePlant
 
     var body: some View {
 
-        HStack {
-            AsyncImage(
-                url: URL(string: plant.defaultImage?.thumbnail ?? "")
-            ) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .shadow(color: .black.opacity(0.2), radius: 2, x: 3, y: 3)
-            } placeholder: {
-                Image("placeholderPlant")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .foregroundColor(.gray)
-            }
-            VStack(alignment: .leading, spacing: 5) {
-                Text(plant.commonName)
-                    .font(.system(size: 18))
-                    .fontWeight(.semibold)
-
-                Text(plant.scientificName.first ?? "")
-                    .font(.system(size: 14))
-                    .foregroundStyle(.gray)
-                    .padding(.bottom, 3)
-                
-                if plant.needsToBeWatered {
-                    HStack {
-                        Image(systemName: "drop.triangle")
-                            .foregroundStyle(.orange)
-                            .font(.system(size: 24))
-                        Text("needs water")
-                            .font(.system(size: 14))
-                            .padding(.vertical, 4)
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 10)
-                            .background(.orange)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                    }
-                } else {
-                    HStack {
-                        Image(systemName: "drop.fill")
-                            .foregroundStyle(.cyan)
-                            .font(.system(size: 24))
-  //                    Text("Next watering: \(plant.nextWatering!.formatted(date: .abbreviated, time: .omitted))")
-                        Text("water in \(String(format: "%.0f", plant.watering?.nextWatering ?? 0)) days")
-                            .font(.system(size: 14))
-                            .padding(.vertical, 4)
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 10)
-                            .background(.cyan)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                    }
+            HStack {
+                AsyncImage(
+                    url: URL(string: plant.defaultImage?.thumbnail ?? "")
+                ) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: .black.opacity(0.2), radius: 2, x: 3, y: 3)
+                } placeholder: {
+                    Image("placeholderPlant")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .foregroundColor(.gray)
                 }
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(plant.commonName)
+                        .font(.system(size: 18))
+                        .fontWeight(.semibold)
+                    
+                    Text(plant.userCategory?.rawValue ?? "")
+                        .padding(.bottom, 3)
+                        .font(.system(size: 14))
+                        .foregroundStyle(.gray)
+                    
+                    
+              
+                        HStack {
+                            Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
+                                .font(.system(size: 20))
+                            Text(plant.wateringStatusText)
+                                .font(.system(size: 16))
+                        }
+                        .padding(.vertical, 4)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 10)
+                        .background(plant.needsToBeWatered ? .orange : .cyan)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                   
+                }
+                .padding(.leading, 10)
+                Spacer()
+                        Button {
+                            showWateringMessage = true
+                            isClicked = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                isClicked = false
+                                Task {
+                                    await favPlantViewModel.addWatering(for: plant, with: plant.id)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: !plant.needsToBeWatered ? "drop" : "drop.halffull")
+                                .font(.system(size: 30))
+                                .foregroundStyle(.white)
+                                .padding()
+                                .background {
+                                    Circle()
+                                        .fill(isClicked ? .cyan.opacity(1) : .cyan.opacity(0.6) )
+                                        .stroke(.cyan, lineWidth: 3)
+                                }
+                                .shadow(color: .blue.opacity(0.4), radius: 3, x: 2, y: 2)
+                        }
+                        .padding(.trailing, 10)
+                        .scaleEffect(isClicked ? 1.2 : 1.0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.4, blendDuration: 0), value: isClicked)
+                        .contentShape(Circle()) // um klickbaren Bereich zu definieren
+                        .alert(!plant.needsToBeWatered ? "Oops!" : "Nice!", isPresented: $showWateringMessage) {
+                            Button("OK", role: .cancel) {}
+                        } message: {
+                            Text(!plant.needsToBeWatered ? "The timing wasn't ideal. Keep an eye on the next watering date." : "Perfect timing! Well done, the watering was just right.")
+                        }
             }
-            .padding(.leading, 10)
-            Spacer()
+        .background(
+            NavigationLink(
+                "",
+                destination: FavDetailView(selectedPlantId: plant.id ?? "0")
+            )
+            .opacity(0)
+        )
         }
     }
-}
 
 #Preview {
     FavListItemView(
@@ -91,7 +117,6 @@ struct FavListItemView: View {
             type: "tree",
             dimensions: [DimensionItem(minValue: 1, maxValue: 1.5, unit: "feet")],
             watering: .Frequent,
-//            wateringBenchmark: WateringBenchmark(value: "5", unit: "days"),
             sunlight: ["Part shade"],
             cycle: "Perennial",
             defaultImage: PlantImages(
@@ -118,14 +143,9 @@ struct FavListItemView: View {
             edibleLeaf: false,
             attracts: ["bees", "birds"],
             hardiness: Hardiness(min: "7", max: "7"),
-            lastWatering: Date(),
-            needsToBeWatered: false,
-            nextWatering: Date() + TimeInterval(Watering.Average.nextWatering),
-            waterings: [WateringRecord(id: "1", timestamp: Timestamp(date: Date()))],
-            timesWatered: 0,
-            userCategory: .outdoor
+            waterings: [WateringRecord(id: "1", date: Date())]
         )
-        )
+    )
     .environmentObject(FavPlantViewModel())
 }
 

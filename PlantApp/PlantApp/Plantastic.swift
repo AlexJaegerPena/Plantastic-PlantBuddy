@@ -19,16 +19,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 @main
-struct PlantApp: App {
+struct Plantastic: App {
   // register app delegate for Firebase setup
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     @StateObject var userViewModel = UserViewModel()
+    
+    @AppStorage("isDarkModeOn") private var isDarkModeOn: Bool = false
 
   var body: some Scene {
     WindowGroup {
-        RootView()
+        LoginView()
             .environmentObject(userViewModel)
+            .environment(\.darkModeEnabled, $isDarkModeOn)
+            .preferredColorScheme(isDarkModeOn ? .dark : .light)
 
     }
   }

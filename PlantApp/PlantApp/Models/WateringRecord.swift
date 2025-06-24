@@ -7,11 +7,9 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseCore
 
 struct WateringRecord: Codable, Identifiable {
     
     @DocumentID var id: String?
-    var timestamp: Timestamp
-
+    var date: Date
 }

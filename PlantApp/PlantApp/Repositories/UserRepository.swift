@@ -9,7 +9,7 @@ import FirebaseFirestore
 
 
 class UserRepository {
-    
+        
     private let collectionRef = FirebaseManager.shared.database.collection("users")
     
     
@@ -17,11 +17,12 @@ class UserRepository {
         guard let id = user.id else { throw FirestoreUserError.idNotFound }
         try collectionRef.document(id).setData(from: user)
     }
-    
+
     
     func getUserByID(_ id: String) async throws -> FireUser {
         return try await collectionRef.document(id).getDocument(as: FireUser.self)
     }
+    
     
     func getUserByEmail(_ email: String) async throws -> FireUser {
         guard let user = try await collectionRef
@@ -31,6 +32,11 @@ class UserRepository {
             .first?
             .data(as: FireUser.self) else { throw FirestoreUserError.usernameNotFound }
         return user
+    }
+    
+    
+    func removeUser(userId: String) async throws {
+        try await collectionRef.document(userId).delete()
     }
 }
 

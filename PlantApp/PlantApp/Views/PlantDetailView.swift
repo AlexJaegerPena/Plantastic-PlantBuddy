@@ -16,6 +16,7 @@ struct PlantDetailView: View {
     @State private var isFavorite: Bool = false
     @State private var showAddFavAlert: Bool = false
     @State private var showDelFavAlert: Bool = false
+    @State private var showDelSuccess: Bool = false
 
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
@@ -51,30 +52,25 @@ struct PlantDetailView: View {
 
                         Button {
                             if !isFavorite {
-                                showAddFavAlert = true
-                                isFavorite.toggle()
                                 Task {
                                     if let plantDetails = plantDetailsViewModel
                                         .plantDetails
                                     {
-                                        let plantToAdd = FirePlant(
-                                            from: plantDetails)  // Umwandlung in FirePlant
-                                        await favPlantViewModel.addToFavorites(
-                                            plantToAdd)
+                                        let plantToAdd = FirePlant(from: plantDetails)  // Umwandlung in FirePlant
+                                        await favPlantViewModel.addToFavorites(plantToAdd)
                                         await favPlantViewModel.loadFavorites()
                                         checkIfFavorite()  // isFavorite Status aktualisieren
-
+                                        showAddFavAlert = true
+                                        isFavorite = true
                                     } else {
                                         print(
-                                            "Fehler: Pflanzendetails nicht geladen!"
+                                            "Fehler: Pflanze konnte nicht zu Favoriten hinzugefügt werden"
                                         )
                                     }
                                 }
                             } else {
                                 showDelFavAlert = true
-
                             }
-
                         } label: {
                             Image(
                                 systemName: isFavorite ? "heart.fill" : "heart"
@@ -88,12 +84,12 @@ struct PlantDetailView: View {
                         .padding(.leading, 300)
                         .padding(.bottom, 220)
                     }
-                    Text(
-                        "Common Name: \(plantDetailsViewModel.plantDetails?.commonName ?? "")"
-                    )
-                    Text(
-                        "Scientific Name: \(plantDetailsViewModel.plantDetails?.scientificName.joined(separator: ", ") ?? "Unbekannt")"
-                    )
+                    
+                    Text(plantDetailsViewModel.plantDetails?.commonName ?? "")
+                        .font(.headline)
+                    Text(plantDetailsViewModel.plantDetails?.scientificName.joined(separator: ", ") ?? "")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
 
                     List {
                         Section("info") {
@@ -112,7 +108,6 @@ struct PlantDetailView: View {
                             Text(
                                 "Cycle: \(plantDetailsViewModel.plantDetails?.cycle ?? "")"
                             )
-
                             Text(
                                 "Attracts: \(plantDetailsViewModel.plantDetails?.attracts?.joined(separator: ", ") ?? "–")"
                             )
@@ -123,7 +118,7 @@ struct PlantDetailView: View {
                                 "Care Level: \(plantDetailsViewModel.plantDetails?.careLevel ?? "")"
                             )
                             Text(
-                                "Watering: \(plantDetailsViewModel.plantDetails?.watering?.rawValue.capitalized ?? "–")"
+                                "Watering: \(plantDetailsViewModel.plantDetails?.watering?.rawValue ?? "–")"
                             )
 
                             HStack {
@@ -135,15 +130,6 @@ struct PlantDetailView: View {
                                     Text("no watering information")
                                 }
                             }
-
-//                            HStack {
-//                                Text(
-//                                    "WateringBenchmark: \(plantDetailsViewModel.plantDetails?.wateringBenchmark?.unit ?? "") |"
-//                                )
-//                                Text(
-//                                    "WateringBenchmark: \(plantDetailsViewModel.plantDetails?.wateringBenchmark?.value ?? "")"
-//                                )
-//                            }
                             Text(
                                 "Sunlight: \(plantDetailsViewModel.plantDetails?.sunlight ?? [""])"
                             )
@@ -196,20 +182,19 @@ struct PlantDetailView: View {
                     print("PlantDetailView - onAppear: selectedPlantId = \(selectedPlantId)")
                     plantDetailsViewModel.fetchPlantByID(selectedPlantId)
                 }
-                .alert(
-                    "Plant has been added to your garden",
-                    isPresented: $showAddFavAlert
-                ) {
-                    Button("Ok", role: .cancel) {}
+                .alert("Your Garden Grows!",isPresented: $showAddFavAlert) {
+                    Button("Ok", role: .cancel) { }
+                } message: {
+                    Text("Congratulations! This plant is now part of your collection.")
                 }
                 .alert(
-                    "Sure you want to delete this plant from your garden?",
+                    "Delete this plant?",
                     isPresented: $showDelFavAlert
                 ) {
                     Button("Cancel", role: .destructive) {
                         showDelFavAlert = false
                     }
-                    Button("Yes", role: .cancel) {
+                    Button("Delete", role: .cancel) {
                         Task {
                             if let firePlant = currentFavFirePlant,
                                 let idToRemove = firePlant.id
@@ -222,7 +207,15 @@ struct PlantDetailView: View {
                         }
                         showDelFavAlert = false
                         isFavorite = false
+                        showDelSuccess = true
                     }
+                } message: {
+                    Text("Are you sure you want to remove this plant from your garden?")
+                }
+                .alert("Plant Removed",isPresented: $showDelSuccess) {
+                    Button("Ok", role: .cancel) { }
+                } message: {
+                    Text("The plant has been successfully removed from your garden.")
                 }
             }
 
@@ -233,12 +226,11 @@ struct PlantDetailView: View {
 
     }
 
-    // Hilfsfunktion, um den Favoritenstatus zu überprüfen
+    // Hilfsfunktion, um Favoritenstatus zu überprüfen
     private func checkIfFavorite() {
         if let plantDetails = plantDetailsViewModel.plantDetails {
             // favorisierte Pflanze basierend auf der apiPlantId finden
-            currentFavFirePlant = favPlantViewModel.favPlantsList.first {
-                favPlant in
+            currentFavFirePlant = favPlantViewModel.favPlantsList.first { favPlant in
                 favPlant.apiPlantId == plantDetails.id
             }
             isFavorite = currentFavFirePlant != nil

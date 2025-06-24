@@ -20,11 +20,13 @@ struct WelcomeView: View {
         VStack {
             Text("Hello! How should we call you?")
             TextField("Tipe in a name", text: $tempUsername)
+                .textFieldStyle(.roundedBorder)
+                .padding()
             Button("Continue") {
                 userViewModel.username = tempUsername // username in VM aktualisieren
                 userViewModel.updateUsername(
                     username: tempUsername) // username in Firestore speichern
-                userViewModel.isRegistrationComplete = true
+                
             }
             .environmentObject(userViewModel)
         }

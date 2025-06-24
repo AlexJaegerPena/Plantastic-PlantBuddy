@@ -16,7 +16,7 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if userViewModel.isRegistrationComplete {
+            if userViewModel.isUsernameSet {
                 NavView()
                     .environmentObject(favPlantViewModel)
                     .environmentObject(weatherViewModel)

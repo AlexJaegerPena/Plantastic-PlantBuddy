@@ -11,7 +11,6 @@ struct PlantResponse: Codable {
     let data: [Plant]
 }
 
-
 struct Plant: Codable, Identifiable {
     let id: Int
     let commonName: String
@@ -32,7 +31,6 @@ struct Plant: Codable, Identifiable {
     }
 }
 
-
 extension Plant {
     init(from plant: Plant) {
         self.id = plant.id
@@ -44,9 +42,6 @@ extension Plant {
         self.defaultImage = plant.defaultImage
     }
 }
-
-
-
 
 struct PlantImages: Codable {
     let originalUrl: String?
@@ -64,7 +59,6 @@ struct PlantImages: Codable {
     }
 }
 
-
 struct PlantDetails: Codable, Identifiable {
     let id: Int
     let commonName: String
@@ -74,7 +68,7 @@ struct PlantDetails: Codable, Identifiable {
     let type: String?
     let dimensions: [DimensionItem]?
     let watering: Watering?
-//    let wateringBenchmark: WateringBenchmark?
+    //    let wateringBenchmark: WateringBenchmark?
     let sunlight: [String]?
     let cycle: String?
     let defaultImage: PlantImages?
@@ -95,7 +89,7 @@ struct PlantDetails: Codable, Identifiable {
     let edibleLeaf: Bool?
     let attracts: [String]?
     let hardiness: Hardiness?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case commonName = "common_name"
@@ -105,7 +99,7 @@ struct PlantDetails: Codable, Identifiable {
         case type
         case dimensions
         case watering
-//        case wateringBenchmark = "watering_general_benchmark"
+        //        case wateringBenchmark = "watering_general_benchmark"
         case sunlight
         case cycle
         case defaultImage = "default_image"
@@ -129,46 +123,41 @@ struct PlantDetails: Codable, Identifiable {
     }
 }
 
-
 struct Hardiness: Codable {
     let min: String
     let max: String
 }
 
-
 struct DimensionItem: Codable {
     let minValue: Double?
     let maxValue: Double?
     let unit: String?
-    
-    enum CodingKeys: String, CodingKey {
-            case minValue = "min_value"
-            case maxValue = "max_value"
-            case unit
-        }
-}
 
+    enum CodingKeys: String, CodingKey {
+        case minValue = "min_value"
+        case maxValue = "max_value"
+        case unit
+    }
+}
 
 //struct WateringBenchmark: Codable {
 //    let value: String
 //    let unit: String
 //}
 
-
-
 enum Watering: String, Codable {
     case Frequent
     case Average
     case Minimum
     case None
-    
+
     var icon: String {
         switch self {
         case .None: return "drop.degreesign.slash.rtl"
         default: return "drop.fill"
         }
     }
-    
+
     var dropCount: Int {
         switch self {
         case .Frequent: return 3
@@ -177,7 +166,7 @@ enum Watering: String, Codable {
         case .None: return 0
         }
     }
-    
+
     var nextWatering: Double {
         switch self {
         case .Frequent: return 2
@@ -186,10 +175,7 @@ enum Watering: String, Codable {
         case .None: return 0
         }
     }
-    
 }
-
-
 
 //{
 //    "id":1,

@@ -16,6 +16,12 @@
     "App settings" : {
 
     },
+    "Are you sure you want to remove this plant from your garden?" : {
+
+    },
+    "Are you sure?" : {
+
+    },
     "Attracts: %@" : {
 
     },
@@ -31,7 +37,10 @@
     "Care Level: %@" : {
 
     },
-    "Common Name: %@" : {
+    "Confirm" : {
+
+    },
+    "Congratulations! This plant is now part of your collection." : {
 
     },
     "Contact us" : {
@@ -43,13 +52,25 @@
     "Cycle: %@" : {
 
     },
-    "Dark mode" : {
+    "Dark Mode" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete Account" : {
+
+    },
+    "Delete this plant?" : {
 
     },
     "Description: %@" : {
 
     },
     "Email" : {
+
+    },
+    "Enable Notifications" : {
 
     },
     "Explore" : {
@@ -61,16 +82,10 @@
     "Fehler. %@" : {
 
     },
-    "Garden" : {
-
-    },
     "Genus: %@" : {
 
     },
     "Got an account?" : {
-
-    },
-    "Hello, world!" : {
 
     },
     "Hello, World!" : {
@@ -85,9 +100,6 @@
     "info" : {
 
     },
-    "Language preferences" : {
-
-    },
     "Loading..." : {
 
     },
@@ -97,25 +109,40 @@
     "Logout" : {
 
     },
+    "Milestones" : {
+
+    },
     "My Garden" : {
 
     },
-    "needs water" : {
+    "Nice!" : {
 
     },
-    "No plants added yet" : {
+    "No plants added yet :(" : {
 
     },
     "no watering information" : {
 
     },
+    "Notifications successfully set." : {
+
+    },
     "Ok" : {
+
+    },
+    "OK" : {
+
+    },
+    "Oops!" : {
 
     },
     "Password" : {
 
     },
-    "Plant has been added to your garden" : {
+    "Perfect timing! Well done, the watering was just right." : {
+
+    },
+    "Plant Removed" : {
 
     },
     "Profile" : {
@@ -127,19 +154,37 @@
     "Register here" : {
 
     },
-    "Scientific Name: %@" : {
+    "Search" : {
 
     },
-    "Search" : {
+    "Select Date" : {
+
+    },
+    "Select Language" : {
+
+    },
+    "Set Time" : {
+
+    },
+    "Success!" : {
 
     },
     "Support" : {
 
     },
-    "Sure you want to delete this plant from your garden?" : {
+    "The plant has been successfully removed from your garden." : {
+
+    },
+    "The timing wasn't ideal. Keep an eye on the next watering date." : {
+
+    },
+    "This plant will be removed from your garden." : {
 
     },
     "Tipe in a name" : {
+
+    },
+    "Title" : {
 
     },
     "Type: %@" : {
@@ -148,7 +193,7 @@
     "Username" : {
 
     },
-    "water in %@ days" : {
+    "Watered plants in total" : {
 
     },
     "Watering: %@" : {
@@ -160,7 +205,10 @@
     "Website" : {
 
     },
-    "Yes" : {
+    "Welcome back, \n%@!" : {
+
+    },
+    "Your Garden Grows!" : {
 
     }
   },

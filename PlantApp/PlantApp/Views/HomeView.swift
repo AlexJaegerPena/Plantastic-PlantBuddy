@@ -11,8 +11,10 @@ struct HomeView: View {
     
     @StateObject var weatherViewModel = WeatherViewModel()
     @StateObject var favPlantViewModel = FavPlantViewModel()
+    @StateObject var settingsViewModel = SettingsViewModel()
     
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
     @State private var showProfile = false
     @State private var showSearch = false
@@ -22,13 +24,12 @@ struct HomeView: View {
         NavigationStack {
             VStack {
                 WeatherView(weatherViewModel: weatherViewModel)
-             Text("My Garden")
                 Spacer()
                 if favPlantViewModel.favPlantsList.isEmpty {
-                    Text("No plants added yet")
+                    Text("No plants added yet :(")
+                    Spacer()
                 } else {
                     FavListView()
-                
                 }
             }
             .toolbar {
@@ -45,8 +46,9 @@ struct HomeView: View {
                     .navigationDestination(isPresented: $showProfile) {
                         SettingsView()
                             .environmentObject(userViewModel)
+                            .environmentObject(settingsViewModel)
                     }
-                    .tint(.black)
+//                    .tint(.black)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -54,7 +56,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .tint(.black)
+//                    .tint(.black)
                     .navigationDestination(isPresented: $showSearch) {
                         PlantSearchView()
                     }
@@ -64,15 +66,24 @@ struct HomeView: View {
         .onAppear {
             Task {
                 await favPlantViewModel.loadFavorites()
-    
             }
         }
     }
 }
 
 #Preview {
+    
+    let mockUserViewModel = UserViewModel(
+        mockUserId: "mockUser123",
+        mockUsername: "Testuser",
+        mockEmail: "test@plantapp.com"
+    )
+    
     HomeView()
         .environmentObject(WeatherViewModel())
+        .environmentObject(mockUserViewModel)
         .environmentObject(UserViewModel())
         .environmentObject(FavPlantViewModel())
+        .environmentObject(NotificationsViewModel())
+        .environmentObject(SettingsViewModel())
 }
