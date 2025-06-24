@@ -84,8 +84,7 @@ struct PlantSearchView: View {
             }
         }
         .onAppear {
-            plantViewModel.apiPlantsList()
-            plantViewModel.searchTerm = ""
+//            plantViewModel.searchTerm = ""
         }
     }
 }

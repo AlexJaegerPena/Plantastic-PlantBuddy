@@ -20,18 +20,17 @@ struct NavView: View {
     
     var body: some View {
         TabView {
-            Tab("Garden", systemImage: "leaf.fill") {
+            Tab("My Garden", systemImage: "leaf.fill") {
                     HomeView()
                         .environmentObject(userViewModel)
                         .environmentObject(favPlantViewModel)
             }
-           
             Tab("Explore", systemImage: "magnifyingglass") {
                 PlantSearchView(plantViewModel: PlantListViewModel())
                     .environmentObject(favPlantViewModel)
             }
             Tab("Calendar", systemImage: "calendar") {
-                CalendarView()
+//                CalendarView()
             }
         }
         .onAppear {
@@ -41,7 +40,10 @@ struct NavView: View {
             }
         }
     }
+  
 }
+
+
 
 #Preview {
     NavView()

@@ -6,19 +6,29 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct SettingsView: View {
     
-    @EnvironmentObject var userViewModel: UserViewModel
+    
     @StateObject var settingsViewModel = SettingsViewModel()
+    @StateObject var notificationsViewModel = NotificationsViewModel()
+    @EnvironmentObject var userViewModel: UserViewModel
     
     @State private var editing: Bool = false
     @State private var showPassword: Bool = false
-    @State private var darkMode: Bool = false
+    @State private var selectedLanguage: String = "ENG"
+    @State private var languages: [String] = ["ENG", "DE", "ESP"]
+    @State private var showNotificationSheet: Bool = false
+    @State private var showDeleteNotification: Bool = false
     
-    @Environment(\.openURL) private var openUrl
+    @State private var date = Date()
+    var getTimeFromDate: [String] {
+        date.formatted(date: .omitted, time: .shortened).components(separatedBy: ":")
+    }
     
-    
+    @Environment(\.darkModeEnabled) var darkModeEnabled: Binding<Bool>
+
     var body: some View {
         List {
             Section("Profile") {
@@ -31,7 +41,6 @@ struct SettingsView: View {
                         } else {
                             SecureField("Password", text: $userViewModel.password)
                         }
-                            
                     }
                     .overlay {
                         HStack {
@@ -49,53 +58,96 @@ struct SettingsView: View {
                     Text("******")
                 }
             }
-
-            
             
             Section("App settings") {
-                Toggle("Dark mode", isOn: $darkMode)
-                    .onChange(of: darkMode) {
-                        UIApplication.shared.connectedScenes
-                            .compactMap { $0 as? UIWindowScene }
-                            .first?.windows
-                            .first?.overrideUserInterfaceStyle = darkMode ? .dark : .light
+                Toggle("Dark Mode", isOn: darkModeEnabled)
+                VStack(alignment: .leading) {
+                Toggle("Enable Notifications", isOn: $notificationsViewModel.allowNotifications)
+                    .onChange(of: notificationsViewModel.allowNotifications) {
+                        notificationsViewModel.requestPermission()
                     }
-                
-                Text("Language preferences")
-            }
-            Section("Support") {
-                Button {
+                    if notificationsViewModel.allowNotifications {
+                        VStack {
+                            DatePicker("Set Time", selection: $date, displayedComponents: .hourAndMinute)
+                            
+                            Button {
+                                notificationsViewModel.wateringNotification(hour: Int(getTimeFromDate[0]) ?? 0, minute: Int(getTimeFromDate[1]) ?? 0)
+                                showNotificationSheet = true
+                            } label: {
+                                HStack {
+                                    Text("Confirm")
+                                        .foregroundStyle(.white)
+                                        .padding(.vertical, 6)
+                                        .padding(.horizontal, 20)
+                                        .background(.cyan)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                }
+                                .buttonStyle(.borderedProminent)
+                            }
+                        }
+                        .padding(.leading, 15)
+                    }
+                    }
                     
-                } label: {
-                    Label("Website", systemImage: "globe")
+                    Picker("Select Language", selection: $selectedLanguage) {
+                        ForEach(languages, id:\.self) { language in
+                            Text(language).tag(language)
+                        }
+                    }
                 }
-                
-                Button {
+                Section("Support") {
+                    Button {
+                        
+                    } label: {
+                        Label("Website", systemImage: "globe")
+                    }
                     
-                } label: {
-                    Label("Contact us", systemImage: "envelope")
+                    Button {
+                        
+                    } label: {
+                        Label("Contact us", systemImage: "envelope")
+                    }
                 }
-            }
-            Button("Logout") {
-                settingsViewModel.logout()
-                userViewModel.email = ""
-                userViewModel.password = ""
+                Button {
+                    settingsViewModel.logout()
+                    userViewModel.email = ""
+                    userViewModel.password = ""
+                    userViewModel.username = ""
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                        Text("Logout")
+                    }
+                }
+            
+            Button(role: .destructive) {
+                showDeleteNotification = true
+            } label: {
+                HStack {
+                    Text("Delete Account")
+                }
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    editing.toggle()
-                } label: {
-                    Image(systemName: "pencil")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        editing.toggle()
+                        userViewModel.updateUsername(username: userViewModel.username)
+                    } label: {
+                        Image(systemName: editing ? "checkmark.square" : "square.and.pencil")
+                    }
                 }
+            }
+            .alert("Success!", isPresented: $showNotificationSheet) {
+                
+            } message: {
+                Text("Notifications successfully set.")
             }
         }
     }
-}
+
 
 #Preview {
     SettingsView()
         .environmentObject(UserViewModel())
-
 }

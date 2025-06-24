@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct CalendarView: View {
+    
+    let calendar = Calendar.current
+    let today = Date()
+    
+    var currentMonthDates: [Date] {
+        let calendar = Calendar.current
+        let today = Date()
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))!
+        let range = calendar.range(of: .day, in: .month, for: startOfMonth)!
+        return range.compactMap { day in
+            calendar.date(byAdding: .day, value: day - 1, to: startOfMonth)
+        }
+    }
+
+
+    
+    
+    
+    @State private var selectedDate = Date()
+    
     var body: some View {
-        Text("Calendar")
+        DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+            .datePickerStyle(.graphical)
     }
 }
 

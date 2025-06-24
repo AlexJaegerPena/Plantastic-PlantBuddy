@@ -41,15 +41,54 @@ struct FirePlant: Codable, Identifiable {
     let edibleLeaf: Bool?
     let attracts: [String]?
     let hardiness: Hardiness?
-    var lastWatering: Date?
-    var needsToBeWatered: Bool = true
-    var nextWatering: Date?
+    var lastWaterDate: Date?
+    var nextWaterDate: Date?
+    
+    // needsToBeWatered als Computed Property
+    var needsToBeWatered: Bool {
+        // Sicherstellen, dass ein nextWaterDate existiert, wenn nicht wird true gesetzt
+        guard let nextWaterDate = self.nextWaterDate else {
+               return true
+        }
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date()) // Start des heutigen Tages (00:00 Uhr)
+        let nextWateringDay = calendar.startOfDay(for: nextWaterDate) // Start des nextWaterDate (00:00 Uhr)
+
+        // needsToBeWatered ist true, wenn heute >= nächster Bewässerungstag ist
+        return today >= nextWateringDay
+    }
+    
+    var wateringStatusText: String {
+        if needsToBeWatered {
+            return "Needs water"
+        } else if let nextWaterDate = self.nextWaterDate {
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: Date())
+            let nextWateringDay = calendar.startOfDay(for: nextWaterDate)
+            
+            let components = calendar.dateComponents([.day], from: today, to: nextWateringDay)
+            
+            if let days = components.day {
+                if days == 0 {
+                    return "Water today"
+                } else if days == 1{
+                 return "Water tomorrow"
+                } else if days >= 2 {
+                    return "Water in \(days) days"
+                }
+            }
+        }
+        return "No watering info"
+    }
+    
+    
+    
     var waterings: [WateringRecord]?
     var timesWatered: Int?
     var userCategory: UserCategory?
 
     
-    // Konstruktor ermöglicht, ein FirePlant-Objekt aus den API-Daten von PlantDetails zu erzeugen
+    // Konstruktor, um ein FirePlant-Objekt aus den API-Daten von PlantDetails zu erzeugen
     init(from plantDetails: PlantDetails) {
         self.apiPlantId = plantDetails.id
         self.commonName = plantDetails.commonName
@@ -80,12 +119,17 @@ struct FirePlant: Codable, Identifiable {
         self.edibleLeaf = plantDetails.edibleLeaf
         self.attracts = plantDetails.attracts
         self.hardiness = plantDetails.hardiness
+        self.lastWaterDate = nil
+        self.nextWaterDate = nil
+        self.waterings = nil
+        self.timesWatered = 0
+        self.userCategory = .unmarked
     }
 }
 
 
 
-// Extension für den eigenen init
+// Extension für den custom init mit allen Eigenschaften
 extension FirePlant {
     init(
         id: String?,
@@ -118,12 +162,12 @@ extension FirePlant {
         edibleLeaf: Bool?,
         attracts: [String]?,
         hardiness: Hardiness?,
-        lastWatering: Date?,
-        needsToBeWatered: Bool,
-        nextWatering: Date,
-        waterings: [WateringRecord]?,
-        timesWatered: Int?,
-        userCategory: UserCategory?
+//        lastWatering: Date?,
+//        needsToBeWatered: Bool,
+//        nextWatering: Date,
+        waterings: [WateringRecord]?
+//        timesWatered: Int?,
+//        userCategory: UserCategory?
     ) {
         self.id = id
         self.apiPlantId = apiPlantId
@@ -155,12 +199,17 @@ extension FirePlant {
         self.edibleLeaf = edibleLeaf
         self.attracts = attracts
         self.hardiness = hardiness
-        self.lastWatering = lastWatering
-        self.needsToBeWatered = needsToBeWatered
-        self.nextWatering = lastWatering?.addingTimeInterval(watering!.nextWatering * 24 * 60 * 60) ?? Date()
         self.waterings = waterings
-        self.timesWatered = timesWatered
-        self.userCategory = userCategory
+        self.timesWatered = self.waterings?.count ?? 0
+        self.userCategory = .unmarked
+        self.lastWaterDate = waterings?.last?.date // lastWaterDate auf letzted Datum setzen
+        
+        // nextWaterDate baiserend auf lastWaterDate
+        if let lastWaterDate = self.lastWaterDate, let wateringInterval = watering?.nextWatering {
+            self.nextWaterDate = Calendar.current.date(byAdding: .day, value: Int(wateringInterval), to: lastWaterDate)
+        } else {
+            self.nextWaterDate = Calendar.current.date(byAdding: .day, value: 7, to: Date()) // Standardwert 7 Tage
+        }
     }
 }
 
@@ -169,7 +218,7 @@ enum UserCategory: String, CaseIterable, Identifiable, Codable {
     case all = "All plants"
     case indoor = "Indoor"
     case outdoor = "Outdoor"
-    case unmarked = "Unmarked"
+    case unmarked = "No category"
 
     var id: String {
         rawValue

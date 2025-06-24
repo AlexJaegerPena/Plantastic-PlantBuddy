@@ -194,7 +194,7 @@ class LocalPlantRepository: PlantRepository {
         id: 1,
         commonName: "European Silver Fir",
         scientificName: ["Abies alba"],
-        family: "", // JSON hat ""
+        family: "",
         genus: "Abies",
         type: "tree",
         dimensions: [DimensionItem(
@@ -203,10 +203,6 @@ class LocalPlantRepository: PlantRepository {
             unit: "feet"
         )],
         watering: Watering(rawValue: "Frequent"),
-//        wateringBenchmark: WateringBenchmark(
-//            value: "5 - 7",
-//            unit: "days"
-//        ),
         sunlight: ["Part shade"],
         cycle: "Perennial",
         defaultImage: PlantImages(
@@ -221,20 +217,18 @@ class LocalPlantRepository: PlantRepository {
         poisonousToHumans: false,
         poisonousToPets: false,
         description: "Amazing garden plant that is sure to capture attention...",
-        soil: [], // JSON hat ein leeres Array
-        origin: nil, // JSON hat null
+        soil: [],
+        origin: nil,
         pruningMonth: ["March", "April"],
         invasive: false,
         careLevel: "Medium",
         fruits: false,
         edibleFruit: false,
-        harvestSeason: nil, // JSON hat null
+        harvestSeason: nil,
         leaf: true,
         edibleLeaf: false,
         attracts: ["bees", "birds", "rabbits"],
         hardiness: Hardiness(min: "7", max: "7")
     )
-    
-    
 }
 

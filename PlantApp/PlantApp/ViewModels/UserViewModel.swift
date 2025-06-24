@@ -16,41 +16,27 @@ class UserViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
-
     
-//    @Published var onboardingCompleted: Bool {
-//        didSet {
-//            UserDefaults.standard.set(onboardingCompleted, forKey: "onboardingCompleted")
-//        }
-//    }
-//    @Published var firePlant: FirePlant?
-//    @Published var favoritePlantsList: [FirePlant] = []
-    //    @Published var isAuthStatusChecked = false
-    
-    var isRegistrationComplete: Bool = false
     var isLoggedIn: Bool { user != nil }
+    var isUsernameSet: Bool { return !username.isEmpty} // prüfen, ob String nicht leer
     
     private let auth = FirebaseManager.shared.auth
-    
     private let userRepository = UserRepository()
-    
     private var authListener: NSObjectProtocol?
     
     init() {
-//        self.onboardingCompleted = UserDefaults.standard.set(forKey: "onboardingCompleted")
         addAuthListener()
     }
     
-    
-//    func checkLogin() {
-////        try? auth.signOut() // Nutzer bei Start ausloggen
-//        self.user = nil
-//        self.userId = nil
-//    }
+    // Init für Mock-Daten für Previews
+    init(mockUserId: String, mockUsername: String, mockEmail: String) {
+        self.userId = mockUserId
+        self.username = mockUsername
+        self.email = mockEmail
+    }
 
     
-    func loginEmailPassword(email: String, password: String) async {
-
+    func loginEmailPassword() async {
         do {
                 try await auth.signIn(withEmail: email, password: password)
                 print("Erfolgreich eingeloggt:")
@@ -61,11 +47,11 @@ class UserViewModel: ObservableObject {
     }
     
     
-    func registerWithEmailPassword(email: String, password: String) async {
+    func registerWithEmailPassword() async {
         Task {
             do {
                 let result = try await auth.createUser(withEmail: email, password: password)
-                let fireUser = FireUser(id: result.user.uid, username: username, email: email, password: password, favoritePlants: [])
+                let fireUser = FireUser(id: result.user.uid, username: "", email: email, favoritePlants: [])
                 try userRepository.createUser(fireUser)
             } catch {
                 print(error)
@@ -79,11 +65,13 @@ class UserViewModel: ObservableObject {
         let data = ["username": username]
         
         FirebaseManager.shared.database.collection("users").document(userId).updateData(data) { error in
-            if let error {
-                print("User has not been updated.", error)
-                return
+            DispatchQueue.main.async { // auf dem Main Thread aktualisieren
+                if let error {
+                    print("User has not been updated.", error)
+                    return
+                }
+                print("User has been updated.")
             }
-            print("User has been updated.")
         }
     }
     
@@ -100,7 +88,6 @@ class UserViewModel: ObservableObject {
                 if let userId = user?.uid {
                     await self?.fetchUsername(userId: userId)
                 }
-//                self?.isAuthStatusChecked = true
             }
         }
     }
@@ -123,6 +110,17 @@ class UserViewModel: ObservableObject {
                 print("Fehler beim Abmelden: \(error.localizedDescription)")
             }
         }
+    
+    func deleteUser(_ userId: String?) {
+        guard let userId else { return }
+        FirebaseManager.shared.database.collection("users").document(userId).delete() { error in
+            if let error {
+                        print("User kann nicht gelöscht werden", error)
+                        return
+            }
+            print("User mit ID \(userId) gelöscht.")
+        }
+    }
 
 }
 

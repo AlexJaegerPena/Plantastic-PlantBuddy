@@ -13,6 +13,7 @@ class SettingsViewModel: ObservableObject {
     private let fireManager = FirebaseManager.shared
     
     func logout() {
+        print("logout")
         try? fireManager.auth.signOut()
     }
 }
