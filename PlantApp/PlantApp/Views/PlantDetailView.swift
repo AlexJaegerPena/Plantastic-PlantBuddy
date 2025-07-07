@@ -106,8 +106,8 @@ struct PlantDetailView: View {
                                         .foregroundStyle(.white
                                         )
                                         .background(isFavorite
-                                            ? Color("secondaryPetrol").opacity(0.8)
-                                            : Color("primaryPetrol").opacity(0.4)
+                                            ? Color("secondaryPetrol")
+                                            : Color("primaryPetrol")
                                         )
                                         .clipShape(RoundedRectangle(cornerRadius: 12))
                                         .shadow(radius: 5)
@@ -120,7 +120,7 @@ struct PlantDetailView: View {
 
                             // ---- Plant Names ----
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(plant.commonName)
+                                Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                                     .font(.system(size: 30))
                                     .fontWeight(.semibold)
                                     .lineLimit(2)
@@ -273,8 +273,7 @@ struct PlantDetailView: View {
                                         ? "Yes" : "No")
                                 InfoRow(
                                     icon: "calendar", title: "Harvest Season",
-                                    value: plant.harvestSeason?.joined(
-                                        separator: ", "))
+                                    value: plant.harvestSeason)
                             }
                             .padding(.horizontal)
                         }

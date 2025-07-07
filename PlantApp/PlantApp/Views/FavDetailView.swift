@@ -93,10 +93,11 @@ struct FavDetailView: View {
                                             .frame(width: 35, height: 35)
                                     }
                                     .padding(.vertical, 8)
-                                    .padding(.horizontal, 24)
+//                                    .padding(.horizontal, 24)
+                                    .frame(width: 170)
                                     .background {
                                         RoundedRectangle(cornerRadius: 15)
-                                            .fill(isClicked ? Color("secondaryPetrol").opacity(0.8) : (plant.needsToBeWatered ? Color("signalColor").opacity(0.8) : Color("secondaryPetrol").opacity(0.8)))
+                                            .fill(isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol")))
                                             .stroke(
                                                 isClicked ? Color("secondaryPetrol") :
                                                     (plant.needsToBeWatered ? Color("signalColor").opacity(0.2) : Color("secondaryPetrol").opacity(0.2)),
@@ -312,8 +313,7 @@ struct FavDetailView: View {
                             InfoRow(
                                 icon: "calendar",
                                 title: "Harvest Season",
-                                value: plant.harvestSeason?.joined(
-                                    separator: ", "))
+                                value: plant.harvestSeason)
                         }
                         .padding(.horizontal)
                     }

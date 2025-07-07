@@ -19,9 +19,10 @@ struct CalendarView: View {
 
     var body: some View {
         VStack {
-            Text("When do your plants need water?")
+            Text("When’s Watering Day?")
                 .font(.title)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
+                .padding(.top, 20)
                 .padding(.bottom, 30)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color("primaryPetrol"))
@@ -85,6 +86,8 @@ struct CalendarView: View {
                 }
                 Spacer()
             }
+            .padding(.horizontal, 5)
+            Spacer()
         }
     }
 

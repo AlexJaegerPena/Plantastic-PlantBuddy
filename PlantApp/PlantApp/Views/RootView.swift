@@ -29,7 +29,7 @@ struct RootView: View {
                     LoadingScreenView()
                         .environmentObject(userViewModel)
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 withAnimation {
                                     isActive = true
                                 }

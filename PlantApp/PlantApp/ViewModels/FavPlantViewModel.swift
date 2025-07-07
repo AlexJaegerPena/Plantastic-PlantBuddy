@@ -16,15 +16,16 @@ import FirebaseFirestore
 class FavPlantViewModel: ObservableObject {
     
     @Published var favPlantsList: [FirePlant] = [] {
-        didSet { // Property Observer mit comp property
+        didSet { // Property Observer mit comp property um zu prüfen, ob mindestens eine Pflanze bewässert werden muss
             plantsNeedWaterToday = favPlantsList.contains(where: { $0.needsToBeWatered })
-            if plantsNeedWaterToday {
-                print("A plant needs water today")
-            } else {
-                print("No plant needs water today")
-            }
+//            if plantsNeedWaterToday {
+//                print("A plant needs water today")
+//            } else {
+//                print("No plant needs water today")
+//            }
         }
     }
+    
     @Published var selectedFavPlant: FirePlant?
     @Published var selectedFavPlantId: String?
     @Published var isLoading: Bool = false

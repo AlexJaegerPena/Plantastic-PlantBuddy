@@ -34,7 +34,7 @@ struct FirePlant: Codable, Identifiable {
     let careLevel: String?
     let fruits: Bool?
     let edibleFruit: Bool?
-    let harvestSeason: [String]?
+    let harvestSeason: String?
     let leaf: Bool?
     let edibleLeaf: Bool?
     let attracts: [String]?
@@ -155,7 +155,7 @@ extension FirePlant {
         careLevel: String?,
         fruits: Bool?,
         edibleFruit: Bool?,
-        harvestSeason: [String]?,
+        harvestSeason: String?,
         leaf: Bool?,
         edibleLeaf: Bool?,
         attracts: [String]?,
