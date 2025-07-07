@@ -26,7 +26,7 @@ struct WeatherView: View {
             } else {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: .infinity, height: 80)
+                    .frame(maxWidth: .infinity, maxHeight: 80)
             }
 
             if let weather = weatherViewModel.weatherResponse {
@@ -66,7 +66,7 @@ struct WeatherView: View {
                         }
                         .padding(.trailing, 35)
                     }
-                    .frame(width: .infinity, height: 80)
+                    .frame(maxWidth: .infinity, maxHeight: 80)
                     .background(.ultraThinMaterial.opacity(0.7))
                     .cornerRadius(20)
 //                    .overlay(
@@ -78,7 +78,7 @@ struct WeatherView: View {
 
             } else if weatherViewModel.isLoading {
                 ProgressView("Weather is loading...")
-                    .frame(width: .infinity, height: 50)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
                     .foregroundStyle(.gray)
                     .padding()
                 

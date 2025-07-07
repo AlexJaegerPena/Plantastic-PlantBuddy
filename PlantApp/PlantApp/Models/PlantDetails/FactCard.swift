@@ -7,15 +7,16 @@
 
 import SwiftUI
 
-struct FactCard: View {
-    let icon: String
+// icon als generisches View-Parameter
+struct FactCard<Icon: View>: View {
+    @ViewBuilder let icon: () -> Icon
     let title: String
     let value: String
 
 
     var body: some View {
         VStack(spacing: 8) {
-            Text(icon)
+            icon()
                 .font(.title2)
             Text(title)
                 .font(.caption)
@@ -43,5 +44,5 @@ struct FactCard: View {
 }
 
 #Preview {
-    FactCard(icon: "💧", title: "Test", value: "medium")
+    FactCard(icon: { Text("💧") }, title: "Test", value: "medium")
 }

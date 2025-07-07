@@ -12,9 +12,10 @@ struct FavListItemView: View {
     
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
     
+    
     @State private var isClicked = false
     @State private var showWateringMessage = false
-    
+        
     let plant: FirePlant
 
     var body: some View {
@@ -42,30 +43,22 @@ struct FavListItemView: View {
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
                         .foregroundStyle(Color("primaryPetrol"))
-
-                   
                     
                     Text(plant.userCategory?.rawValue ?? "")
                         .padding(.bottom, 3)
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                     
-
                     HStack {
                         Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
-                            .font(.system(size: 20))
                         Text(plant.wateringStatusText)
-                            .font(.system(size: 16))
                     }
-                    .padding(.vertical, 4)
+                    .font(.system(size: 16))
+                    .padding(.vertical, 5)
                     .foregroundStyle(.white)
                     .padding(.horizontal, 10)
                     .background(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(1))
-                    .clipShape(RoundedRectangle(cornerRadius: 18))
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 20)
-//                            .stroke(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol"), lineWidth: 3)
-//                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 .padding(.leading, 10)
                 

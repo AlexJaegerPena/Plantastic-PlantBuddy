@@ -161,20 +161,26 @@ struct PlantDetailView: View {
                             VStack(alignment: .leading, spacing: 15) {
                                 HStack(spacing: 15) {
                                     FactCard(
-                                        icon: "✋",
+                                        icon: {Text("✋")},
                                         title: "Care Level",
                                         value: plant.careLevel ?? "N/A"
                                     
                                     )
                                     FactCard(
-                                        icon: "💧",
+                                        icon: {
+                                            if let watering = plant.watering {
+                                                (WateringIndicatorView(watering: watering))
+                                             } else {
+                                                Text("no info")
+                                            }
+                                        },
                                         title: "Watering",
                                         value: plant.watering?.rawValue
                                             ?? "N/A"
                                        
                                     )
                                     FactCard(
-                                        icon: "☀️",
+                                        icon: {Text("☀️")},
                                         title: "Sunlight",
                                         value: plant.sunlight?.first ?? "N/A"
                                    
@@ -184,21 +190,21 @@ struct PlantDetailView: View {
 
                                 HStack(spacing: 15) {
                                     FactCard(
-                                        icon: plant.indoor == true ? "🏠" : "🌳",
+                                        icon: {Text(plant.indoor == true ? "🏠" : "🌳")},
                                         title: "Location",
                                         value: plant.indoor == true
                                             ? "Indoor" : "Outdoor"
                                     
                                     )
                                     FactCard(
-                                        icon: "⚠️",
+                                        icon: {Text("⚠️")},
                                         title: "Poisonous (Human)",
                                         value: plant.poisonousToHumans == true
                                             ? "Yes" : "No"
                                   
                                     )
                                     FactCard(
-                                        icon: "⚠️",
+                                        icon: {Text("⚠️")},
                                         title: "Poisonous (Pets)",
                                         value: plant.poisonousToPets == true
                                             ? "Yes" : "No"
@@ -274,8 +280,6 @@ struct PlantDetailView: View {
                         }
                         .padding(.bottom, 20)
                     }
-//                .navigationTitle(plant.commonName)
-//                .navigationBarTitleDisplayMode(.inline)
             }
             else {
                     ContentUnavailableView(
