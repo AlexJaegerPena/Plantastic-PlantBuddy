@@ -19,7 +19,7 @@ class PlantListViewModel: ObservableObject {
     // Private Task-Variable für die Debounce-Logik
     private var searchTask: Task<Void, Error>?
 
-    private let plantRepository: PlantRepository = RemotePlantRepository()
+    private let plantRepository: PlantRepository = LocalPlantRepository()
     
     init() {
         apiPlantsList()
