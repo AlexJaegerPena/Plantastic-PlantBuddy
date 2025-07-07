@@ -1,10 +1,10 @@
-# 🌿 Plantastic - Plant Buddy
+## 🌿 Plantastic - Plant Buddy
 
 **Plantastic** ist eine iOS-App, die dir dabei hilft, deine Pflanzen optimal zu pflegen – mit personalisierten Bewässerungshinweisen, Standortwetter und umfassenden Pflanzeninfos. 🌱☀️
 
 ---
 
-## ✨ Features
+### ✨ Features
 
 - 🪴 Pflanzen entdecken: Durchsuche eine umfangreiche Datenbank mit tausenden von Pflanzenarten und finde detaillierte Informationen zu Pflege, Standort, Gießen und mehr.
 - ✨ Favoriten verwalten: Speichere deine Lieblingspflanzen in deinem persönlichen "Garten", um schnellen Zugriff auf ihre spezifischen Pflegeanforderungen zu haben.
@@ -16,7 +16,7 @@
 
 ---
 
-## 🛠 Technologien
+### 🛠 Technologien
 
 | Technologie     | Zweck                                              |
 |----------------|----------------------------------------------------|
@@ -27,7 +27,7 @@
 
 ---
 
-## 📲 Voraussetzungen
+### 📲 Voraussetzungen
 
 - iOS 18 oder neuer
 - Internetverbindung (für API-Zugriff & Firebase)
@@ -35,15 +35,15 @@
 
 ---
 
-## 🔗 API-Integration
+### 🔗 API-Integration
 
-### 📍 [WeatherAPI](https://api.weatherapi.com/)
+#### 📍 [WeatherAPI](https://api.weatherapi.com/)
 Die App nutzt Wetterdaten (Temperatur, Niederschlag, Luftfeuchtigkeit), damit du sehen kannst, ob deine Pflanzen heute gegossen werden sollten. Das macht die Gießentscheidungen smarter.
 
-### 🌱 [Perenual API](https://perenual.com/api/)
+#### 🌱 [Perenual API](https://perenual.com/api/)
 Diese API liefert Daten zu tausenden Pflanzenarten: Standortansprüche, Gießintervalle, Sonnenverträglichkeit, Blütezeit und vieles mehr – direkt in der App integriert.
 
-### 🔐 [Firebase](https://firebase.google.com/)
+#### 🔐 [Firebase](https://firebase.google.com/)
 - Speicherung der Nutzerdaten & Favoriten in der Firestore-Datenbank
 - Authentifizierung von Nutzer:innen
 - Realtime-Updates bei Änderungen am Pflanzenbestand
@@ -51,13 +51,13 @@ Diese API liefert Daten zu tausenden Pflanzenarten: Standortansprüche, Gießint
 
 ---
 
-## 📱 Screenshots
+### 📱 Screenshots
 
 ![screenshotsGit](https://github.com/user-attachments/assets/7d2e3e97-b4b6-48c2-b501-263470085c3c)
 
 ---
 
-## 🔧 Weiterentwicklungsideen
+### 🔧 Weiterentwicklungsideen
 
 - 🌤 Anpassung der Bewässerungsempfehlungen an die aktuellen Wetterbedingungen (Regen, Temperatur, Luftfeuchtigkeit)
 - ⛅️ Wettervorhersage für die nächsten 3 Tage
