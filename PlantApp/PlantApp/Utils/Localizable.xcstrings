@@ -26,7 +26,22 @@
     "%lld in your garden" : {
 
     },
+    "☀️" : {
+
+    },
+    "⚠️" : {
+
+    },
+    "✋" : {
+
+    },
+    "🌳" : {
+
+    },
     "🏆 Milestones 🏆" : {
+
+    },
+    "🏠" : {
 
     },
     "Add Plant View" : {
@@ -120,6 +135,9 @@
 
     },
     "Nice!" : {
+
+    },
+    "no info" : {
 
     },
     "No matching plants found." : {

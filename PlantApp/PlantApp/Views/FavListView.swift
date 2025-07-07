@@ -25,7 +25,9 @@ struct FavListView: View {
         if selectedCategory == .all {
             
             // --- Fav Plants List Source ---
+            // Firebase
             return favPlantViewModel.favPlantsList
+            // Dummy
 //            return favPlantViewModel.dummyFavPlants
 
         } else {
@@ -72,8 +74,7 @@ struct FavListView: View {
                     guard let date0 = $0.nextWaterDate else { return true }
                     // wenn $1 nil, dann $1 vor $0 - früher
                     guard let date1 = $1.nextWaterDate else { return false }
-                    return date0 < date1
-                })) { plant in
+                    return date0 < date1 })) { plant in
                     
                     FavListItemView(plant: plant)
                         .buttonStyle(.plain)

@@ -12,12 +12,13 @@ struct WateringIndicatorView: View {
     let watering: Watering
 
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             if watering.rawValue == "none" {
                 Text(watering.icon)
             } else {
                 ForEach(0..<watering.dropCount, id: \.self) { _ in
                     Text(watering.icon)
+                        .padding(0)
                 }
             }
         }

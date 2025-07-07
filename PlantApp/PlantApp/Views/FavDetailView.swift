@@ -82,10 +82,10 @@ struct FavDetailView: View {
                                     VStack(alignment: .center, spacing: 8) {
                                         HStack {
                                             Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
-                                                .font(.system(size: 20))
                                             Text(plant.wateringStatusText)
-                                                .font(.system(size: 16))
+                                                
                                         }
+                                        .font(.system(size: 16))
                                         .foregroundStyle(.white)
                                         Image(plant.needsToBeWatered ? "canSignal" : "canPetrol")
                                             .resizable()
@@ -96,7 +96,7 @@ struct FavDetailView: View {
                                     .padding(.horizontal, 24)
                                     .background {
                                         RoundedRectangle(cornerRadius: 15)
-                                            .fill(isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(0.8)))
+                                            .fill(isClicked ? Color("secondaryPetrol").opacity(0.8) : (plant.needsToBeWatered ? Color("signalColor").opacity(0.8) : Color("secondaryPetrol").opacity(0.8)))
                                             .stroke(
                                                 isClicked ? Color("secondaryPetrol") :
                                                     (plant.needsToBeWatered ? Color("signalColor").opacity(0.2) : Color("secondaryPetrol").opacity(0.2)),
@@ -197,18 +197,24 @@ struct FavDetailView: View {
                         VStack(alignment: .leading, spacing: 15) {
                             HStack(spacing: 15) {
                                 FactCard(
-                                    icon: "✋",
+                                    icon: { Text("✋") },
                                     title: "Care Level",
                                     value: plant.careLevel ?? "N/A"
                                 )
                                 FactCard(
-                                    icon: "💧",
+                                    icon: {
+                                        if let watering = plant.watering {
+                                            (WateringIndicatorView(watering: watering))
+                                         } else {
+                                            Text("no info")
+                                        }
+                                    },
                                     title: "Watering",
                                     value: plant.watering?.rawValue
                                     ?? "N/A"
                                 )
                                 FactCard(
-                                    icon: "☀️",
+                                    icon: { Text("☀️") },
                                     title: "Sunlight",
                                     value: plant.sunlight?.first
                                     ?? "N/A"
@@ -218,20 +224,19 @@ struct FavDetailView: View {
                             
                             HStack(spacing: 15) {
                                 FactCard(
-                                    icon: plant.indoor == true
-                                    ? "🏠" : "🌳",
+                                    icon: { Text(plant.indoor == true ? "🏠" : "🌳") },
                                     title: "Location",
                                     value: plant.indoor == true
                                     ? "Indoor" : "Outdoor"
                                 )
                                 FactCard(
-                                    icon: "⚠️",
+                                    icon: {Text("⚠️")},
                                     title: "Poisonous (Human)",
                                     value: plant.poisonousToHumans
                                     == true ? "Yes" : "No"
                                 )
                                 FactCard(
-                                    icon: "⚠️",
+                                    icon: {Text("⚠️")},
                                     title: "Poisonous (Pets)",
                                     value: plant.poisonousToPets == true
                                     ? "Yes" : "No"
