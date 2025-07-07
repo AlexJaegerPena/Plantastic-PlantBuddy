@@ -14,11 +14,12 @@ class PlantListViewModel: ObservableObject {
     @Published var searchTerm: String = ""
     @Published var plantSuggestionList: [Plant] = []
     @Published var listErrorMessage: String?
+    
 
     // Private Task-Variable für die Debounce-Logik
     private var searchTask: Task<Void, Error>?
 
-    private let plantRepository: PlantRepository = RemotePlantRepository()
+    private let plantRepository: PlantRepository = LocalPlantRepository()
     
     init() {
         apiPlantsList()

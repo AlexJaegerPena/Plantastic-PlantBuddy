@@ -9,17 +9,19 @@ import SwiftUI
 
 struct PlantSearchView: View {
     
-    @StateObject var plantViewModel = PlantListViewModel()
+    @StateObject var plantListViewModel = PlantListViewModel()
     
+    @EnvironmentObject var favPlantViewModel: FavPlantViewModel
+        
     @State private var selectedPlantId: Int = 0
     @State private var animatingCard: Int? = nil
     @State private var navigateToDetail = false
     
     private var displayedPlants: [Plant] {
-        if plantViewModel.searchTerm.isEmpty {
-            return plantViewModel.plants
+        if plantListViewModel.searchTerm.isEmpty {
+            return plantListViewModel.plants
         } else {
-            return plantViewModel.plantSuggestionList
+            return plantListViewModel.plantSuggestionList
         }
     }
 
@@ -28,71 +30,67 @@ struct PlantSearchView: View {
             VStack {
                 HStack {
                     HStack {
-                        TextField("Search", text: $plantViewModel.searchTerm)
+                        TextField("Search", text: $plantListViewModel.searchTerm)
                             .padding(8)
                             
-                            .onChange(of: plantViewModel.searchTerm) { oldValue, newValue in
-                                plantViewModel.plantSuggestions(for: newValue)
+                            .onChange(of: plantListViewModel.searchTerm) { oldValue, newValue in
+                                plantListViewModel.plantSuggestions(for: newValue)
                             }
                         Button {
-                                plantViewModel.searchTerm = ""
+                                plantListViewModel.searchTerm = ""
                             } label: {
                                 Image(systemName: "xmark.circle")
                             }
-                            .tint(.black.opacity(0.8))
+                            .tint(Color("lightGrayColor"))
                             .padding(.trailing, 10)
                     }
-                    .background(Color(.systemGray6))
-                    .cornerRadius(15)
-
-                    Button {
-                        plantViewModel.searchPlantByName(for: plantViewModel.searchTerm)
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.black.opacity(0.8))
-                    .cornerRadius(12)
+                    .background(Color("bgColor"))
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("primaryPetrol"), lineWidth: 1)
+                    )
                 }
                 .padding(.horizontal)
 
-            
                     List(displayedPlants) { plant in
                         let detailViewModel = PlantDetailsViewModel(plantId: plant.id)
                         VStack {
                             PlantListItemView(plant: plant)
+                                .environmentObject(plantListViewModel)
+                                .environmentObject(favPlantViewModel)
                       
                             .background(
                                 NavigationLink(
                                     "",
-                                    destination: PlantDetailView(selectedPlant: plant, selectedPlantId: plant.id, plantDetailsViewModel: detailViewModel)
+                                    destination: PlantDetailView(selectedPlant: plant, selectedPlantId: plant.id)
                                 )
                                 .opacity(0)
                             )
                         }
-                    
-                        .frame(width: 350, height: 100)
-                        .padding()
-                        .background(.white)
+                        .frame(width: .infinity, height: 100)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 7)
+                        .background(Color("cardBg"))
                         .listRowSeparator(.hidden)
-                       
+                        .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(color: .black.opacity(0.2), radius: 3, x: 3, y: 3)
-
                     }
                     .listStyle(.plain)
             }
         }
-        .onAppear {
-//            plantViewModel.searchTerm = ""
-        }
+        .navigationTitle("Add plants to your Garden")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 // Preview Provider
 #Preview {
     PlantSearchView(
-        plantViewModel: PlantListViewModel()
+        plantListViewModel: PlantListViewModel()
     )
+    .environmentObject(PlantListViewModel())
+    .environmentObject(FavPlantViewModel())
 }
 

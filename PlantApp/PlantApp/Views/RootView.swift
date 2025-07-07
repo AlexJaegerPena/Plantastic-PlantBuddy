@@ -14,12 +14,29 @@ struct RootView: View {
     @StateObject private var favPlantViewModel = FavPlantViewModel()
     @StateObject private var weatherViewModel = WeatherViewModel()
 
+    @State private var isActive = false
+
     var body: some View {
         Group {
             if userViewModel.isUsernameSet {
-                NavView()
-                    .environmentObject(favPlantViewModel)
-                    .environmentObject(weatherViewModel)
+                if isActive {
+                    NavView()
+                        .transition(.opacity)
+                        .animation(.easeInOut(duration: 0.5), value: isActive)
+                        .environmentObject(favPlantViewModel)
+                        .environmentObject(weatherViewModel)
+                } else {
+                    LoadingScreenView()
+                        .environmentObject(userViewModel)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation {
+                                    isActive = true
+                                }
+
+                            }
+                        }
+                }
             } else {
                 WelcomeView()
             }

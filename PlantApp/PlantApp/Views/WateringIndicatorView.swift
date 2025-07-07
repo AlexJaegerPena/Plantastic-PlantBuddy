@@ -14,12 +14,10 @@ struct WateringIndicatorView: View {
     var body: some View {
         HStack {
             if watering.rawValue == "none" {
-                Image(systemName: watering.icon)
-                    .foregroundStyle(.gray)
+                Text(watering.icon)
             } else {
                 ForEach(0..<watering.dropCount, id: \.self) { _ in
-                    Image(systemName: watering.icon)
-                        .foregroundStyle(.cyan)
+                    Text(watering.icon)
                 }
             }
         }

@@ -26,13 +26,15 @@ struct NavView: View {
                         .environmentObject(favPlantViewModel)
             }
             Tab("Explore", systemImage: "magnifyingglass") {
-                PlantSearchView(plantViewModel: PlantListViewModel())
+                PlantSearchView(plantListViewModel: PlantListViewModel())
                     .environmentObject(favPlantViewModel)
             }
             Tab("Calendar", systemImage: "calendar") {
-//                CalendarView()
+                CalendarView()
+                    .environmentObject(favPlantViewModel)
             }
         }
+        .tint(Color("primaryPetrol"))
         .onAppear {
             if !hasAppeared {
                 notificationsViewModel.requestPermission()
