@@ -30,19 +30,19 @@ struct PlantListItemView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
+                        .frame(minWidth: 100, maxWidth: 100, minHeight: 100, maxHeight: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                         .shadow(color: .black.opacity(0.2), radius: 2, x:3, y: 3)
                 } placeholder: {
                     Image("placeholderPlant")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
+                        .frame(minWidth: 100, maxWidth: 100, minHeight: 100, maxHeight: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                         .foregroundColor(Color("textColor"))
                 }
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(plant.commonName)
+                    Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
                         .foregroundColor(Color("textColor"))

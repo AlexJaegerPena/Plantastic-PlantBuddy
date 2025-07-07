@@ -84,7 +84,7 @@ struct PlantDetails: Codable, Identifiable {
     let careLevel: String?
     let fruits: Bool?
     let edibleFruit: Bool?
-    let harvestSeason: [String]?
+    let harvestSeason: String?
     let leaf: Bool?
     let edibleLeaf: Bool?
     let attracts: [String]?
