@@ -10,7 +10,7 @@
 - ✨ Favoriten verwalten: Speichere deine Lieblingspflanzen in deinem persönlichen "Garten", um schnellen Zugriff auf ihre spezifischen Pflegeanforderungen zu haben.
 - 💧 Individuelle Bewässerungspläne: Protokolliere, wann du deine Pflanzen zuletzt gegossen hast, und erhalte Empfehlungen für die nächste Bewässerung.
 - 📍 Wetterintegration: Passe dein Gießverhalten an das lokale Klima an
-- 🔔 Automatische Benachrichtigungen: erhalte eine Push-Nachricht wenn eine Pflanze gegossen werden muss
+- 🔔 Automatische Benachrichtigungen: Erhalte eine Push-Nachricht wenn eine Pflanze gegossen werden muss
 - 📆 Kalender-Integration: Überblick über deine kommenden Gießaufgaben
 - 🔐 Benutzerprofile: Speicherung deiner Favoriten & Gießdaten via Firebase
 
@@ -18,13 +18,12 @@
 
 ### 🛠 Technologien
 
-| Technologie     | Zweck                                              |
-|----------------|----------------------------------------------------|
-| Swift & SwiftUI | App-Entwicklung mit moderner UI & States          |
-| WeatherAPI      | Standortbasiertes Wetter zur Gießempfehlung       |
-| Perenual API    | Pflanzenspezifische Daten & Pflegeanleitungen     |
-| Firebase        | Nutzerverwaltung, Cloudspeicher, Realtime-Updates |
-
+| Technologie     | Zweck                                                                           |
+|----------------|----------------------------------------------------------------------------------|
+| Swift & SwiftUI | App-Entwicklung mit moderner UI & States                                        |
+| WeatherAPI      | Standortbasiertes Wetter zur Anpassung des Gießverhaltens                       |
+| Perenual API    | Pflanzenspezifische Daten & Pflegeanleitungen                                   |
+| @AppStorage	    | Persistente lokale Speicherung für UI-Zustände wie Dark Mode oder Intro-Screens |
 ---
 
 ### 📲 Voraussetzungen
