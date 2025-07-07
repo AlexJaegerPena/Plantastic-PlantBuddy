@@ -9,9 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 struct FireUser: Codable, Identifiable {
-    
     @DocumentID var id: String?
-    
     var username: String
     var email: String
     var favoritePlants: [FirePlant]

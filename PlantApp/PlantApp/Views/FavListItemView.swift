@@ -12,13 +12,13 @@ struct FavListItemView: View {
     
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
     
-    @State private var isClicked: Bool = false
-    @State private var showWateringMessage: Bool = false
+    @State private var isClicked = false
+    @State private var showWateringMessage = false
     
     let plant: FirePlant
 
     var body: some View {
-
+        VStack {
             HStack {
                 AsyncImage(
                     url: URL(string: plant.defaultImage?.thumbnail ?? "")
@@ -41,60 +41,69 @@ struct FavListItemView: View {
                     Text(plant.commonName)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color("primaryPetrol"))
+
+                   
                     
                     Text(plant.userCategory?.rawValue ?? "")
                         .padding(.bottom, 3)
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                     
-                    
-              
-                        HStack {
-                            Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
-                                .font(.system(size: 20))
-                            Text(plant.wateringStatusText)
-                                .font(.system(size: 16))
-                        }
-                        .padding(.vertical, 4)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 10)
-                        .background(plant.needsToBeWatered ? .orange : .cyan)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                   
+
+                    HStack {
+                        Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
+                            .font(.system(size: 20))
+                        Text(plant.wateringStatusText)
+                            .font(.system(size: 16))
+                    }
+                    .padding(.vertical, 4)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 10)
+                    .background(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(1))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 20)
+//                            .stroke(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol"), lineWidth: 3)
+//                    )
                 }
                 .padding(.leading, 10)
+                
                 Spacer()
-                        Button {
-                            showWateringMessage = true
-                            isClicked = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                isClicked = false
-                                Task {
-                                    await favPlantViewModel.addWatering(for: plant, with: plant.id)
-                                }
-                            }
-                        } label: {
-                            Image(systemName: !plant.needsToBeWatered ? "drop" : "drop.halffull")
-                                .font(.system(size: 30))
-                                .foregroundStyle(.white)
-                                .padding()
-                                .background {
-                                    Circle()
-                                        .fill(isClicked ? .cyan.opacity(1) : .cyan.opacity(0.6) )
-                                        .stroke(.cyan, lineWidth: 3)
-                                }
-                                .shadow(color: .blue.opacity(0.4), radius: 3, x: 2, y: 2)
+                
+                Button {
+                    showWateringMessage = true
+                    isClicked = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        isClicked = false
+                        Task {
+                            await favPlantViewModel.addWatering(for: plant, with: plant.id)
                         }
-                        .padding(.trailing, 10)
-                        .scaleEffect(isClicked ? 1.2 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.4, blendDuration: 0), value: isClicked)
-                        .contentShape(Circle()) // um klickbaren Bereich zu definieren
-                        .alert(!plant.needsToBeWatered ? "Oops!" : "Nice!", isPresented: $showWateringMessage) {
-                            Button("OK", role: .cancel) {}
-                        } message: {
-                            Text(!plant.needsToBeWatered ? "The timing wasn't ideal. Keep an eye on the next watering date." : "Perfect timing! Well done, the watering was just right.")
+                    }
+                } label: {
+                    Image(plant.needsToBeWatered ? "canSignal" : "canPetrol")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .padding(12)
+                        .background {
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(isClicked ? Color("secondaryPetrol") :  (plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(0.6)) )
+                                .stroke(isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? Color("signalColor").opacity(0.2) : Color("secondaryPetrol").opacity(0.2)), lineWidth: 3)
                         }
+                        .shadow(color: isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? .yellow.opacity(0.4) : Color("secondaryPetrol").opacity(0.4)), radius: 1, x: 2, y: 2)
+                }
+                .padding(.trailing, 10)
+                .scaleEffect(isClicked ? 1.2 : 1.0)
+                .animation(.spring(response: 0.3, dampingFraction: 0.4, blendDuration: 0), value: isClicked)
+                .contentShape(RoundedRectangle(cornerRadius: 18)) // um klickbaren Bereich zu definieren
+                .alert(!plant.needsToBeWatered ? "Oops!" : "Nice!", isPresented: $showWateringMessage) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text(!plant.needsToBeWatered ? "The timing wasn't ideal. Keep an eye on the next watering date." : "Perfect timing! The watering was just right.")
+                }
             }
+        }
         .background(
             NavigationLink(
                 "",

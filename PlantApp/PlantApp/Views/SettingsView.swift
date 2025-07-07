@@ -15,12 +15,12 @@ struct SettingsView: View {
     @StateObject var notificationsViewModel = NotificationsViewModel()
     @EnvironmentObject var userViewModel: UserViewModel
     
-    @State private var editing: Bool = false
-    @State private var showPassword: Bool = false
+    @State private var editing = false
+    @State private var showPassword = false
     @State private var selectedLanguage: String = "ENG"
     @State private var languages: [String] = ["ENG", "DE", "ESP"]
-    @State private var showNotificationSheet: Bool = false
-    @State private var showDeleteNotification: Bool = false
+    @State private var showNotificationSheet = false
+    @State private var showDeleteNotification = false
     
     @State private var date = Date()
     var getTimeFromDate: [String] {
@@ -79,7 +79,7 @@ struct SettingsView: View {
                                         .foregroundStyle(.white)
                                         .padding(.vertical, 6)
                                         .padding(.horizontal, 20)
-                                        .background(.cyan)
+                                        .background(Color("primaryPetrol"))
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                 }
                                 .buttonStyle(.borderedProminent)
@@ -142,6 +142,15 @@ struct SettingsView: View {
                 
             } message: {
                 Text("Notifications successfully set.")
+            }
+            .alert("Do you really want to delete your account?", isPresented: $showDeleteNotification) {
+                Button("Delete", role: .destructive) {
+                        Task {
+                            userViewModel.deleteUser(userViewModel.userId)
+                    }
+                }
+            } message: {
+                Text("You can NOT undo this action.")
             }
         }
     }

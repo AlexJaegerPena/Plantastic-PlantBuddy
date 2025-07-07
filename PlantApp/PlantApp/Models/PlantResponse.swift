@@ -153,8 +153,8 @@ enum Watering: String, Codable {
 
     var icon: String {
         switch self {
-        case .None: return "drop.degreesign.slash.rtl"
-        default: return "drop.fill"
+        case .None: return "🚫"
+        default: return "💧"
         }
     }
 

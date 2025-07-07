@@ -17,16 +17,25 @@ struct HomeView: View {
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
     @State private var showProfile = false
-    @State private var showSearch = false
-
+    @State private var showMilestones = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 WeatherView(weatherViewModel: weatherViewModel)
                 Spacer()
+                
                 if favPlantViewModel.favPlantsList.isEmpty {
-                    Text("No plants added yet :(")
+                    Image("emptyGarden")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 160, height: 160)
+                        .padding(.leading, 60)
+                        .opacity(0.6)
+                    Text("No plants in your garden yet.\n\nKlick 🔍 Explore and\nadd plants to your favorites.")
+                        .foregroundStyle(Color("primaryPetrol"))
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 50)
                     Spacer()
                 } else {
                     FavListView()
@@ -38,7 +47,11 @@ struct HomeView: View {
                         showProfile = true
                     } label: {
                         HStack {
-                            Image(systemName: "person")
+//                            Image(systemName: "person.crop.circle")
+                            Image("userImage")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
                             Text("Hey, \(userViewModel.username.isEmpty ? "You" : userViewModel.username)!")
                                 .font(.title3)
                         }
@@ -48,17 +61,18 @@ struct HomeView: View {
                             .environmentObject(userViewModel)
                             .environmentObject(settingsViewModel)
                     }
-//                    .tint(.black)
+                    .tint(Color("primaryPetrol"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        showSearch = true
+                        showMilestones = true
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "trophy.fill")
                     }
-//                    .tint(.black)
-                    .navigationDestination(isPresented: $showSearch) {
-                        PlantSearchView()
+                    .tint(Color("primaryPetrol"))
+                    .navigationDestination(isPresented: $showMilestones) {
+                        MilestonesView()
+                            .environmentObject(favPlantViewModel)
                     }
                 }
             }
@@ -73,15 +87,15 @@ struct HomeView: View {
 
 #Preview {
     
-    let mockUserViewModel = UserViewModel(
-        mockUserId: "mockUser123",
-        mockUsername: "Testuser",
-        mockEmail: "test@plantapp.com"
-    )
+//    let mockUserViewModel = UserViewModel(
+//        mockUserId: "mockUser123",
+//        mockUsername: "Testuser",
+//        mockEmail: "test@plantapp.com"
+//    )
     
     HomeView()
         .environmentObject(WeatherViewModel())
-        .environmentObject(mockUserViewModel)
+//        .environmentObject(mockUserViewModel)
         .environmentObject(UserViewModel())
         .environmentObject(FavPlantViewModel())
         .environmentObject(NotificationsViewModel())

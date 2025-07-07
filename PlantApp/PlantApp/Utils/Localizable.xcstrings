@@ -10,7 +10,32 @@
     "%.1f°C" : {
 
     },
+    "%@ / %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ / %2$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "%lld in your garden" : {
+
+    },
+    "🏆 Milestones 🏆" : {
+
+    },
     "Add Plant View" : {
+
+    },
+    "Add plants to your Garden" : {
+
+    },
+    "Add to garden" : {
 
     },
     "App settings" : {
@@ -19,22 +44,10 @@
     "Are you sure you want to remove this plant from your garden?" : {
 
     },
-    "Are you sure?" : {
-
-    },
-    "Attracts: %@" : {
-
-    },
     "Calendar" : {
 
     },
     "Cancel" : {
-
-    },
-    "Care" : {
-
-    },
-    "Care Level: %@" : {
 
     },
     "Confirm" : {
@@ -46,10 +59,7 @@
     "Contact us" : {
 
     },
-    "Continue" : {
-
-    },
-    "Cycle: %@" : {
+    "Continue →" : {
 
     },
     "Dark Mode" : {
@@ -64,7 +74,7 @@
     "Delete this plant?" : {
 
     },
-    "Description: %@" : {
+    "Do you really want to delete your account?" : {
 
     },
     "Email" : {
@@ -76,31 +86,28 @@
     "Explore" : {
 
     },
-    "Family: %@" : {
-
-    },
     "Fehler. %@" : {
 
     },
-    "Genus: %@" : {
+    "Garden Milestones" : {
 
     },
     "Got an account?" : {
 
     },
-    "Hello, World!" : {
-
-    },
-    "Hello! How should we call you?" : {
+    "Hey %@!👋" : {
 
     },
     "Hey, %@!" : {
 
     },
-    "info" : {
+    "How should we call you?" : {
 
     },
-    "Loading..." : {
+    "In your garden" : {
+
+    },
+    "Loading Plant Details..." : {
 
     },
     "Login" : {
@@ -109,19 +116,13 @@
     "Logout" : {
 
     },
-    "Milestones" : {
-
-    },
     "My Garden" : {
 
     },
     "Nice!" : {
 
     },
-    "No plants added yet :(" : {
-
-    },
-    "no watering information" : {
+    "No plants in your garden yet.\n\nKlick 🔍 Explore and\nadd plants to your favorites." : {
 
     },
     "Notifications successfully set." : {
@@ -139,10 +140,19 @@
     "Password" : {
 
     },
-    "Perfect timing! Well done, the watering was just right." : {
+    "Perfect timing! The watering was just right." : {
+
+    },
+    "Plant Not Found" : {
 
     },
     "Plant Removed" : {
+
+    },
+    "Please log in to continue" : {
+
+    },
+    "Please register to continue" : {
 
     },
     "Profile" : {
@@ -154,10 +164,13 @@
     "Register here" : {
 
     },
-    "Search" : {
+    "Remove" : {
 
     },
-    "Select Date" : {
+    "Remove this plant?" : {
+
+    },
+    "Search" : {
 
     },
     "Select Language" : {
@@ -172,13 +185,13 @@
     "Support" : {
 
     },
+    "The details for this plant could not be loaded." : {
+
+    },
     "The plant has been successfully removed from your garden." : {
 
     },
     "The timing wasn't ideal. Keep an eye on the next watering date." : {
-
-    },
-    "This plant will be removed from your garden." : {
 
     },
     "Tipe in a name" : {
@@ -187,16 +200,10 @@
     "Title" : {
 
     },
-    "Type: %@" : {
-
-    },
     "Username" : {
 
     },
-    "Watered plants in total" : {
-
-    },
-    "Watering: %@" : {
+    "Watering Milestones" : {
 
     },
     "Weather is loading..." : {
@@ -205,10 +212,22 @@
     "Website" : {
 
     },
-    "Welcome back, \n%@!" : {
+    "Welcome back, Green Thumb!" : {
 
     },
-    "Your Garden Grows!" : {
+    "Welcome to" : {
+
+    },
+    "When do your plants need water?" : {
+
+    },
+    "You can NOT undo this action." : {
+
+    },
+    "Your Garden Grows! 🪴" : {
+
+    },
+    "Your green journey starts now" : {
 
     }
   },

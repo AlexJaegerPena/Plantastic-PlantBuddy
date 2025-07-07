@@ -15,26 +15,28 @@ class PlantDetailsViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let plantId: Int
-    private let plantRepository: PlantRepository = RemotePlantRepository()
+    private let plantRepository: PlantRepository = LocalPlantRepository()
     
+
     init(plantId: Int) {
         self.plantId = plantId
     }
     
-    func fetchPlantByID(_ id: Int) {
+    func fetchPlantByID(_ id: Int) async {
         guard !isLoading else { return } // Verhindert doppeltes Laden
         
         isLoading = true
         errorMessage = nil
         
-        Task {
             defer { isLoading = false} // Stellt sicher, dass isLoading immer auf false gesetzt wird
             do {
                 self.plantDetails = try await plantRepository.fetchPlantDetailsByID(id)
                 print("Fetched Plant Details for ID \(id): \(self.plantDetails?.commonName ?? "Unknown name")")
             } catch {
                 print(error)
+                self.errorMessage = "Plant could not be fetched, \(error.localizedDescription)"
+
             }
-        }
+        
     } 
 }

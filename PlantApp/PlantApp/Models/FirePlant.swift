@@ -9,9 +9,7 @@ import FirebaseFirestore
 import Foundation
 
 struct FirePlant: Codable, Identifiable {
-
     @DocumentID var id: String?
-
     let apiPlantId: Int
     let commonName: String
     let scientificName: [String]
@@ -70,11 +68,11 @@ struct FirePlant: Codable, Identifiable {
             
             if let days = components.day {
                 if days == 0 {
-                    return "Water today"
+                    return "today"
                 } else if days == 1{
-                 return "Water tomorrow"
+                 return "tomorrow"
                 } else if days >= 2 {
-                    return "Water in \(days) days"
+                    return "in \(days) days"
                 }
             }
         }

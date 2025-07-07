@@ -92,7 +92,9 @@ struct WeatherView: View {
                             Color.white.opacity(0.8)))
             }
         }
-        .padding()
+        .padding(.horizontal, 5)
+        .padding(.top, 10)
+        .padding(.bottom, 20)
         .onAppear {
             Task { await weatherViewModel.fetchWeatherForCurrentLocation() }
         }

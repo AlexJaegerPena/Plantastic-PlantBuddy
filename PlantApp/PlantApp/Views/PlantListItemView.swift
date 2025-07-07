@@ -11,12 +11,16 @@ import Foundation
 
 struct PlantListItemView: View {
     
-//    @ObservedObject var plantViewModel: PlantListViewModel
-//    @ObservedObject var plantDetailsViewModel: PlantDetailsViewModel
-    
-    let plant: Plant
+    @EnvironmentObject var plantListViewModel: PlantListViewModel
+    @EnvironmentObject var favPlantViewModel: FavPlantViewModel
 
+    let plant: Plant
     
+    private var countPlantType: Int {
+        favPlantViewModel.favPlantsList.filter { $0.commonName == plant.commonName }.count
+    }
+
+
     var body: some View {
 
             HStack {
@@ -35,30 +39,35 @@ struct PlantListItemView: View {
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("textColor"))
                 }
                 VStack(alignment: .leading, spacing: 5) {
                     Text(plant.commonName)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
+                        .foregroundColor(Color("textColor"))
+
 
                     Text(plant.scientificName.first ?? "")
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 3)
-                    Text(plant.family ?? "")
-                        .font(.system(size: 14))
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 10)
-                        .foregroundStyle(.white)
-                        .background((plant.family != nil) ? .cyan.opacity(0.8) : .cyan.opacity(0))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-
+                        .foregroundColor(Color("lightGrayColor"))
+                    if countPlantType > 0 {
+                        Text("\(countPlantType) in your garden")
+                            .font(.system(size: 14))
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 10)
+                            .foregroundStyle(.white)
+                            .background(Color("secondaryPetrol"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                 }
                 .padding(.leading, 10)
                 Spacer()
             }
     }
+
 }
 
 #Preview {
@@ -77,4 +86,6 @@ struct PlantListItemView: View {
             thumbnail: "https://example.com/fiddle_leaf_fig_thumbnail.jpg"
         )
     ))
+    .environmentObject(PlantListViewModel())
+    .environmentObject(FavPlantViewModel())
 }

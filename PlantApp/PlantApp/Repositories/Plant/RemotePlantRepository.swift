@@ -39,11 +39,12 @@ class RemotePlantRepository: PlantRepository {
         
         // Rohen JSON-String ausgeben
         if let jsonString = String(data: data, encoding: .utf8) {
-            print("--- RAW JSON RESPONSE ---")
+            print("RAW JSON RESPONSE")
             print(jsonString)
             print("-------------------------")
+
         } else {
-            print("--- UNABLE TO CONVERT DATA TO STRING ---")
+            print("Unable to convert data to string")
         }
 
         // Prüfen, ob der Status Code 200 ist. Wenn nicht, Fehler werfen.
@@ -72,22 +73,12 @@ class RemotePlantRepository: PlantRepository {
         
         // Debugging: Rohen JSON-String ausgeben
         if let jsonString = String(data: data, encoding: .utf8) {
-            print("--- RAW JSON RESPONSE ---")
+            print("RAW JSON RESPONSE")
             print(jsonString)
             print("-------------------------")
         } else {
-            print("--- UNABLE TO CONVERT DATA TO STRING ---")
+            print("Unable to convert data to string")
         }
-
-        if let httpResponse = response as? HTTPURLResponse {
-            print("--- HTTP STATUS CODE ---")
-            print(httpResponse.statusCode)
-            print("-------------------------")
-        }
-        
-//        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
-//            throw HTTPError.badResponse
-//        }
         
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 200 {

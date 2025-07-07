@@ -26,15 +26,36 @@ class FavPlantViewModel: ObservableObject {
         }
     }
     @Published var selectedFavPlant: FirePlant?
-    @Published var searchTerm: String = ""
-    @Published var plantSuggestionList: [FirePlant] = []
-    @Published var listErrorMessage: String?
+    @Published var selectedFavPlantId: String?
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
     @Published var plantsNeedWaterToday: Bool = false
-    
-    // Private Task-Variable für die Debounce-Logik
-    private var searchTask: Task<Void, Error>?
-    private var listener: ListenerRegistration?
+    @Published var isFavorite: Bool = true
 
+    
+    var futureWateringTasks: [WateringTaskCal] {
+        var tasks: [WateringTaskCal] = []
+        for plant in favPlantsList {
+            if let nextDate = plant.nextWaterDate {
+                let task = WateringTaskCal(date: nextDate, title: plant.commonName)
+                tasks.append(task)
+            }
+        }
+        return tasks
+    }
+    
+    var allWateringsCount: Double {
+        var total: Double = 0.0
+        for plant in favPlantsList {
+            if plant.waterings != nil {
+                total += Double(plant.waterings?.count ?? 0)
+            }
+        }
+        return total
+    }    
+
+    
+    private var listener: ListenerRegistration?
     private let userId: String?
     private let repo: FirePlantRepo
     private let fireManager = FirebaseManager.shared
@@ -43,7 +64,11 @@ class FavPlantViewModel: ObservableObject {
     init() {
         self.userId = fireManager.userID
         self.repo = FirePlantRepo(userId: self.userId ?? "") // Initialisiere repo mit aktueller userId
+        
         self.addSnapshotListener()
+        Task {
+               await loadFavorites()
+           }
         }
     
     deinit {
@@ -54,16 +79,51 @@ class FavPlantViewModel: ObservableObject {
     func loadFavorites() async {
         guard let userId = self.userId, !userId.isEmpty else {
             print("Keine UserId zum Laden der Favoriten gefunden")
+            self.errorMessage = "Authentification error: User ID missing."
             return
         }
         do {
-            favPlantsList = try await repo.fetchFavorites()
+            favPlantsList = try await repo.fetchFavorites(userId)
         } catch {
             print("Fehler beim Laden:", error)
         }
     }
-
     
+    func loadSelectedFav(_ plantId: String) async {
+        guard !isLoading else { return } // Verhindert doppeltes Laden
+        
+        isLoading = true
+        errorMessage = nil
+        selectedFavPlant = nil // alten Detailzustand löschen
+        
+        guard let currentUserId = self.userId, !currentUserId.isEmpty else {
+            print("Keine UserId zum Laden der Favoriten gefunden")
+            self.errorMessage = "Authentification error: User ID missing."
+            isLoading = false
+            return
+        }
+        
+        defer { isLoading = false} // Stellt sicher, dass isLoading immer auf false gesetzt wird
+
+            do {
+                let fetchedPlant = try await repo.fetchPlant(userId: currentUserId, plantId: plantId)
+                
+                self.selectedFavPlant = fetchedPlant // Ergebnis der neuen @Published Property zuweisen
+                
+                if fetchedPlant == nil {
+                    print("Pflanze mit ID \(plantId) nicht in Favoriten gefunden.")
+                    self.errorMessage = "Plant not found"
+                } else {
+                    print("Pflanze \(fetchedPlant!.commonName) erfolgreich geladen.")
+                }
+            } catch {
+                print("Fehler beim Laden:", error)
+                self.errorMessage = "Loading of plant failed: \(error.localizedDescription)"
+            }
+    }
+    
+    
+
     func addToFavorites(_ plant: FirePlant) async {
         guard let userId = self.userId, !userId.isEmpty else {
             print("Keine UserId zum Hinzufügen der Favoriten gefunden")
@@ -73,13 +133,12 @@ class FavPlantViewModel: ObservableObject {
             let addedPlantID = try await repo.add(plant: plant)
             print("Pflanze \(plant.commonName) mit ID \(addedPlantID) zu Favoriten hinzugefügt.")
             print(favPlantsList)
-            await loadFavorites()
+//            await loadFavorites()
             print(favPlantsList)
         } catch {
             print("Fehler beim Hinzufügen:", error)
         }
     }
-
     
     func removeFromFavorites(plantId: String) async {
         guard let userId = self.userId, !userId.isEmpty else {
@@ -88,7 +147,7 @@ class FavPlantViewModel: ObservableObject {
         }
         do {
             try await repo.remove(plantId: plantId)
-            await loadFavorites()
+//            await loadFavorites()
         } catch {
             print("Fehler beim Entfernen:", error)
         }
@@ -119,7 +178,7 @@ class FavPlantViewModel: ObservableObject {
         let newRecord = WateringRecord(date: Date())
         var updatedPlant = plant
         
-        // leeres Aray erstellen
+        // leeres Array erstellen
         if updatedPlant.waterings == nil {
             updatedPlant.waterings = []
         }
@@ -173,7 +232,7 @@ class FavPlantViewModel: ObservableObject {
         var plant1 = FirePlant(
             id: "fp_dummy_1",
             apiPlantId: 101,
-            commonName: "Peace Lily (Needs Water)",
+            commonName: "Peace Lily",
             scientificName: ["Spathiphyllum wallisii"],
             family: "Araceae",
             genus: "Spathiphyllum",
@@ -215,7 +274,7 @@ class FavPlantViewModel: ObservableObject {
         var plant2 = FirePlant(
             id: "fp_dummy_2",
             apiPlantId: 102,
-            commonName: "Snake Plant (Water Today)",
+            commonName: "Snake Plant",
             scientificName: ["Sansevieria trifasciata"],
             family: "Asparagaceae",
             genus: "Sansevieria",
@@ -257,7 +316,7 @@ class FavPlantViewModel: ObservableObject {
         var plant3 = FirePlant(
             id: "fp_dummy_3",
             apiPlantId: 103,
-            commonName: "ZZ Plant (Water Tomorrow)",
+            commonName: "ZZ Plant",
             scientificName: ["Zamioculcas zamiifolia"],
             family: "Araceae",
             genus: "Zamioculcas",
@@ -299,7 +358,7 @@ class FavPlantViewModel: ObservableObject {
         var plant4 = FirePlant(
             id: "fp_dummy_4",
             apiPlantId: 104,
-            commonName: "Monstera Deliciosa (Water in 5 days)",
+            commonName: "Monstera Deliciosa",
             scientificName: ["Monstera deliciosa"],
             family: "Araceae",
             genus: "Monstera",
@@ -341,7 +400,7 @@ class FavPlantViewModel: ObservableObject {
         var plant5 = FirePlant(
             id: "fp_dummy_5",
             apiPlantId: 105,
-            commonName: "Cactus (No Info)",
+            commonName: "Cactus",
             scientificName: ["Cactaceae"],
             family: "Cactaceae",
             genus: "Various",

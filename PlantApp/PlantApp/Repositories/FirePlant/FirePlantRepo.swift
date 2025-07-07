@@ -11,7 +11,7 @@ import Foundation
 class FirePlantRepo {
 
     private let userId: String
-    private let db: Firestore = FirebaseManager.shared.database
+    private let collectionRef = FirebaseManager.shared.database.collection("users")
 
     init(userId: String) {
         self.userId = userId
@@ -22,7 +22,7 @@ class FirePlantRepo {
         print("Fireplant repo userId: \(userId)")
 
         // addDocument(from:) gibt eine DocumentReference zurück
-        let docRef = try db.collection("users").document(userId).collection(
+        let docRef = try collectionRef.document(userId).collection(
             "favoritePlants"
         ).addDocument(from: plant)
 
@@ -32,18 +32,36 @@ class FirePlantRepo {
         return newDocumentID
     }
     
-    func fetchFavorites() async throws -> [FirePlant] {
-        let snapshot = try await db.collection("users").document(userId)
-            .collection("favoritePlants").getDocuments()
+    func fetchFavorites(_ userId: String) async throws -> [FirePlant] {
+        
+        let userDocRef = collectionRef.document(userId)
+        let snapshot = try await userDocRef.collection("favoritePlants").getDocuments()
+
         return snapshot.documents.compactMap {
             try? $0.data(as: FirePlant.self)
         }
     }
+    
+    func fetchPlant(userId: String, plantId: String) async throws -> FirePlant? {
+        
+        // Benutzer-Dokumentreferenz
+        let userDocRef = collectionRef.document(userId)
+        
+        // Auf das Dokument mit der plantId in der favoritePlants-Unterkollektion zugreifen
+        let plantDocRef = userDocRef.collection("favoritePlants").document(plantId)
+
+        // Dokument holen
+        let snapshot = try await plantDocRef.getDocument()
+
+        // Prüfen, ob das Dokument existiert, konvertieren und zurückgeben
+        return try? snapshot.data(as: FirePlant.self)
+    }
 
     func remove(plantId: String) async throws {
-        try await db.collection("users").document(userId).collection(
-            "favoritePlants"
-        ).document(plantId).delete()
+        try await collectionRef
+            .document(userId)
+            .collection("favoritePlants")
+            .document(plantId).delete()
         print("Pflanze erfolgreich entfernt")
     }
 
@@ -56,10 +74,9 @@ class FirePlantRepo {
                         "Plant ID ist leer. Kann Bewässerungsdaten nicht zuordnen."
                 ])
         }
-
         // Neue Bewässerung hinzufügen
-        try db
-            .collection("users").document(userId)  // Benutzer-Dokument
+        try collectionRef
+            .document(userId)  // Benutzer-Dokument
             .collection("favoritePlants").document(plantId)  // favorisierte Pflanze
             .collection("timesWatered")  // Sub-Sammlung für Bewässerungszeiten
             .addDocument(from: record)
@@ -90,8 +107,8 @@ class FirePlantRepo {
         }
 
         // Führe das Update im Haupt-Pflanzendokument aus
-        try await db
-            .collection("users").document(userId)
+        try await collectionRef
+            .document(userId)
             .collection("favoritePlants").document(plantId)
             .updateData(updatedFields)  // updateData ist hier die richtige Wahl, um nur spezifische Felder zu ändern
 
@@ -114,7 +131,7 @@ class FirePlantRepo {
 
         let plantData = try Firestore.Encoder().encode(plant)
 
-        try await db.collection("users").document(userId)
+        try await collectionRef.document(userId)
             .collection("favoritePlants").document(plantId)
             .setData(plantData, merge: true)  //merge um nur die übergebenen felder zu aktualisieren
     }
@@ -122,7 +139,7 @@ class FirePlantRepo {
     func addFavSnapshotListener(
         userId: String, onChange: @escaping ([FirePlant]) -> Void
     ) -> ListenerRegistration? {
-        db.collection("users").document(userId)
+        collectionRef.document(userId)
             .collection("favoritePlants")
             .addSnapshotListener { querySnapshot, error in
                 if let error {
@@ -146,9 +163,4 @@ class FirePlantRepo {
                 }
             }
     }
-    
-//    func fetchFavDetailsByID(_ id: String ) async throws -> FirePlant {
-//        
-//    }
- 
 }

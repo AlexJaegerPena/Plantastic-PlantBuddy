@@ -17,14 +17,16 @@ struct FavListView: View {
     @State private var showAddSheet = false
     @State private var showOptionsAlert = false
     @State private var showDeleteAlert = false
-    @State private var showCalendar = false
+    @State private var showDelSuccessAlert = false
 
     @State private var selectedCategory: UserCategory = .all
 
     var plantsByCategory: [FirePlant] {
         if selectedCategory == .all {
+            
+            // --- Fav Plants List Source ---
             return favPlantViewModel.favPlantsList
-            //            return favPlantViewModel.dummyFavPlants
+//            return favPlantViewModel.dummyFavPlants
 
         } else {
             return favPlantViewModel.favPlantsList.filter {
@@ -32,27 +34,16 @@ struct FavListView: View {
             }
         }
     }
+    
 
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
-                    Button {
-
-                    } label: {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text("Calendar")
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-                        .background(.cyan.opacity(0.4))
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                    }
-                    .navigationDestination(isPresented: $showCalendar) {
-//                        CalendarView()
-                    }
-
+                    Text("My Garden")
+                        .font(.system(size: 26, weight: .light))
+                        .foregroundStyle(Color("primaryPetrol"))
+                    
                     Spacer()
                     Picker("Title", selection: $selectedCategory) {
                         ForEach(UserCategory.allCases) { category in
@@ -64,16 +55,26 @@ struct FavListView: View {
                             .tag(category)
                         }
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(.cyan.opacity(0.4))
+                    .tint(Color("primaryPetrol"))
+                    .padding(.horizontal, 2)
+                    .padding(.vertical, 1)
+                    .background(Color("secondaryPetrol").opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                    //                    .shadow(color: .green, radius: 1)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color("secondaryPetrol").opacity(0.2), lineWidth: 2)
+                    )
                 }
                 .padding(.horizontal, 20)
-
-                List(plantsByCategory) { plant in
+                
+                List(plantsByCategory.sorted(by: {
+                    // wenn $0 nil, dann $0 vor $1 - früher
+                    guard let date0 = $0.nextWaterDate else { return true }
+                    // wenn $1 nil, dann $1 vor $0 - früher
+                    guard let date1 = $1.nextWaterDate else { return false }
+                    return date0 < date1
+                })) { plant in
+                    
                     FavListItemView(plant: plant)
                         .buttonStyle(.plain)
 
@@ -87,32 +88,40 @@ struct FavListView: View {
                             }
                         }
 
-                        .frame(width: 350, height: 100)
-                        .padding()
-                        .background(.white)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 10)
+                        .background(Color("cardBg"))
                         .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(
-                            color: .black.opacity(0.2), radius: 3, x: 3, y: 3
-                        )
-
-                        .alert("Are you sure?", isPresented: $showDeleteAlert) {
-                            Button("Delete", role: .destructive) {
-                                Task {
-                                    do {
-                                        await favPlantViewModel
-                                            .removeFromFavorites(
-                                                plantId: selectedPlantId)
-                                    }
-                                }
-                            }
-                        } message: {
-                            Text("This plant will be removed from your garden.")
-                        }
+                        .shadow(color: .black.opacity(0.2), radius: 3, x: 3, y: 3)
                 }
                 .listStyle(.plain)
+                
+            }
+            .alert("Delete this plant?", isPresented: $showDeleteAlert) {
+                Button("Delete", role: .destructive) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        Task {
+                            do {
+                                await favPlantViewModel
+                                    .removeFromFavorites(
+                                        plantId: selectedPlantId)
+                                showDelSuccessAlert = true
+                            }
+                        }
+                    }
+                }
+            } message: {
+                Text("Are you sure you want to remove this plant from your garden?")
+            }
+            .alert("Plant Removed",isPresented: $showDelSuccessAlert) {
+                Button("Ok", role: .cancel) { }
+            } message: {
+                Text("The plant has been successfully removed from your garden.")
             }
         }
+
         .onAppear {
             Task {
                 do {

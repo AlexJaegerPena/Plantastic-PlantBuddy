@@ -9,7 +9,6 @@ import Foundation
 import FirebaseFirestore
 
 struct WateringRecord: Codable, Identifiable {
-    
     @DocumentID var id: String?
     var date: Date
 }
