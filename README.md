@@ -64,11 +64,12 @@ Diese API liefert Daten zu tausenden Pflanzenarten: Standortansprüche, Gießint
 - 🎶 Sound für verbesserte UX - z.B. bei Klick auf den Bewässern-Button
 - 🎍 Intelligente Pflegeempfehlungen und automatische Benachrichtigungen zu Düngen, Umtopfen oder Schnitt
 - 💡 Nützliche Tipps und Tricks zum Thema Gardening allgemein
-- 📷 Nutzer:innen können eigene Fotos ihrer Pflanzen hinzufügen
+- 📷 Nutzer:innen können eigene Fotos ihrer Pflanzen und Notizen hinzufügen
 - 📸 Pflanzenerkennung per Kamera-Integration
 - 🏁 Erweiterte Meilensteine für interaktive Nutzererfahrung und Langzeitmotivation
 - 🎯 Nutzer:innen können durch das Erreichen von Meilensteinen Credits sammeln, um z.B. einen Baum zu pflanzen
 - 🔗 Links zu Produktempfehlungen
+- 🚫 Offline-Modus
 
 ---
 
