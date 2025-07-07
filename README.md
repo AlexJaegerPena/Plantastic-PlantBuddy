@@ -23,6 +23,7 @@
 | Swift & SwiftUI | App-Entwicklung mit moderner UI & States                                        |
 | WeatherAPI      | Standortbasiertes Wetter zur Anpassung des Gießverhaltens                       |
 | Perenual API    | Pflanzenspezifische Daten & Pflegeanleitungen                                   |
+| Firebase	      | Nutzerverwaltung, Cloudspeicher, Authentifizierung und Realtime-Daten           |
 | @AppStorage	    | Persistente lokale Speicherung für UI-Zustände wie Dark Mode oder Intro-Screens |
 ---
 
