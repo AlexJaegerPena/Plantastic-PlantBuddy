@@ -19,7 +19,7 @@ class PlantListViewModel: ObservableObject {
     // Private Task-Variable für die Debounce-Logik
     private var searchTask: Task<Void, Error>?
 
-    private let plantRepository: PlantRepository = LocalPlantRepository()
+    private let plantRepository: PlantRepository = RemotePlantRepository()
     
     init() {
         apiPlantsList()
@@ -34,7 +34,7 @@ class PlantListViewModel: ObservableObject {
             do {
                 let response = try await plantRepository.fetchPlantsList()
                 self.plants = Array(response.prefix(40)) // Begrenzung auf 40 Pflanzen
-                print("DEBUG: Successfully loaded \(self.plants.count) plants.")
+                print("Successfully loaded \(self.plants.count) plants.")
             } catch {
                 // Fehlerbehandlung auf dem Main Thread
                 self.listErrorMessage = "Ein Fehler ist aufgetreten: \(error.localizedDescription)"
@@ -56,7 +56,6 @@ class PlantListViewModel: ObservableObject {
                         print("Decoding Error: Unknown. \(decodingError)")
                     }
                 }
-                print("------------------------------------------")
             }
         }
     }
@@ -79,34 +78,32 @@ class PlantListViewModel: ObservableObject {
                 self.plantSuggestionList = fetchedSuggestions
 
             } catch is CancellationError {
-                print("DEBUG: Search suggestion task was cancelled.")
+                print("Search suggestion task was cancelled.")
             } catch {
                 self.listErrorMessage = "Fehler beim Laden der Vorschläge: \(error.localizedDescription)"
                 print("--- ERROR IN VIEWMODEL (plantSuggestions) ---")
                 print("Localized Description: \(error.localizedDescription)")
                 print("Full Error Object: \(error)")
-                print("------------------------------------------")
             }
             self.searchTask = nil // Task nach Abschluss zurücksetzen
         }
     }
 
  
-    func searchPlantByName(for name: String) {
-        listErrorMessage = nil
-        Task {
-            do {
-                let results = try await plantRepository.fetchPlantsByQuery(name)
-                // Hauptpflanzenliste aktualisieren
-                self.plants = results
-                print("DEBUG: Search results loaded: \(self.plants.count) plants for '\(name)'.")
-            } catch {
-                self.listErrorMessage = "Fehler bei der Suche: \(error.localizedDescription)"
-                print("--- ERROR IN VIEWMODEL (searchPlantByName) ---")
-                print("Localized Description: \(error.localizedDescription)")
-                print("Full Error Object: \(error)")
-                print("------------------------------------------")
-            }
-        }
-    }
+//    func searchPlantByName(for name: String) {
+//        listErrorMessage = nil
+//        Task {
+//            do {
+//                let results = try await plantRepository.fetchPlantsByQuery(name)
+//                // Hauptpflanzenliste aktualisieren
+//                self.plants = results
+//                print("Search results loaded: \(self.plants.count) plants for '\(name)'.")
+//            } catch {
+//                self.listErrorMessage = "Fehler bei der Suche: \(error.localizedDescription)"
+//                print("--- ERROR IN VIEWMODEL (searchPlantByName) ---")
+//                print("Localized Description: \(error.localizedDescription)")
+//                print("Full Error Object: \(error)")
+//            }
+//        }
+//    }
 }

@@ -40,8 +40,7 @@ struct MilestoneCard: View {
             }
             .tint(Color("secondaryPetrol"))
             .padding()
-            //            .foregroundStyle(.primaryColor)
-            .background(.white)
+            .background(Color("cardBg"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -51,10 +50,11 @@ struct MilestoneCard: View {
                 Image(currentValueLabel >= maxValue ? stamp : "")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 110, height: 80)
-                    .padding(.bottom, 25)
-                    .padding(.leading, 250)
-                    .rotationEffect(.degrees(20), anchor: .center)            )
+                    .frame(width: 100, height: 80)
+                    .padding(.bottom, 55)
+                    .padding(.leading, 270)
+                    .rotationEffect(.degrees(20), anchor: .center)
+            )
         }
         .shadow(color: Color("secondaryPetrol").opacity(0.3), radius: 3, x: 1, y: 1)
         .frame(width: .infinity, height: 130, alignment: .leading)
@@ -94,25 +94,25 @@ struct MilestonesView: View {
                 value: wateringTotalCount,
                 title: "Water 5 plants",
                 currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 5, icon: "wateringCan1")
+                maxValue: 5, icon: "canPetrol")
 
             MilestoneCard(
                 value: wateringTotalCount,
                 title: "Water 10 plants",
                 currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 10, icon: "wateringCan2")
+                maxValue: 10, icon: "canPetrol")
 
             MilestoneCard(
                 value: wateringTotalCount,
                 title: "Water 25 plants",
                 currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 25, icon: "wateringCan1")
+                maxValue: 25, icon: "canPetrol")
 
             MilestoneCard(
                 value: wateringTotalCount,
                 title: "Water 50 plants",
                 currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 50, icon: "wateringCan2")
+                maxValue: 50, icon: "canPetrol")
             
             Divider()
                 .padding(.top, 30)

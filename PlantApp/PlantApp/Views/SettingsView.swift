@@ -30,63 +30,63 @@ struct SettingsView: View {
     @Environment(\.darkModeEnabled) var darkModeEnabled: Binding<Bool>
 
     var body: some View {
-        List {
-            Section("Profile") {
-                if editing {
-                    TextField("Username", text: $userViewModel.username)
-                    TextField("Email", text: $userViewModel.email)
-                    VStack {
-                        if showPassword {
-                            TextField("Password", text: $userViewModel.password)
-                        } else {
-                            SecureField("Password", text: $userViewModel.password)
-                        }
-                    }
-                    .overlay {
-                        HStack {
-                            Spacer()
-                            Button {
-                                showPassword.toggle()
-                            } label: {
-                                Image(systemName: showPassword ? "eye.slash" : "eye")
-                            }
-                        }
-                    }
-                } else {
-                    Text(userViewModel.username)
-                    Text(userViewModel.email)
-                    Text("******")
-                }
-            }
-            
-            Section("App settings") {
-                Toggle("Dark Mode", isOn: darkModeEnabled)
-                VStack(alignment: .leading) {
-                Toggle("Enable Notifications", isOn: $notificationsViewModel.allowNotifications)
-                    .onChange(of: notificationsViewModel.allowNotifications) {
-                        notificationsViewModel.requestPermission()
-                    }
-                    if notificationsViewModel.allowNotifications {
+            List {
+                Section("Profile") {
+                    if editing {
+                        TextField("Username", text: $userViewModel.username)
+                        TextField("Email", text: $userViewModel.email)
                         VStack {
-                            DatePicker("Set Time", selection: $date, displayedComponents: .hourAndMinute)
-                            
-                            Button {
-                                notificationsViewModel.wateringNotification(hour: Int(getTimeFromDate[0]) ?? 0, minute: Int(getTimeFromDate[1]) ?? 0)
-                                showNotificationSheet = true
-                            } label: {
-                                HStack {
-                                    Text("Confirm")
-                                        .foregroundStyle(.white)
-                                        .padding(.vertical, 6)
-                                        .padding(.horizontal, 20)
-                                        .background(Color("primaryPetrol"))
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                }
-                                .buttonStyle(.borderedProminent)
+                            if showPassword {
+                                TextField("Password", text: $userViewModel.password)
+                            } else {
+                                SecureField("Password", text: $userViewModel.password)
                             }
                         }
-                        .padding(.leading, 15)
+                        .overlay {
+                            HStack {
+                                Spacer()
+                                Button {
+                                    showPassword.toggle()
+                                } label: {
+                                    Image(systemName: showPassword ? "eye.slash" : "eye")
+                                }
+                            }
+                        }
+                    } else {
+                        Text(userViewModel.username)
+                        Text(userViewModel.email)
+                        Text("******")
                     }
+                }
+                
+                Section("App settings") {
+                    Toggle("Dark Mode", isOn: darkModeEnabled)
+                    VStack(alignment: .leading) {
+                        Toggle("Enable Notifications", isOn: $notificationsViewModel.allowNotifications)
+                            .onChange(of: notificationsViewModel.allowNotifications) {
+                                notificationsViewModel.requestPermission()
+                            }
+                        if notificationsViewModel.allowNotifications {
+                            VStack {
+                                DatePicker("Set Time", selection: $date, displayedComponents: .hourAndMinute)
+                                
+                                Button {
+                                    notificationsViewModel.wateringNotification(hour: Int(getTimeFromDate[0]) ?? 0, minute: Int(getTimeFromDate[1]) ?? 0)
+                                    showNotificationSheet = true
+                                } label: {
+                                    HStack {
+                                        Text("Confirm")
+                                            .foregroundStyle(.white)
+                                            .padding(.vertical, 6)
+                                            .padding(.horizontal, 20)
+                                            .background(Color("primaryPetrol"))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                }
+                            }
+                            .padding(.leading, 15)
+                        }
                     }
                     
                     Picker("Select Language", selection: $selectedLanguage) {
@@ -119,15 +119,15 @@ struct SettingsView: View {
                         Text("Logout")
                     }
                 }
-            
-            Button(role: .destructive) {
-                showDeleteNotification = true
-            } label: {
-                HStack {
-                    Text("Delete Account")
+                
+                Button(role: .destructive) {
+                    showDeleteNotification = true
+                } label: {
+                    HStack {
+                        Text("Delete Account")
+                    }
                 }
             }
-        }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

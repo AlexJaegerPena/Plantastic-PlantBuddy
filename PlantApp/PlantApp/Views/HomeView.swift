@@ -48,7 +48,7 @@ struct HomeView: View {
                     } label: {
                         HStack {
 //                            Image(systemName: "person.crop.circle")
-                            Image("userImage")
+                            Image("userImage2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 35, height: 35)
