@@ -51,14 +51,24 @@ Diese API liefert Daten zu tausenden Pflanzenarten: Standortansprüche, Gießint
 
 ---
 
+## 📱 Screenshots
+
+![screenshotsGit](https://github.com/user-attachments/assets/7d2e3e97-b4b6-48c2-b501-263470085c3c)
+
+---
+
 ## 🔧 Weiterentwicklungsideen
 
 - 🌤 Anpassung der Bewässerungsempfehlungen an die aktuellen Wetterbedingungen (Regen, Temperatur, Luftfeuchtigkeit)
-- 🎍 Intelligente Pflegeempfehlungen und automatische Benachrichtigungen zu Düngen, Umtopfen oder Schn
-- 💡 Nützliche Tipps und Tricks zum Thema Gardening
+- ⛅️ Wettervorhersage für die nächsten 3 Tage
+- 🎶 Sound für verbesserte UX - z.B. bei Klick auf den Bewässern-Button
+- 🎍 Intelligente Pflegeempfehlungen und automatische Benachrichtigungen zu Düngen, Umtopfen oder Schnitt
+- 💡 Nützliche Tipps und Tricks zum Thema Gardening allgemein
 - 📷 Nutzer:innen können eigene Fotos ihrer Pflanzen hinzufügen
 - 📸 Pflanzenerkennung per Kamera-Integration
+- 🏁 Erweiterte Meilensteine für interaktive Nutzererfahrung und Langzeitmotivation
 - 🎯 Nutzer:innen können durch das Erreichen von Meilensteinen Credits sammeln, um z.B. einen Baum zu pflanzen
+- 🔗 Links zu Produktempfehlungen
 
 ---
 
