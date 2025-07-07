@@ -197,14 +197,16 @@ class FavPlantViewModel: ObservableObject {
             // zur subcollection hinzufügen
             try await repo.trackWateringRecord(for: plant, record: newRecord)
             print("Pflanze erfolgreich bewässert")
-            
             // needsToBeWateredDate muss nicht aktualisiert werden, da berechnete Property
-
             // plant in der datenbank aktualisieren
             await updatePlant(for: updatedPlant, with: id)
+            
+            self.selectedFavPlant = updatedPlant
+
             } catch {
                 print("Fehler beim Watering:", error)
             }
+
     }
     
     

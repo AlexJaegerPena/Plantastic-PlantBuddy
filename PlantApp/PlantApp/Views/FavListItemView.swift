@@ -27,7 +27,7 @@ struct FavListItemView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
                         .shadow(color: .black.opacity(0.2), radius: 2, x: 3, y: 3)
                 } placeholder: {
                     Image("placeholderPlant")
@@ -61,7 +61,7 @@ struct FavListItemView: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, 10)
                     .background(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(1))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
 //                    .overlay(
 //                        RoundedRectangle(cornerRadius: 20)
 //                            .stroke(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol"), lineWidth: 3)

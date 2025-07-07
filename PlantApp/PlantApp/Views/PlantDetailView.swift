@@ -93,7 +93,7 @@ struct PlantDetailView: View {
                                             showDelFavAlert = true
                                         }
                                     } label: {
-                                        HStack {
+                                        HStack(spacing: 5) {
                                             Text(isFavorite ? "In your garden" : "Add to garden")
                                             Image(
                                                 systemName: isFavorite
@@ -101,7 +101,7 @@ struct PlantDetailView: View {
                                             )
                                             .font(.system(size: 20))
                                         }
-                                        .padding(.vertical, 10)
+                                        .padding(.vertical, 20)
                                         .padding(.horizontal, 20)
                                         .foregroundStyle(.white
                                         )
@@ -138,7 +138,6 @@ struct PlantDetailView: View {
                             .padding(.horizontal)
 
                             // ---- Description ----
-                            // MARK: dsf
                             if let description = plant.description,
                                 !description.isEmpty
                             {
@@ -296,10 +295,6 @@ struct PlantDetailView: View {
                     await plantDetailsViewModel.fetchPlantByID(selectedPlantId)
                 }
         }
-//        .onChange(of: favPlantViewModel.favPlantsList) { _ in
-//            checkIfFavorite()
-//        }
-
         .alert("Your Garden Grows! 🪴", isPresented: $showAddFavAlert) {
             Button("Ok", role: .cancel) {}
         } message: {

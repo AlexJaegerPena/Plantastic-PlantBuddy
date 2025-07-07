@@ -33,7 +33,7 @@ struct FavDetailView: View {
                         "The details for this plant could not be loaded.")
                 )
             } else {
-                let plant = favPlantViewModel.selectedFavPlant!
+                if let plant = favPlantViewModel.selectedFavPlant {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         // --- Plant Image Header ---
@@ -116,7 +116,6 @@ struct FavDetailView: View {
                                 } message: {
                                     Text(!plant.needsToBeWatered ? "The timing wasn't ideal. Keep an eye on the next watering date." : "Perfect timing! The watering was just right.")
                                 }
-//                            }
                             .padding(.trailing, 20)
                             .padding(.bottom, 5)
                         }
@@ -144,7 +143,7 @@ struct FavDetailView: View {
                                 Spacer()
                                 
                                 Picker("Title", selection: $selectedCategory) {
-                                    ForEach(UserCategory.allCases) { category in
+                                    ForEach(UserCategory.allCases.filter { $0 != .all }) { category in
                                         HStack {
                                             Text(category.rawValue)
                                             Image(systemName: category.icon)
@@ -170,8 +169,6 @@ struct FavDetailView: View {
                                         .stroke(Color("secondaryPetrol").opacity(0.2), lineWidth: 2)
                                 )
                             }
-
-                           
                         }
                         .padding(.horizontal)
                         
@@ -316,6 +313,7 @@ struct FavDetailView: View {
                         .padding(.horizontal)
                     }
                     .padding(.bottom, 20)
+                }
                 }
             }
         }
