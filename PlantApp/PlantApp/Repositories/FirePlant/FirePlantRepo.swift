@@ -74,49 +74,40 @@ class FirePlantRepo {
                         "Plant ID ist leer. Kann Bewässerungsdaten nicht zuordnen."
                 ])
         }
-        // Neue Bewässerung hinzufügen
+        // Gießaktion in der Unterkolletktion timesWatered speichern
         try collectionRef
             .document(userId)  // Benutzer-Dokument
             .collection("favoritePlants").document(plantId)  // favorisierte Pflanze
             .collection("timesWatered")  // Sub-Sammlung für Bewässerungszeiten
             .addDocument(from: record)
 
-        // 2. lastWaterDate und nextWaterDate im Haupt-Pflanzendokument aktualisieren
+        // Gießdaten vorbereiten
         // Das Datum der letzten Bewässerung ist der Zeitpunkt dieses Records
         let newLastWaterDate = record.date
-
-        // Berechne das nextWaterDate
-        let newNextWaterDate: Date?
-
         // Holen des Bewässerungsintervalls (in Tagen) aus den Pflanzendetails
         let wateringIntervalDays = Int(plant.watering?.nextWatering ?? 7)
-
         // Berechne das nächste Bewässerungsdatum basierend auf der aktuellen Bewässerung
-        newNextWaterDate = Calendar.current.date(
+        let newNextWaterDate = Calendar.current.date(
             byAdding: .day, value: wateringIntervalDays, to: newLastWaterDate)
 
+        // Daten zusammenstellen, die aktualisiert werden sollen
         // Erstelle ein Dictionary der Felder, die aktualisiert werden sollen
-        var updatedFields: [String: Any] = [
-            "lastWaterDate": newLastWaterDate
-        ]
-
+        var updatedFields: [String: Any] = ["lastWaterDate":newLastWaterDate]
         // newNextWaterDate ist ein Optional. Es muss sicher ausgepackt werden,
         // bevor es dem [String: Any] Dictionary zugewiesen wird.
         if let nextDate = newNextWaterDate {
             updatedFields["nextWaterDate"] = nextDate
         }
 
-        // Führe das Update im Haupt-Pflanzendokument aus
+        // Hauptdokument der Pflanze updaten
         try await collectionRef
             .document(userId)
             .collection("favoritePlants").document(plantId)
-            .updateData(updatedFields)  // updateData ist hier die richtige Wahl, um nur spezifische Felder zu ändern
-
-        print(
-            "Pflanze mit ID '\(plantId)' erfolgreich bewässert und Daten aktualisiert."
-        )
+            .updateData(updatedFields)  // updateData, um nur spezifische Felder zu ändern
+        // Debug-Ausgabe
+        print("Pflanze mit ID '\(plantId)' erfolgreich bewässert und Daten aktualisiert.")
         print("Neues lastWaterDate: \(newLastWaterDate)")
-        print("Neues nextWaterDate: \(newNextWaterDate?.description ?? "nil")")  // Füge description hinzu, um das Datum lesbar zu machen
+        print("Neues nextWaterDate: \(newNextWaterDate?.description ?? "nil")")  // description, um das Datum lesbar zu machen
     }
 
     func update(plant: FirePlant) async throws {

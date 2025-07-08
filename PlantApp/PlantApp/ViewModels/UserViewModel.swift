@@ -14,9 +14,17 @@ class UserViewModel: ObservableObject {
     @Published var user: User?
     @Published var userId: String?
     @Published var username: String = ""
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var errorMessage = ""
+    @Published var email: String = "" {
+        didSet {
+            authError = nil
+        }
+    }
+    @Published var password: String = "" {
+        didSet {
+            authError = nil
+        }
+    }
+    @Published var authError: AuthError?
     @Published var toast: Toast? = nil
 
     var isLoggedIn: Bool { user != nil }

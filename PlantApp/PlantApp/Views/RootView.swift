@@ -14,6 +14,7 @@ struct RootView: View {
     @StateObject private var favPlantViewModel = FavPlantViewModel()
     @StateObject private var weatherViewModel = WeatherViewModel()
 
+    // isActive für zeitverzögerte Einblendung von NavView nach LoadingScreenView
     @State private var isActive = false
 
     var body: some View {
@@ -33,7 +34,6 @@ struct RootView: View {
                                 withAnimation {
                                     isActive = true
                                 }
-
                             }
                         }
                 }

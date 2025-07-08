@@ -63,14 +63,17 @@ class FavPlantViewModel: ObservableObject {
 
 
     init() {
+        // aktuelle id vom fireManager holen
         self.userId = fireManager.userID
-        self.repo = FirePlantRepo(userId: self.userId ?? "") // Initialisiere repo mit aktueller userId
-        
+        // Initialisiere repo mit aktueller userId
+        self.repo = FirePlantRepo(userId: self.userId ?? "")
+        // Listener starten
         self.addSnapshotListener()
+        // Asynchron favoriten laden, im init barucht man Task für await
         Task {
-               await loadFavorites()
-           }
+            await loadFavorites()
         }
+    }
     
     deinit {
         listener?.remove() // Listener beim Zerstören des ViewModels entfernen

@@ -18,12 +18,10 @@ struct FavListView: View {
     @State private var showOptionsAlert = false
     @State private var showDeleteAlert = false
     @State private var showDelSuccessAlert = false
-
     @State private var selectedCategory: UserCategory = .all
 
     var plantsByCategory: [FirePlant] {
         if selectedCategory == .all {
-            
             // --- Fav Plants List Source ---
             // Firebase
             return favPlantViewModel.favPlantsList
@@ -88,7 +86,6 @@ struct FavListView: View {
                                 selectedPlantId = plant.id ?? "0"
                             }
                         }
-
                         .padding(.horizontal, 5)
                         .padding(.vertical, 10)
                         .background(Color("cardBg"))
@@ -122,7 +119,6 @@ struct FavListView: View {
                 Text("The plant has been successfully removed from your garden.")
             }
         }
-
         .onAppear {
             Task {
                 do {
@@ -132,6 +128,7 @@ struct FavListView: View {
         }
     }
 }
+
 #Preview {
     FavListView()
         .environmentObject(FavPlantViewModel())

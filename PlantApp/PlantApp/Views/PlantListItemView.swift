@@ -20,9 +20,7 @@ struct PlantListItemView: View {
         favPlantViewModel.favPlantsList.filter { $0.commonName == plant.commonName }.count
     }
 
-
     var body: some View {
-
             HStack {
                 AsyncImage(
                     url: URL(string: plant.defaultImage?.thumbnail ?? "")
@@ -46,7 +44,6 @@ struct PlantListItemView: View {
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
                         .foregroundColor(Color("textColor"))
-
                     Text(plant.scientificName.first ?? "")
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)

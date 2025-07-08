@@ -145,7 +145,6 @@ struct MilestonesView: View {
                 title: "Add 50 plants to your garden",
                 currentValueLabel: ownedPlantsCount, minValue: min,
                 maxValue: 50, icon: "plantMilestones")
-
         }
         .padding()
         .onAppear {

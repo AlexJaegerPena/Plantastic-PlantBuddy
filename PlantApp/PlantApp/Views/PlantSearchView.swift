@@ -14,10 +14,9 @@ struct PlantSearchView: View {
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
 
     @State private var selectedPlantId: Int = 0
-//    @State private var animatingCard: Int? = nil
+    //    @State private var animatingCard: Int? = nil
     @State private var navigateToDetail = false
     @State private var showEmptyResult = false
-
 
     private var displayedPlants: [Plant] {
         if plantListViewModel.searchTerm.isEmpty {
@@ -36,20 +35,21 @@ struct PlantSearchView: View {
                             "Search", text: $plantListViewModel.searchTerm
                         )
                         .padding(8)
-
                         .onChange(of: plantListViewModel.searchTerm) {
                             oldValue, newValue in
                             plantListViewModel.plantSuggestions(for: newValue)
                             showEmptyResult = false
                             // zeitverzögerung für EmptySearchResultView()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    if plantListViewModel.searchTerm == newValue &&
-                                       displayedPlants.isEmpty {
-                                        showEmptyResult = true
-                                    }
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + 1.5
+                            ) {
+                                if plantListViewModel.searchTerm == newValue
+                                    && displayedPlants.isEmpty
+                                {
+                                    showEmptyResult = true
                                 }
+                            }
                         }
-                        
                         Button {
                             plantListViewModel.searchTerm = ""
                         } label: {
@@ -77,7 +77,6 @@ struct PlantSearchView: View {
                             PlantListItemView(plant: plant)
                                 .environmentObject(plantListViewModel)
                                 .environmentObject(favPlantViewModel)
-
                                 .background(
                                     NavigationLink(
                                         "",

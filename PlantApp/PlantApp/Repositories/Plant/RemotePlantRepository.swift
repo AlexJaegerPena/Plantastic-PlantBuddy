@@ -16,12 +16,11 @@ class RemotePlantRepository: PlantRepository {
     func fetchPlantsList() async throws -> [Plant] {
         // Endpunkt Deklarieren
         let urlString = "\(speciesListURL)?key=\(plantApiKey)"
-        
+    
         // URL verifizieren
         guard let url = URL(string: urlString) else {
             throw HTTPError.invalidURL
         }
-
         // Daten von API ziehen (wird ein String sein)
         let (data, response) = try await URLSession.shared.data(from: url)
         
@@ -34,20 +33,17 @@ class RemotePlantRepository: PlantRepository {
         // Status Code ausgeben
             print("--- HTTP STATUS CODE ---")
             print(httpResponse.statusCode)
-            print("-------------------------")
-        
         
         // Rohen JSON-String ausgeben
         if let jsonString = String(data: data, encoding: .utf8) {
             print("RAW JSON RESPONSE")
             print(jsonString)
-            print("-------------------------")
 
         } else {
             print("Unable to convert data to string")
         }
 
-        // Prüfen, ob der Status Code 200 ist. Wenn nicht, Fehler werfen.
+        // Prüfen, ob der Status Code 200 ist. Wenn nicht, Fehler werfen
             guard httpResponse.statusCode == 200 else {
                 throw HTTPError.badResponse
             }
@@ -57,6 +53,7 @@ class RemotePlantRepository: PlantRepository {
         
         return plantResponse.data
     }
+    
     
     func fetchPlantsByQuery(_ query: String ) async throws -> [Plant] {
         
@@ -75,7 +72,6 @@ class RemotePlantRepository: PlantRepository {
         if let jsonString = String(data: data, encoding: .utf8) {
             print("RAW JSON RESPONSE")
             print(jsonString)
-            print("-------------------------")
         } else {
             print("Unable to convert data to string")
         }
@@ -90,12 +86,12 @@ class RemotePlantRepository: PlantRepository {
                 throw HTTPError.badResponse
             }
         }
-        
         // Bekommene Daten in gewünschtes Objekt decodieren
         let plantResponse = try JSONDecoder().decode(PlantResponse.self, from: data)
         
         return plantResponse.data
     }
+    
     
     func fetchPlantDetailsByID(_ id: Int ) async throws -> PlantDetails {
         
@@ -114,15 +110,13 @@ class RemotePlantRepository: PlantRepository {
         if let jsonString = String(data: data, encoding: .utf8) {
             print("--- RAW JSON RESPONSE ---")
             print(jsonString)
-            print("-------------------------")
         } else {
-            print("--- UNABLE TO CONVERT DATA TO STRING ---")
+            print("Unable to convert data to string")
         }
 
         if let httpResponse = response as? HTTPURLResponse {
             print("--- HTTP STATUS CODE ---")
             print(httpResponse.statusCode)
-            print("-------------------------")
         }
         
         if let httpResponse = response as? HTTPURLResponse {

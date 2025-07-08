@@ -47,7 +47,6 @@ struct HomeView: View {
                         showProfile = true
                     } label: {
                         HStack {
-//                            Image(systemName: "person.crop.circle")
                             Image("userImage2")
                                 .resizable()
                                 .scaledToFit()
@@ -86,16 +85,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    
-//    let mockUserViewModel = UserViewModel(
-//        mockUserId: "mockUser123",
-//        mockUsername: "Testuser",
-//        mockEmail: "test@plantapp.com"
-//    )
-    
     HomeView()
         .environmentObject(WeatherViewModel())
-//        .environmentObject(mockUserViewModel)
         .environmentObject(UserViewModel())
         .environmentObject(FavPlantViewModel())
         .environmentObject(NotificationsViewModel())
