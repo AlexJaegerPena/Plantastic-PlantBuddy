@@ -12,9 +12,7 @@ struct LoginView: View {
     @EnvironmentObject var userViewModel: UserViewModel
 
     @State private var showRegister = false
-    @State private var isActive = false
     @State private var showPassword = false
-
 
     var body: some View {
 
@@ -23,12 +21,23 @@ struct LoginView: View {
                 .environmentObject(userViewModel)
         } else {
             VStack {
-                    Image("Logo6")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 250)
+                Image("logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 90)
+                    .shadow(color: .black.opacity(0.2), radius: 3, x: 4, y: 4)
+
+                Text("Plantastic")
+                    .font(.system(size: 55))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.white)
+                    .padding(.bottom, 80)
+                    .fontDesign(.serif)
+                    .shadow(color: .black.opacity(0.3), radius: 3, x: 0, y: 0)
+                
                     Text(showRegister ? "Please register to continue" : "Please log in to continue")
-                        .foregroundStyle(Color("primaryPetrol"))
+                    .foregroundStyle(.white)
                         .font(.system(size: 20))
                         .fontWeight(.light)
                     
@@ -38,9 +47,8 @@ struct LoginView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
-                        .shadow(
-                            color: Color("secondaryPetrol").opacity(0.5), radius: 2,
-                            x: 2, y: 2)
+                        .shadow(color: .black.opacity(0.2), radius: 0, x: 4, y: 4)
+
                     
                     SecureField("Password", text: $userViewModel.password)
                         .padding()
@@ -48,9 +56,7 @@ struct LoginView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
-                        .shadow(
-                            color: Color("secondaryPetrol").opacity(0.5), radius: 2,
-                            x: 2, y: 2)
+                        .shadow(color: .black.opacity(0.2), radius: 0, x: 4, y: 4)
                     
                 Text((userViewModel.authError?.errorDescription) ?? "")
                         .foregroundStyle(.red)
@@ -81,15 +87,21 @@ struct LoginView: View {
                         .padding(.horizontal, 30)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(isActive ? Color("secundaryPetrol") : Color("primaryPetrol"))
+                .tint(Color("primaryPetrol"))
                 .padding(.top, 15)
                     
                 Button(showRegister ? "Got an account?" : "Register here") {
                     showRegister.toggle()
                 }
-                .foregroundStyle(Color("secondaryPetrol"))
+                .foregroundStyle(.white)
             }
             .padding()
+            .background(
+                Image("bgSlide")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 450)
+            )
         }
     }
 }
