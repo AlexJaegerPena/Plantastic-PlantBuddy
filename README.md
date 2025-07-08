@@ -36,7 +36,8 @@
 
 
 
-![2](https://github.com/user-attachments/assets/7628d8f5-fe94-436b-99e9-2ca8bc6c7a7d)
+![12](https://github.com/user-attachments/assets/f899d5f9-a409-4280-a2b1-89d7b7119ffd)
+
 
 
 
@@ -77,7 +78,8 @@
 - Realtime-Updates bei Änderungen
 
 
-![3](https://github.com/user-attachments/assets/ec7c7729-c23b-462a-ac4f-89b27ce20a05)
+
+![13](https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a)
 
 
 
