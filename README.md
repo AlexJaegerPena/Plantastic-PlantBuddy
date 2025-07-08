@@ -1,76 +1,106 @@
-## 🌿 Plantastic - Plant Buddy
+# 🌿 Plantastic – Dein smarter Plant Buddy
 
-**Plantastic** ist eine iOS-App, die dir dabei hilft, deine Pflanzen optimal zu pflegen – mit personalisierten Bewässerungshinweisen, Standortwetter und umfassenden Pflanzeninfos. 🌱☀️
 
----
+**Plantastic** ist eine iOS-App, die dir hilft, deine Pflanzen optimal zu pflegen – mit personalisierten Gieß-Erinnerungen, standortbasiertem Wetter und umfassenden Pflanzeninfos. 🌱☀️
 
-### ✨ Features
 
-- 🪴 Pflanzen entdecken: Durchsuche eine umfangreiche Datenbank mit tausenden von Pflanzenarten und finde detaillierte Informationen zu Pflege, Standort, Gießen und mehr.
-- ✨ Favoriten verwalten: Speichere deine Lieblingspflanzen in deinem persönlichen "Garten", um schnellen Zugriff auf ihre spezifischen Pflegeanforderungen zu haben.
-- 💧 Individuelle Bewässerungspläne: Protokolliere, wann du deine Pflanzen zuletzt gegossen hast, und erhalte Empfehlungen für die nächste Bewässerung.
-- 📍 Wetterintegration: Passe dein Gießverhalten an das lokale Klima an
-- 🔔 Automatische Benachrichtigungen: Erhalte eine Push-Nachricht wenn eine Pflanze gegossen werden muss
-- 📆 Kalender-Integration: Überblick über deine kommenden Gießaufgaben
-- 🔐 Benutzerprofile: Speicherung deiner Favoriten & Gießdaten via Firebase
+![11](https://github.com/user-attachments/assets/6455931d-bb95-47a4-a188-0388416e110a)
+
+
 
 ---
 
-### 🛠 Technologien
+## ✨ Funktionen im Überblick
 
-| Technologie     | Zweck                                                                           |
-|----------------|----------------------------------------------------------------------------------|
-| Swift & SwiftUI | App-Entwicklung mit moderner UI & States                                        |
-| WeatherAPI      | Standortbasiertes Wetter zur Anpassung des Gießverhaltens                       |
-| Perenual API    | Pflanzenspezifische Daten & Pflegeanleitungen                                   |
-| Firebase	      | Nutzerverwaltung, Cloudspeicher, Authentifizierung und Realtime-Daten           |
-| @AppStorage	    | Persistente lokale Speicherung für UI-Zustände wie Dark Mode oder Intro-Screens |
+- 🪴 **Pflanzen entdecken**  
+  Durchsuche eine umfangreiche Datenbank mit tausenden Pflanzenarten – inklusive Pflegehinweisen, Standort, Lichtbedarf und Gießintervallen.
+
+- 🌟 **Favoriten speichern**  
+  Lege deine Lieblingspflanzen in deinem digitalen „Garten“ ab – für schnellen Zugriff auf alle wichtigen Infos.
+
+- 💧 **Individuelle Gießpläne**  
+  Dokumentiere, wann du zuletzt gegossen hast, und erhalte Empfehlungen für den nächsten Gießzeitpunkt.
+
+- 📍 **Wetterintegration**  
+  Passe dein Gießverhalten automatisch an lokale Wetterbedingungen an.
+
+- 🔔 **Push-Benachrichtigungen**  
+  Lass dich erinnern, wenn deine Pflanzen durstig sind.
+
+- 📆 **Kalender-Übersicht**  
+  Behalte alle anstehenden Gießaufgaben im Blick.
+
+- 🔐 **Benutzerprofile mit Firebase**  
+  Speichere deine Pflanzen, Gießdaten und Einstellungen sicher in der Cloud.
+
+
+
+
+![12](https://github.com/user-attachments/assets/f899d5f9-a409-4280-a2b1-89d7b7119ffd)
+
+
+
+
+
 ---
 
-### 📲 Voraussetzungen
+## 🛠️ Technologien
 
-- iOS 18 oder neuer
-- Internetverbindung (für API-Zugriff & Firebase)
+| Technologie      | Einsatzbereich                                                                 |
+|------------------|--------------------------------------------------------------------------------|
+| **Swift & SwiftUI** | Moderne App-Entwicklung mit deklarativer UI                                 |
+| **WeatherAPI**      | Standortbasiertes Wetter für smarte Gießentscheidungen                      |
+| **Perenual API**    | Pflanzendatenbank mit Pflegeinfos, Bildern & Standortansprüchen             |
+| **Firebase**        | Authentifizierung, Cloud-Speicherung & Realtime-Daten                       |
+| **@AppStorage**     | Lokale Speicherung von UI-Zuständen (z. B. Dark Mode, Intro-Screens)        |
+
+---
+
+## 📲 Voraussetzungen
+
+- iOS 18 oder neuer  
+- Internetverbindung (für API-Zugriff & Firebase)  
 - Berechtigung für Push-Benachrichtigungen
 
 ---
 
-### 🔗 API-Integration
+## 🔗 API-Integration
 
-#### 📍 [WeatherAPI](https://api.weatherapi.com/)
-Die App nutzt Wetterdaten (Temperatur, Niederschlag, Luftfeuchtigkeit), damit du sehen kannst, ob deine Pflanzen heute gegossen werden sollten. Das macht die Gießentscheidungen smarter.
+### 📍 [WeatherAPI](https://api.weatherapi.com/)  
+- Standortgenaue Wetterdaten (Temperatur, Regen, Luftfeuchtigkeit) zur Optimierung der Gießempfehlungen.
 
-#### 🌱 [Perenual API](https://perenual.com/api/)
-Diese API liefert Daten zu tausenden Pflanzenarten: Standortansprüche, Gießintervalle, Sonnenverträglichkeit, Blütezeit und vieles mehr – direkt in der App integriert.
+### 🌱 [Perenual API](https://perenual.com/api/)  
+- Umfassende Pflanzeninformationen: Gießintervalle, Lichtbedarf, Blütezeit, Standortansprüche und mehr.
 
-#### 🔐 [Firebase](https://firebase.google.com/)
-- Speicherung der Nutzerdaten & Favoriten in der Firestore-Datenbank
-- Authentifizierung von Nutzer:innen
-- Realtime-Updates bei Änderungen am Pflanzenbestand
-- Speicherung von Gießverlauf und nächsten Terminen
+### 🔐 [Firebase](https://firebase.google.com/)  
+- Authentifizierung & Benutzerverwaltung  
+- Speicherung von Favoriten, Gießdaten & Erinnerungen  
+- Realtime-Updates bei Änderungen
 
----
 
-### 📱 Screenshots
 
-![screenshotsGit](https://github.com/user-attachments/assets/7d2e3e97-b4b6-48c2-b501-263470085c3c)
+![13](https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a)
 
----
 
-### 🔧 Weiterentwicklungsideen
-
-- 🌤 Anpassung der Bewässerungsempfehlungen an die aktuellen Wetterbedingungen (Regen, Temperatur, Luftfeuchtigkeit)
-- ⛅️ Wettervorhersage für die nächsten 3 Tage
-- 🎶 Sound für verbesserte UX - z.B. bei Klick auf den Bewässern-Button
-- 🎍 Intelligente Pflegeempfehlungen und automatische Benachrichtigungen zu Düngen, Umtopfen oder Schnitt
-- 💡 Nützliche Tipps und Tricks zum Thema Gardening allgemein
-- 📷 Nutzer:innen können eigene Fotos ihrer Pflanzen und Notizen hinzufügen
-- 📸 Pflanzenerkennung per Kamera-Integration
-- 🏁 Erweiterte Meilensteine für interaktive Nutzererfahrung und Langzeitmotivation
-- 🎯 Nutzer:innen können durch das Erreichen von Meilensteinen Credits sammeln, um z.B. einen Baum zu pflanzen
-- 🔗 Links zu Produktempfehlungen
-- 🚫 Offline-Modus
 
 ---
 
-Viel Spaß beim Pflegen deiner Pflanzen mit Plantastic! 💚
+## 🚀 Zukunftsvision
+
+- 🌧 **Wetterbasierte Gieß-Erinnerungen**  
+- ⛅️ **3-Tage-Wetterprognose für Pflegeplanung**  
+- 🔊 **Sound-Feedback für bessere UX**  
+- 🌿 **Intelligente Pflegehinweise (Düngen, Umtopfen, Schnitt)**  
+- 💡 **Allgemeine Gardening-Tipps & Tricks**  
+- 📷 **Eigene Pflanzenfotos & Notizen speichern**  
+- 📸 **Pflanzenerkennung per Kamera**  
+- 🏆 **Meilensteine & Gamification für Langzeitmotivation**  
+- 🎯 **Credits sammeln & z. B. Bäume pflanzen**  
+- 🔗 **Produktempfehlungen direkt in der App**  
+- 📴 **Offline-Modus für maximale Flexibilität**
+
+---
+
+## 💚 Viel Spaß beim Pflegen deiner Pflanzen mit Plantastic!
+
+Bei Fragen, Feedback oder Ideen zur Weiterentwicklung: Let’s grow together! 🌱
