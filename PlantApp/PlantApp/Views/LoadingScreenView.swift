@@ -20,8 +20,8 @@ struct LoadingScreenView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
-                .padding(.horizontal, 40)
-                .padding(.bottom, 60)
+                .padding(.horizontal, 50)
+                .padding(.bottom, 50)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         showOverlay = true
@@ -33,17 +33,26 @@ struct LoadingScreenView: View {
                 .fontWeight(.medium)
                 .foregroundStyle(Color("textColor"))
                 .multilineTextAlignment(.center)
-                .padding(.bottom, 365)
+                .fontDesign(.serif)
+
+                .padding(.bottom, 340)
             
-            Text(hasAppeared ? "Welcome back, Green Thumb!" : "Your green journey starts now")
-                .font(.system(size: 25))
-                .foregroundStyle(Color("primaryPetrol"))
-                .fontWeight(.regular)
-                .multilineTextAlignment(.center)
-                .padding(.top, 450)
+//            Text(hasAppeared ? "Welcome back, Green Thumb!" : "Your green journey starts now")
+//                .font(.system(size: 25))
+//                .foregroundStyle(.white)
+//                .fontWeight(.regular)
+//                .fontDesign(.serif)
+//                .multilineTextAlignment(.center)
+//                .padding(.top, 450)
             Spacer()
             Spacer()
         }
+        .background(
+            Image("bgSlide")
+            .resizable()
+            .scaledToFill()
+            .frame(width: 450)
+        )
         .onDisappear {
             hasAppeared = true
         }
