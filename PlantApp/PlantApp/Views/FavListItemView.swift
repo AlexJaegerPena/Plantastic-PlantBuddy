@@ -12,7 +12,6 @@ struct FavListItemView: View {
     
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
     
-    
     @State private var isClicked = false
     @State private var showWateringMessage = false
         
@@ -39,7 +38,7 @@ struct FavListItemView: View {
                         .foregroundColor(.gray)
                 }
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(plant.commonName)
+                    Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
                         .foregroundStyle(Color("primaryPetrol"))

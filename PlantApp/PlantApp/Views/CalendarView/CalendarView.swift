@@ -53,7 +53,6 @@ struct CalendarView: View {
                             }
                             .overlay(alignment: .bottom) {
                                 HStack(spacing: 3) {
-                                    
                                     let tasksForThisDate = favPlantViewModel.futureWateringTasks.filter {
                                         // Datum der Aufgabe mit dem Datum des Kalendertags vergleichen
                                         task in
@@ -61,13 +60,9 @@ struct CalendarView: View {
                                     }
                                     let limitedTasksForDisplay = tasksForThisDate.prefix(1)
                                     
-                                    
-                                    
                                     ForEach(limitedTasksForDisplay) { task in
                                         Image(systemName: "drop.fill")
-                                        //                                    Circle()
                                             .font(.system(size: 12))
-                                        //                                        .frame(width: 4, height: 4)
                                             .padding(.bottom, 2)
                                             .foregroundStyle(isSelected ? .white : Color("secondaryPetrol"))
                                     }
@@ -81,8 +76,6 @@ struct CalendarView: View {
                             selectedDate = date
                         }
                     }
-                    
-                    
                 }
                 Spacer()
             }
@@ -102,9 +95,7 @@ struct CalendarView: View {
         // Generiert alle Tage in 1-Tages-Schritten (86400 Sekunden = 24 Stunden)
         return stride(from: firstWeek.start, through: lastWeek.end, by: 86400).map { $0 }
     }
-        
 }
-
 
 
 #Preview {

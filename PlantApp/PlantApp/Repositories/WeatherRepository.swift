@@ -67,6 +67,7 @@ class WeatherRepository {
         }
     }
 
+    
     func fetchWeatherForecast(
         for city: String? = nil, coordinates: CLLocationCoordinate2D? = nil
     ) async throws -> WeatherForecast {

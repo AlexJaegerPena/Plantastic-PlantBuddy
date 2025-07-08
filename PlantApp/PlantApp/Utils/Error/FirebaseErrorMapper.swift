@@ -8,14 +8,18 @@
 import Foundation
 import FirebaseAuth
 
+
+// Firebase Fehler in eigenen AuthError (enum) umwandeln
 struct FirebaseErrorMapper {
+    // generischen error entgegennehmen und AuthError zurück geben
     static func map(_ error: Error) -> AuthError {
-        let nsError = error as NSError
+        let nsError = error as NSError // Typecasting
+        // Sicherstellen, dass Fehler ein Firebase-Auth-Fehler ist
         guard nsError.domain == AuthErrorDomain,
               let code = AuthErrorCode(rawValue: nsError.code) else {
             return .unknown
         }
-
+        // Basiernd auf Firebase-Fehlercode in passenden AuthError umwandeln
         switch code {
         case .userNotFound:
             return .userNotFound
@@ -36,7 +40,7 @@ struct FirebaseErrorMapper {
 }
 
 
-// Typ Error um asAuthError erweitern
+// Error-Typ neue Eigenschaft asAuthError zuweisen
 extension Error {
     var asAuthError: AuthError {
         FirebaseErrorMapper.map(self)

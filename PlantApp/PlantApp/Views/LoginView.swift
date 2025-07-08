@@ -13,7 +13,6 @@ struct LoginView: View {
 
     @State private var showRegister = false
     @State private var isActive = false
-    @State private var authError: AuthError?
     @State private var showPassword = false
 
 
@@ -53,46 +52,42 @@ struct LoginView: View {
                             color: Color("secondaryPetrol").opacity(0.5), radius: 2,
                             x: 2, y: 2)
                     
-                    Text((authError?.errorDescription) ?? "")
+                Text((userViewModel.authError?.errorDescription) ?? "")
                         .foregroundStyle(.red)
 
-                
-                    Button {
-                        Task {
-                            if showRegister {
-                                Task {
-                                    do {
-                                        try await userViewModel.registerWithEmailPassword()
-                                    } catch let error as AuthError {
-                                        authError = error
-//                                        showError = true
-                                    }
+                Button {
+                    Task {
+                        if showRegister {
+                            Task {
+                                do {
+                                    try await userViewModel.registerWithEmailPassword()
+                                } catch let error as AuthError {
+                                    userViewModel.authError = error
                                 }
-                            } else {
-                                Task {
-                                    do {
-                                        try await userViewModel.loginEmailPassword()
-                                    } catch let error as AuthError {
-                                        authError = error
-//                                        showError = true
-                                    }
+                            }
+                        } else {
+                            Task {
+                                do {
+                                    try await userViewModel.loginEmailPassword()
+                                } catch let error as AuthError {
+                                    userViewModel.authError = error
                                 }
                             }
                         }
-                    } label: {
-                        Text(showRegister ? "Register" : "Login")
-                            .font(.system(size: 24))
-                            .padding(.horizontal, 30)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(isActive ? Color("secundaryPetrol") : Color("primaryPetrol"))
-                    .padding(.top, 15)
+                } label: {
+                    Text(showRegister ? "Register" : "Login")
+                        .font(.system(size: 24))
+                        .padding(.horizontal, 30)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(isActive ? Color("secundaryPetrol") : Color("primaryPetrol"))
+                .padding(.top, 15)
                     
-                   
-                    Button(showRegister ? "Got an account?" : "Register here") {
-                        showRegister.toggle()
-                    }
-                    .foregroundStyle(Color("secondaryPetrol"))
+                Button(showRegister ? "Got an account?" : "Register here") {
+                    showRegister.toggle()
+                }
+                .foregroundStyle(Color("secondaryPetrol"))
             }
             .padding()
         }

@@ -80,7 +80,6 @@ struct FirePlant: Codable, Identifiable {
     }
     
     
-    
     var waterings: [WateringRecord]?
     var timesWatered: Int?
     var userCategory: UserCategory?

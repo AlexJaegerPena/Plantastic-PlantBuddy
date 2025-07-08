@@ -13,7 +13,7 @@ struct CalendarHeaderView: View {
     
     @Binding var displayedMonth: Date
     @State private var selectedDate: Date? = nil
-    
+
     let calendar = Calendar.current
     
     let formatter: DateFormatter = {

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PlantDetailView: View {
 
-    let selectedPlant: Plant  // API plant
-    let selectedPlantId: Int  // API id
+    let selectedPlant: Plant
+    let selectedPlantId: Int
 
     @State private var currentFavFirePlant: FirePlant?
     @State private var isFavorite = false
@@ -23,7 +23,6 @@ struct PlantDetailView: View {
 
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
-//    @ObservedObject var plantDetailsViewModel: PlantDetailsViewModel
 
     // init um @StateObject zu initialisieren
     // _ um Swift zu sagen es soll einmalig initialisieren

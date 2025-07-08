@@ -54,7 +54,6 @@ struct WeatherView: View {
                         }
                         .padding(.leading, 25)
                         .padding(.vertical, 20)
-                        
                         Spacer()
                         VStack(alignment: .trailing) {
                             Text(weather.location.name)

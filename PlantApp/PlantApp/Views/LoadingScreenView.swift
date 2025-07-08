@@ -11,13 +11,11 @@ struct LoadingScreenView: View {
     
     @EnvironmentObject var userViewModel: UserViewModel
     
-//    @State private var hasAppeared = false
     @AppStorage("hasAppeared") private var hasAppeared = false
     @State private var showOverlay = false
         
     var body: some View {
         ZStack {
-            
             Image(showOverlay ? "welcome2" : "welcome1")
                 .resizable()
                 .scaledToFit()
@@ -25,10 +23,10 @@ struct LoadingScreenView: View {
                 .padding(.horizontal, 40)
                 .padding(.bottom, 60)
                 .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    showOverlay = true
-                            }
-                        }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        showOverlay = true
+                    }
+                }
             
             Text("Hey \(userViewModel.username)!👋")
                 .font(.system(size: 30))
@@ -40,8 +38,7 @@ struct LoadingScreenView: View {
             Text(hasAppeared ? "Welcome back, Green Thumb!" : "Your green journey starts now")
                 .font(.system(size: 25))
                 .foregroundStyle(Color("primaryPetrol"))
-                .fontWeight(.medium)
-//                .fontWeight(.bold)
+                .fontWeight(.regular)
                 .multilineTextAlignment(.center)
                 .padding(.top, 450)
             Spacer()
