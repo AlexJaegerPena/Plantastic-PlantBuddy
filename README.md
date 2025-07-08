@@ -1,10 +1,12 @@
 # 🌿 Plantastic – Dein smarter Plant Buddy
 
 
-![1](https://github.com/user-attachments/assets/16946351-8fc6-4cab-a9ec-c8dfb1688c98)
-
-
 **Plantastic** ist eine iOS-App, die dir hilft, deine Pflanzen optimal zu pflegen – mit personalisierten Gieß-Erinnerungen, standortbasiertem Wetter und umfassenden Pflanzeninfos. 🌱☀️
+
+
+![11](https://github.com/user-attachments/assets/6455931d-bb95-47a4-a188-0388416e110a)
+
+
 
 ---
 
