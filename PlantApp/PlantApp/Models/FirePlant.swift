@@ -159,12 +159,7 @@ extension FirePlant {
         edibleLeaf: Bool?,
         attracts: [String]?,
         hardiness: Hardiness?,
-//        lastWatering: Date?,
-//        needsToBeWatered: Bool,
-//        nextWatering: Date,
         waterings: [WateringRecord]?
-//        timesWatered: Int?,
-//        userCategory: UserCategory?
     ) {
         self.id = id
         self.apiPlantId = apiPlantId
