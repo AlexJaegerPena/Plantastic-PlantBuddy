@@ -131,7 +131,7 @@ struct PlantDetailView: View {
                                 )
                                 .font(.subheadline)
                                 .italic()
-                                .foregroundStyle(Color("lightGrayColor"))
+                                .foregroundStyle(Color("myLightGrayColor"))
                                 .lineLimit(2)
                             }
                             .padding(.horizontal)

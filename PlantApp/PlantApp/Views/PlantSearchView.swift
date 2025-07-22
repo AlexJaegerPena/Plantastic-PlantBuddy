@@ -55,7 +55,7 @@ struct PlantSearchView: View {
                         } label: {
                             Image(systemName: "xmark.circle")
                         }
-                        .tint(Color("lightGrayColor"))
+                        .tint(Color("myLightGrayColor"))
                         .padding(.trailing, 10)
                     }
                     .background(Color("bgColor"))
@@ -118,7 +118,7 @@ struct EmptySearchResultView: View {
                 .frame(width: 120)
                 .opacity(0.7)
             Text("No matching plants found.")
-                .foregroundColor(Color("lightGrayColor"))
+                .foregroundColor(Color("myLightGrayColor"))
             Spacer()
         }
         .padding(.top, 200)

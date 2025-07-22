@@ -48,7 +48,7 @@ struct PlantListItemView: View {
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 3)
-                        .foregroundColor(Color("lightGrayColor"))
+                        .foregroundColor(Color("myLightGrayColor"))
                     if countPlantType > 0 {
                         Text("\(countPlantType) in your garden")
                             .font(.system(size: 14))
