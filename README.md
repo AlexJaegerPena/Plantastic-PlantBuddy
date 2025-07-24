@@ -40,6 +40,7 @@
 
 
 
+![13](https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a)
 
 
 ---
@@ -76,10 +77,6 @@
 - Authentifizierung & Benutzerverwaltung  
 - Speicherung von Favoriten, Gießdaten & Erinnerungen  
 - Realtime-Updates bei Änderungen
-
-
-
-![13](https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a)
 
 
 
