@@ -101,3 +101,4 @@
 ## 💚 Viel Spaß beim Pflegen deiner Pflanzen mit Plantastic!
 
 Bei Fragen, Feedback oder Ideen zur Weiterentwicklung: Let’s grow together! 🌱
+MIT Lizenz
