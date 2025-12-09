@@ -187,8 +187,3 @@ Bei Fragen, Feedback oder Ideen zur Weiterentwicklung: Let’s grow together! �
 For questions, feedback, or ideas for further development: Let’s grow together! 🌱
 
 </details>
-
----
-
-## 📜 Lizenz
-Dieses Projekt ist unter der **MIT License** lizenziert.
