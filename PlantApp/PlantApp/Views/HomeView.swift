@@ -60,7 +60,7 @@ struct HomeView: View {
                             .environmentObject(userViewModel)
                             .environmentObject(settingsViewModel)
                     }
-                    .tint(Color("primaryPetrol"))
+                    .tint(Color("textColor"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -68,7 +68,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "trophy.fill")
                     }
-                    .tint(Color("primaryPetrol"))
+                    .tint(Color("secondaryPetrol"))
                     .navigationDestination(isPresented: $showMilestones) {
                         MilestonesView()
                             .environmentObject(favPlantViewModel)

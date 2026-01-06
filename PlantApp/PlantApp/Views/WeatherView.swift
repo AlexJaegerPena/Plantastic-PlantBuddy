@@ -73,7 +73,7 @@ struct WeatherView: View {
 //                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
 //                    )
                 }
-                .foregroundStyle(.white)
+                .foregroundStyle(Color("primaryPetrol"))
 
             } else if weatherViewModel.isLoading {
                 ProgressView("Weather is loading...")
@@ -91,7 +91,7 @@ struct WeatherView: View {
                             Color.white.opacity(0.8)))
             }
         }
-        .padding(.horizontal, 5)
+        .padding(.horizontal, 10)
         .padding(.top, 10)
         .padding(.bottom, 20)
         .onAppear {

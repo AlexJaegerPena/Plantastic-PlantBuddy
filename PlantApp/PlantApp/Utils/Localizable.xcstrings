@@ -47,9 +47,6 @@
     "Add plants to your Garden" : {
 
     },
-    "Add to garden" : {
-
-    },
     "App settings" : {
 
     },
@@ -101,6 +98,9 @@
     "Fehler. %@" : {
 
     },
+    "Find your plant" : {
+
+    },
     "Garden Milestones" : {
 
     },
@@ -114,9 +114,6 @@
 
     },
     "How should we call you?" : {
-
-    },
-    "In your garden" : {
 
     },
     "Loading Plant Details..." : {
@@ -179,6 +176,9 @@
     "Profile" : {
 
     },
+    "Read more" : {
+
+    },
     "Register" : {
 
     },
@@ -191,13 +191,13 @@
     "Remove this plant?" : {
 
     },
-    "Search" : {
-
-    },
     "Select Language" : {
 
     },
     "Set Time" : {
+
+    },
+    "Show less" : {
 
     },
     "Smart plant care made simple" : {
@@ -219,9 +219,6 @@
 
     },
     "Tipe in a name" : {
-
-    },
-    "Title" : {
 
     },
     "Username" : {

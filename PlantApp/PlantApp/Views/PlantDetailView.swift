@@ -18,6 +18,8 @@ struct PlantDetailView: View {
     @State private var showDelFavAlert = false
     @State private var showDelSuccessAlert = false
     @State private var isClicked = false
+    @State private var isDescriptionExpanded = false
+
 
     @StateObject private var plantDetailsViewModel: PlantDetailsViewModel
 
@@ -75,79 +77,35 @@ struct PlantDetailView: View {
                                 }
                                 .padding(.horizontal, 15)
 
-                                // ---- Favorite Button ----
-                                    Button {
-                                        if !isFavorite {
-                                            Task {
-                                                let plantToAdd = FirePlant(
-                                                    from: plant)
-                                                await favPlantViewModel
-                                                    .addToFavorites(plantToAdd)
-                                                await favPlantViewModel
-                                                    .loadFavorites()
-                                                checkIfFavorite()
-                                                showAddFavAlert = true
-                                            }
-                                        } else {
-                                            showDelFavAlert = true
-                                        }
-                                    } label: {
-                                        HStack(spacing: 5) {
-                                            Text(isFavorite ? "In your garden" : "Add to garden")
-                                            Image(
-                                                systemName: isFavorite
-                                                ? "xmark" : "plus"
-                                            )
-                                            .font(.system(size: 20))
-                                        }
-                                        .padding(.vertical, 20)
-                                        .padding(.horizontal, 20)
-                                        .foregroundStyle(.white
-                                        )
-                                        .background(isFavorite
-                                            ? Color("secondaryPetrol")
-                                            : Color("primaryPetrol")
-                                        )
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                        .shadow(radius: 5)
-                                        .scaleEffect(isClicked ? 1.2 : 1.0)
-                                        .animation(.spring(response: 0.3, dampingFraction: 0.4, blendDuration: 0), value: isClicked)
-                                    }
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 20)
                             }
-
-                            // ---- Plant Names ----
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
-                                    .font(.system(size: 30))
-                                    .fontWeight(.semibold)
-                                    .lineLimit(2)
-                                    .minimumScaleFactor(0.7)
-                                    .foregroundStyle(Color("primaryPetrol"))
-
-                                Text(
-                                    plant.scientificName.joined(separator: ", ")
-                                )
-                                .font(.subheadline)
-                                .italic()
-                                .foregroundStyle(Color("myLightGrayColor"))
-                                .lineLimit(2)
-                            }
-                            .padding(.horizontal)
-
                             // ---- Description ----
-                            if let description = plant.description,
-                                !description.isEmpty
-                            {
-                                SectionHeader(
-                                    title: "Description",
-                                    icon: "info.bubble.fill.rtl")
+                            if let description = plant.description, !description.isEmpty {
+                                SectionHeader(title: "Description", icon: "info.bubble.fill.rtl")
+
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(description)
                                         .font(.body)
                                         .foregroundStyle(Color("textColor"))
                                         .lineSpacing(4)
+                                        .lineLimit(isDescriptionExpanded ? nil : 5)
+                                        .truncationMode(.tail)
+                                        .animation(.easeInOut(duration: 0.2), value: isDescriptionExpanded)
+
+                                    Button {
+                                        isDescriptionExpanded.toggle()
+                                    } label: {
+                                        HStack(spacing: 6) {
+                                            Text(isDescriptionExpanded ? "Show less" : "Read more")
+                                                .font(.subheadline)
+                                                .fontWeight(.semibold)
+
+                                            Image(systemName: isDescriptionExpanded ? "chevron.up" : "chevron.down")
+                                                .font(.subheadline)
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .foregroundStyle(Color("primaryPetrol"))
+                                    .padding(.top, 4)
                                 }
                                 .padding(.horizontal)
                             }
@@ -278,7 +236,39 @@ struct PlantDetailView: View {
                         }
                         .padding(.bottom, 20)
                     }
+                    .navigationTitle(plant.commonName.lowercased()
+                    .trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
+                    .foregroundStyle(Color("textColor"))
+                    .navigationBarTitleDisplayMode(.large)
+                
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                if !isFavorite {
+                                Task {
+                                    let plantToAdd = FirePlant(from: plant)
+                                    await favPlantViewModel.addToFavorites(plantToAdd)
+                                    await favPlantViewModel.loadFavorites()
+                                    checkIfFavorite()
+                                    showAddFavAlert = true
+                                }
+                            } else {
+                                showDelFavAlert = true
+                            }
+                        } label: {
+                            HStack(spacing: 5) {
+                                Image(
+                                    systemName: isFavorite
+                                    ? "trash" : "plus"
+                                )
+                                .foregroundStyle(Color("secondaryPetrol"))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
             }
+           
             else {
                     ContentUnavailableView(
                         "Plant Not Found",

@@ -43,7 +43,7 @@ struct PlantListItemView: View {
                     Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
-                        .foregroundColor(Color("textColor"))
+                        .foregroundColor(.black)
                     Text(plant.scientificName.first ?? "")
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
