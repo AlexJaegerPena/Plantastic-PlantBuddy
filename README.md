@@ -1,56 +1,66 @@
 # 🌿 Plantastic – Your Smart Plant Buddy
 
-Plantastic is an iOS app designed to help plant lovers care for their plants in a simple, reliable, and stress-free way.  
-By combining intelligent watering reminders, location-based weather data, and comprehensive plant information, Plantastic turns everyday plant care into an intuitive experience. 🌱☀️
+**Plantastic** is a modern iOS app designed to help plant lovers care for their plants in a simple, reliable, and stress-free way.  
+By combining intelligent watering reminders, location-based weather data, and comprehensive plant information, Plantastic turns everyday plant care into an intuitive and enjoyable experience. 🌱☀️
+
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6455931d-bb95-47a4-a188-0388416e110a" width="600"/>
+  <img src="https://github.com/user-attachments/assets/cf0a7f5e-ef9e-4c2c-9a3f-1524944fbdb5" width="800"/>
 </p>
 
 ---
 
 ## 🎯 Project Goal
 
-The goal of Plantastic was to solve a common problem many plant owners face:  
-keeping track of plant care consistently while considering environmental factors like weather and location.
+The goal of Plantastic was to solve a common challenge many plant owners face:  
+**keeping plant care consistent while considering environmental factors such as weather and location.**
 
 The focus of this project was to design and build a modern iOS app that:
+
 - feels intuitive and approachable  
 - reduces cognitive load through automation  
-- combines reliable data sources with a clean user experience  
+- combines reliable data sources with a clean, user-centered experience
 
----
-
-## 📱 App Preview
+</br>
 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f899d5f9-a409-4280-a2b1-89d7b7119ffd" width="800"/>
-</p>
-
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a" width="800"/>
+  <img src="https://github.com/user-attachments/assets/b7352971-e652-42bb-b433-39d72bc0131d" width="800"/>
 </p>
 
 ---
+
 
 ## ✨ Core Features
 
-- 🌱 **Plant Discovery**  
-  Browse a large plant database with detailed care instructions, light requirements, and watering intervals.
+- 🪴 **Discover Plants**  
+  Browse an extensive database with thousands of plant species, including care instructions, ideal location, light requirements, and watering intervals.
+
+- 🌟 **Save Favorites**  
+  Store your favorite plants in your personal digital “garden” for quick access to all important information.
 
 - 💧 **Personalized Watering Plans**  
-  Track watering history and receive recommendations tailored to each plant.
+  Track your last watering date and receive recommendations for the next watering time.
 
-- 📍 **Weather-Aware Care**  
-  Local weather conditions automatically influence watering suggestions.
+- 📍 **Weather Integration**  
+  Adjust your watering routine based on local weather conditions.
 
-- 🔔 **Smart Reminders & Calendar**  
-  Stay on top of upcoming watering tasks with notifications and a clear calendar overview.
+- 🔔 **Push Notifications**  
+  Get reminded when your plants need watering.
 
-- ☁️ **Cloud-Based User Profiles**  
-  Save plants, watering data, and preferences securely using Firebase.
+- 📆 **Calendar Overview**  
+  Keep track of all upcoming watering tasks at a glance.
+
+- 🔐 **User Profiles with Firebase**  
+  Securely store your plants, watering data, and preferences in the cloud.
+
+</br>
+
+
+![12](https://github.com/user-attachments/assets/f899d5f9-a409-4280-a2b1-89d7b7119ffd)
+
+
+
 
 ---
 
@@ -60,35 +70,32 @@ The focus of this project was to design and build a modern iOS app that:
   Modern, declarative UI development following Apple best practices.
 
 - **MVVM Architecture**  
-  Clear separation of concerns for maintainable and testable code.
+  Clear separation of concerns for maintainable, scalable, and testable code.
 
-- **WeatherAPI**  
-  Location-based weather data (temperature, rainfall, humidity).
+- **Weather Data Integration**  
+  Location-based weather data used to influence watering recommendations.
 
-- **Perenual API**  
-  Comprehensive plant data including care information and images.
+- **Plant Data Integration**  
+  Comprehensive plant data including care instructions, images, and requirements.
 
 - **Firebase**  
   Authentication, cloud storage, and real-time data synchronization.
 
 - **@AppStorage**  
   Lightweight local persistence for UI-related states such as Dark Mode and onboarding flow.
+</br>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5b11c8d2-827b-4ba8-9ca9-6a6b3913b5bd" width="800"/>
+</p>
 
 ---
 
-## 🔗 API Integration
+## 📲 Requirements
 
-### 📍 WeatherAPI  
-Used to fetch real-time, location-specific weather data in order to improve watering recommendations dynamically.
-
-### 🌱 Perenual API  
-Provides detailed plant information such as watering frequency, light requirements, flowering periods, and general care tips.
-
-### 🔐 Firebase  
-Handles:
-- user authentication  
-- persistent storage of favorites and watering data  
-- real-time updates across sessions  
+- iOS 18 or later  
+- Internet connection  
+- Permission for push notifications  
 
 ---
 
@@ -97,19 +104,35 @@ Handles:
 Plantastic was designed with extensibility in mind. Possible next steps include:
 
 - 🌧 Weather-based watering reminders  
+- ⛅️ Multi-day weather forecasts for better care planning  
 - 🔊 Sound feedback to enhance UX  
 - 🌿 Smart care tips (fertilizing, repotting, pruning)  
-- 💡 General gardening knowledge and tips  
+- 💡 General gardening knowledge & tips  
+- 📷 Saving personal plant photos and notes  
 - 📸 Plant recognition via camera  
-- 🏆 Milestones and light gamification to support long-term engagement  
+- 🏆 Milestones and light gamification for long-term engagement  
 - 🔗 Curated product recommendations  
 - 📴 Offline mode for improved flexibility  
 
 ---
 
-## 👩‍💻 Author
 
-Developed by **Alex Jäger Peña**
+## 👩‍💻 About the Project
+
+Plantastic was created in **2025** as part of my professional training in **Mobile App Development (iOS)**.  
+The project demonstrates my focus on:
+
+- clean SwiftUI architecture  
+- structured MVVM design  
+- data-driven features  
+- Firebase-based state & data handling  
+- user-centered app design  
+
+---
+
+## 🌿 Author
+
+Developed by **Alex Jäger Peña**  
 
 Plantastic was created in **2025** as part of my professional training in **Mobile App Development (iOS)**.  
 The project demonstrates my focus on clean SwiftUI architecture, API integration, Firebase-based data handling, and user-centered app design.
