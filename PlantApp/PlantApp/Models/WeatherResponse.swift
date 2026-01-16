@@ -98,16 +98,16 @@ enum WeatherCategory {
   
     var backgroundImageName: String {
         switch self {
-        case .sunny: return "sunny"
-        case .partlyCloudy: return "cloudy"
-        case .cloudy: return "cloudy"
-        case .mist: return "mist"
-        case .rainLight: return "rain"
-        case .rainHeavy: return "rainHeavy"
-        case .snow: return "snow"
-        case .sleet: return "snow"
-        case .thunder: return "thunderstorm"
-        case .unknown: return "clear"
+        case .sunny: return "sunny2"
+        case .partlyCloudy: return "clear2"
+        case .cloudy: return "clear2"
+        case .mist: return "mist2"
+        case .rainLight: return "mist2"
+        case .rainHeavy: return "rain2"
+        case .snow: return "snow2"
+        case .sleet: return "snow2"
+        case .thunder: return "rainHeavy2"
+        case .unknown: return "clear2"
         }
     }
 }

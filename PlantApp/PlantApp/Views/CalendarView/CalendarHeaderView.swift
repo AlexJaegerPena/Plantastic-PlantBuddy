@@ -55,7 +55,7 @@ struct CalendarHeaderView: View {
                         .frame(maxWidth: .infinity)
 //                        .foregroundStyle(index == todayWeekdayIndex ? .primary : .gray)
                         .padding(.vertical, 3)
-                        .background(index == todayWeekdayIndex ? Color("secondaryPetrol").opacity(0.4) : Color("secondaryPetrol").opacity(0.2), in: .rect(cornerRadius: 8))
+                        .background(index == todayWeekdayIndex ? Color("secondaryColor").opacity(0.4) : Color("secondaryColor").opacity(0.2), in: .rect(cornerRadius: 8))
                 }
             }
         }

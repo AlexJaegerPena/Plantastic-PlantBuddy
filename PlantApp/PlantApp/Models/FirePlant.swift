@@ -58,7 +58,7 @@ struct FirePlant: Codable, Identifiable {
     
     var wateringStatusText: String {
         if needsToBeWatered {
-            return "Needs water"
+            return "needs water"
         } else if let nextWaterDate = self.nextWaterDate {
             let calendar = Calendar.current
             let today = calendar.startOfDay(for: Date())
@@ -76,7 +76,7 @@ struct FirePlant: Codable, Identifiable {
                 }
             }
         }
-        return "No watering info"
+        return "no info"
     }
     
     

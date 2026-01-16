@@ -13,18 +13,13 @@ struct MilestoneCard: View {
     let currentValueLabel: Double
     let minValue: Double
     let maxValue: Double
-    let stamp: String = "stamp"
-    let icon: String
+    let stamp: String = "happyPlant"
     //    let tintColor: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Gauge(value: value, in: minValue...maxValue) {
                 HStack {
-                    Image(icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30, height: 30)
                     Text(title)
                         .font(.title3)
                         .fontWeight(.regular)
@@ -38,13 +33,13 @@ struct MilestoneCard: View {
                     )
                     .foregroundStyle(Color("textColor").opacity(0.6))
             }
-            .tint(Color("secondaryPetrol"))
+            .tint(Color("secondaryColor"))
             .padding()
             .background(Color("cardBg"))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .clipShape(RoundedRectangle(cornerRadius: 35))
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color("secondaryPetrol").opacity(0.5), lineWidth: 2)
+                RoundedRectangle(cornerRadius: 35)
+                    .stroke(Color("textColor").opacity(0.5), lineWidth: 2)
             )
             .overlay(
                 Image(currentValueLabel >= maxValue ? stamp : "")
@@ -56,7 +51,7 @@ struct MilestoneCard: View {
                     .rotationEffect(.degrees(20), anchor: .center)
             )
         }
-        .shadow(color: Color("secondaryPetrol").opacity(0.3), radius: 3, x: 1, y: 1)
+        .shadow(color: Color("textColor").opacity(0.3), radius: 3, x: 1, y: 1)
         .frame(width: .infinity, height: 130, alignment: .leading)
         .padding(.horizontal,2)
         
@@ -79,40 +74,38 @@ struct MilestonesView: View {
 
     var body: some View {
         ScrollView {
-            Text("🏆 Milestones 🏆")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.bottom, 30)
-                .foregroundStyle(Color("primaryPetrol"))
-            
+
             Text("Watering Milestones")
                 .font(.title2)
                 .fontWeight(.medium)
-                .foregroundStyle(Color("secondaryPetrol"))
+                .foregroundStyle(Color("secondaryColor"))
+            MilestoneCard(
+                value: wateringTotalCount,
+                title: "💧 Water 5 plants",
+                currentValueLabel: wateringTotalCount,
+                minValue: min,
+                maxValue: 5)
 
             MilestoneCard(
                 value: wateringTotalCount,
-                title: "Water 5 plants",
-                currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 5, icon: "canPetrol")
+                title: "💧 Water 10 plants",
+                currentValueLabel: wateringTotalCount,
+                minValue: min,
+                maxValue: 10)
 
             MilestoneCard(
                 value: wateringTotalCount,
-                title: "Water 10 plants",
-                currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 10, icon: "canPetrol")
+                title: "💧 Water 25 plants",
+                currentValueLabel: wateringTotalCount,
+                minValue: min,
+                maxValue: 25)
 
             MilestoneCard(
                 value: wateringTotalCount,
-                title: "Water 25 plants",
-                currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 25, icon: "canPetrol")
-
-            MilestoneCard(
-                value: wateringTotalCount,
-                title: "Water 50 plants",
-                currentValueLabel: wateringTotalCount, minValue: min,
-                maxValue: 50, icon: "canPetrol")
+                title: "💧 Water 50 plants",
+                currentValueLabel: wateringTotalCount,
+                minValue: min,
+                maxValue: 50)
             
             Divider()
                 .padding(.top, 30)
@@ -121,30 +114,34 @@ struct MilestonesView: View {
             Text("Garden Milestones")
                 .font(.title2)
                 .fontWeight(.medium)
-                .foregroundStyle(Color("secondaryPetrol"))
+                .foregroundStyle(Color("textColor"))
             MilestoneCard(
                 value: ownedPlantsCount,
-                title: "Add 5 plants to your garden",
-                currentValueLabel: ownedPlantsCount, minValue: min,
-                maxValue: 5, icon: "plantMilestones")
+                title: "🌱 Add 5 plants to your garden",
+                currentValueLabel: ownedPlantsCount,
+                minValue: min,
+                maxValue: 10)
 
             MilestoneCard(
                 value: ownedPlantsCount,
-                title: "Add 10 plants to your garden",
-                currentValueLabel: ownedPlantsCount, minValue: min,
-                maxValue: 10, icon: "plantMilestones")
+                title: "🌱 Add 10 plants to your garden",
+                currentValueLabel: ownedPlantsCount,
+                minValue: min,
+                maxValue: 10)
 
             MilestoneCard(
                 value: ownedPlantsCount,
-                title: "Add 25 plants to your garden",
-                currentValueLabel: ownedPlantsCount, minValue: min,
-                maxValue: 25, icon: "plantMilestones")
+                title: "🌱 Add 25 plants to your garden",
+                currentValueLabel: ownedPlantsCount,
+                minValue: min,
+                maxValue: 25)
 
             MilestoneCard(
                 value: ownedPlantsCount,
-                title: "Add 50 plants to your garden",
-                currentValueLabel: ownedPlantsCount, minValue: min,
-                maxValue: 50, icon: "plantMilestones")
+                title: "🌱 Add 50 plants to your garden",
+                currentValueLabel: ownedPlantsCount,
+                minValue: min,
+                maxValue: 50)
         }
         .padding()
         .onAppear {
@@ -154,6 +151,9 @@ struct MilestonesView: View {
         .onChange(of: favPlantViewModel.favPlantsList.count) { oldValue, newValue in
             self.ownedPlantsCount = Double(newValue)
         }
+        .navigationTitle("Milestones")
+        .navigationBarTitleDisplayMode(.inline)
+
     }
 }
 

@@ -16,7 +16,8 @@ struct LoadingScreenView: View {
         
     var body: some View {
         ZStack {
-            Image(showOverlay ? "welcome2" : "welcome1")
+            //Image(showOverlay ? "welcome2" : "welcome1")
+            Image("welcome3")
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
@@ -31,9 +32,9 @@ struct LoadingScreenView: View {
             Text("Hey \(userViewModel.username)!👋")
                 .font(.system(size: 30))
                 .fontWeight(.medium)
-                .foregroundStyle(Color("textColor"))
+                .foregroundStyle(Color.black)
                 .multilineTextAlignment(.center)
-                .fontDesign(.serif)
+                // .fontDesign(.serif)
 
                 .padding(.bottom, 340)
             

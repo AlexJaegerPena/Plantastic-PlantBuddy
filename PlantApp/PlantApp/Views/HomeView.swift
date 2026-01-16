@@ -26,14 +26,14 @@ struct HomeView: View {
                 Spacer()
                 
                 if favPlantViewModel.favPlantsList.isEmpty {
-                    Image("emptyGarden")
+                    Image("mascot")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 160, height: 160)
-                        .padding(.leading, 60)
+                        .padding(5)
                         .opacity(0.6)
                     Text("No plants in your garden yet.\n\nKlick 🔍 Explore and\nadd plants to your favorites.")
-                        .foregroundStyle(Color("primaryPetrol"))
+                        .foregroundStyle(Color("textColor"))
                         .multilineTextAlignment(.center)
                         .padding(.bottom, 50)
                     Spacer()
@@ -46,21 +46,14 @@ struct HomeView: View {
                     Button {
                         showProfile = true
                     } label: {
-                        HStack {
-                            Image("userImage2")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                            Text("Hey, \(userViewModel.username.isEmpty ? "You" : userViewModel.username)!")
-                                .font(.title3)
-                        }
+                        Image(systemName: "person.fill")
                     }
                     .navigationDestination(isPresented: $showProfile) {
                         SettingsView()
                             .environmentObject(userViewModel)
                             .environmentObject(settingsViewModel)
                     }
-                    .tint(Color("primaryPetrol"))
+                    .tint(Color("textColor"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -68,7 +61,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "trophy.fill")
                     }
-                    .tint(Color("primaryPetrol"))
+                    .tint(Color("textColor"))
                     .navigationDestination(isPresented: $showMilestones) {
                         MilestonesView()
                             .environmentObject(favPlantViewModel)

@@ -1,60 +1,39 @@
-# 🌿 Plantastic – Your Smart Plant Buddy
-
-**Plantastic** is a modern iOS app designed to help plant lovers care for their plants in a simple, reliable, and stress-free way.  
-By combining intelligent watering reminders, location-based weather data, and comprehensive plant information, Plantastic turns everyday plant care into an intuitive and enjoyable experience. 🌱☀️
+# 🌿 Plantastic – Dein smarter Plant Buddy
 
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/cf0a7f5e-ef9e-4c2c-9a3f-1524944fbdb5" width="800"/>
-</p>
-
----
-
-## 🎯 Project Goal
-
-The goal of Plantastic was to solve a common challenge many plant owners face:  
-**keeping plant care consistent while considering environmental factors such as weather and location.**
-
-The focus of this project was to design and build a modern iOS app that:
-
-- feels intuitive and approachable  
-- reduces cognitive load through automation  
-- combines reliable data sources with a clean, user-centered experience
-
-</br>
+**Plantastic** ist eine iOS-App, die dir hilft, deine Pflanzen optimal zu pflegen – mit personalisierten Gieß-Erinnerungen, standortbasiertem Wetter und umfassenden Pflanzeninfos. 🌱☀️
 
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/b7352971-e652-42bb-b433-39d72bc0131d" width="800"/>
-</p>
+![11](https://github.com/user-attachments/assets/6455931d-bb95-47a4-a188-0388416e110a)
+
+
 
 ---
 
+## ✨ Funktionen im Überblick
 
-## ✨ Core Features
+- 🪴 **Pflanzen entdecken**  
+  Durchsuche eine umfangreiche Datenbank mit tausenden Pflanzenarten – inklusive Pflegehinweisen, Standort, Lichtbedarf und Gießintervallen.
 
-- 🪴 **Discover Plants**  
-  Browse an extensive database with thousands of plant species, including care instructions, ideal location, light requirements, and watering intervals.
+- 🌟 **Favoriten speichern**  
+  Lege deine Lieblingspflanzen in deinem digitalen „Garten“ ab – für schnellen Zugriff auf alle wichtigen Infos.
 
-- 🌟 **Save Favorites**  
-  Store your favorite plants in your personal digital “garden” for quick access to all important information.
+- 💧 **Individuelle Gießpläne**  
+  Dokumentiere, wann du zuletzt gegossen hast, und erhalte Empfehlungen für den nächsten Gießzeitpunkt.
 
-- 💧 **Personalized Watering Plans**  
-  Track your last watering date and receive recommendations for the next watering time.
+- 📍 **Wetterintegration**  
+  Passe dein Gießverhalten automatisch an lokale Wetterbedingungen an.
 
-- 📍 **Weather Integration**  
-  Adjust your watering routine based on local weather conditions.
+- 🔔 **Push-Benachrichtigungen**  
+  Lass dich erinnern, wenn deine Pflanzen durstig sind.
 
-- 🔔 **Push Notifications**  
-  Get reminded when your plants need watering.
+- 📆 **Kalender-Übersicht**  
+  Behalte alle anstehenden Gießaufgaben im Blick.
 
-- 📆 **Calendar Overview**  
-  Keep track of all upcoming watering tasks at a glance.
+- 🔐 **Benutzerprofile mit Firebase**  
+  Speichere deine Pflanzen, Gießdaten und Einstellungen sicher in der Cloud.
 
-- 🔐 **User Profiles with Firebase**  
-  Securely store your plants, watering data, and preferences in the cloud.
 
-</br>
 
 
 ![12](https://github.com/user-attachments/assets/f899d5f9-a409-4280-a2b1-89d7b7119ffd)
@@ -62,79 +41,66 @@ The focus of this project was to design and build a modern iOS app that:
 
 
 
----
-
-## 🛠️ Tech Stack & Architecture
-
-- **Swift & SwiftUI**  
-  Modern, declarative UI development following Apple best practices.
-
-- **MVVM Architecture**  
-  Clear separation of concerns for maintainable, scalable, and testable code.
-
-- **Weather Data Integration**  
-  Location-based weather data used to influence watering recommendations.
-
-- **Plant Data Integration**  
-  Comprehensive plant data including care instructions, images, and requirements.
-
-- **Firebase**  
-  Authentication, cloud storage, and real-time data synchronization.
-
-- **@AppStorage**  
-  Lightweight local persistence for UI-related states such as Dark Mode and onboarding flow.
-</br>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/5b11c8d2-827b-4ba8-9ca9-6a6b3913b5bd" width="800"/>
-</p>
 
 ---
 
-## 📲 Requirements
+## 🛠️ Technologien
 
-- iOS 18 or later  
-- Internet connection  
-- Permission for push notifications  
-
----
-
-## 🚀 Future Improvements & Learnings
-
-Plantastic was designed with extensibility in mind. Possible next steps include:
-
-- 🌧 Weather-based watering reminders  
-- ⛅️ Multi-day weather forecasts for better care planning  
-- 🔊 Sound feedback to enhance UX  
-- 🌿 Smart care tips (fertilizing, repotting, pruning)  
-- 💡 General gardening knowledge & tips  
-- 📷 Saving personal plant photos and notes  
-- 📸 Plant recognition via camera  
-- 🏆 Milestones and light gamification for long-term engagement  
-- 🔗 Curated product recommendations  
-- 📴 Offline mode for improved flexibility  
+| Technologie      | Einsatzbereich                                                                 |
+|------------------|--------------------------------------------------------------------------------|
+| **Swift & SwiftUI** | Moderne App-Entwicklung mit deklarativer UI                                 |
+| **WeatherAPI**      | Standortbasiertes Wetter für smarte Gießentscheidungen                      |
+| **Perenual API**    | Pflanzendatenbank mit Pflegeinfos, Bildern & Standortansprüchen             |
+| **Firebase**        | Authentifizierung, Cloud-Speicherung & Realtime-Daten                       |
+| **@AppStorage**     | Lokale Speicherung von UI-Zuständen (z. B. Dark Mode, Intro-Screens)        |
 
 ---
 
+## 📲 Voraussetzungen
 
-## 👩‍💻 About the Project
-
-Plantastic was created in **2025** as part of my professional training in **Mobile App Development (iOS)**.  
-The project demonstrates my focus on:
-
-- clean SwiftUI architecture  
-- structured MVVM design  
-- data-driven features  
-- Firebase-based state & data handling  
-- user-centered app design  
+- iOS 18 oder neuer  
+- Internetverbindung (für API-Zugriff & Firebase)  
+- Berechtigung für Push-Benachrichtigungen
 
 ---
 
-## 🌿 Author
+## 🔗 API-Integration
 
-Developed by **Alex Jäger Peña**  
+### 📍 [WeatherAPI](https://api.weatherapi.com/)  
+- Standortgenaue Wetterdaten (Temperatur, Regen, Luftfeuchtigkeit) zur Optimierung der Gießempfehlungen.
 
-Plantastic was created in **2025** as part of my professional training in **Mobile App Development (iOS)**.  
-The project demonstrates my focus on clean SwiftUI architecture, API integration, Firebase-based data handling, and user-centered app design.
+### 🌱 [Perenual API](https://perenual.com/api/)  
+- Umfassende Pflanzeninformationen: Gießintervalle, Lichtbedarf, Blütezeit, Standortansprüche und mehr.
 
-© 2025 Alex Jäger Peña
+### 🔐 [Firebase](https://firebase.google.com/)  
+- Authentifizierung & Benutzerverwaltung  
+- Speicherung von Favoriten, Gießdaten & Erinnerungen  
+- Realtime-Updates bei Änderungen
+
+
+
+![13](https://github.com/user-attachments/assets/c1dcae12-dad7-4244-8be1-416a9fce226a)
+
+
+
+---
+
+## 🚀 Zukunftsvision
+
+- 🌧 **Wetterbasierte Gieß-Erinnerungen**  
+- ⛅️ **3-Tage-Wetterprognose für Pflegeplanung**  
+- 🔊 **Sound-Feedback für bessere UX**  
+- 🌿 **Intelligente Pflegehinweise (Düngen, Umtopfen, Schnitt)**  
+- 💡 **Allgemeine Gardening-Tipps & Tricks**  
+- 📷 **Eigene Pflanzenfotos & Notizen speichern**  
+- 📸 **Pflanzenerkennung per Kamera**  
+- 🏆 **Meilensteine & Gamification für Langzeitmotivation**  
+- 🎯 **Credits sammeln & z. B. Bäume pflanzen**  
+- 🔗 **Produktempfehlungen direkt in der App**  
+- 📴 **Offline-Modus für maximale Flexibilität**
+
+---
+
+## 💚 Viel Spaß beim Pflegen deiner Pflanzen mit Plantastic!
+
+Bei Fragen, Feedback oder Ideen zur Weiterentwicklung: Let’s grow together! 🌱

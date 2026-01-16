@@ -14,6 +14,8 @@ struct FavDetailView: View {
     @State private var isClicked = false
     @State private var showWateringMessage = false
     @State private var selectedCategory: UserCategory?
+    @State private var isDescriptionExpanded = false
+
     
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var favPlantViewModel: FavPlantViewModel
@@ -75,59 +77,18 @@ struct FavDetailView: View {
                                         }
                                     }
                                 } label: {
-                                    VStack(alignment: .center, spacing: 8) {
-                                        HStack {
-                                            Image(
-                                                systemName: plant.needsToBeWatered
-                                                    ? "drop.triangle"
-                                                    : "drop.fill")
-                                            Text(plant.wateringStatusText)
-                                        }
-                                        .font(.system(size: 16))
-                                        .foregroundStyle(.white)
-                                        Image(
-                                            plant.needsToBeWatered
-                                                ? "canSignal" : "canPetrol"
-                                        )
+                                    Image(systemName: plant.needsToBeWatered ? "drop.fill" : "checkmark")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 35, height: 35)
+                                        .foregroundStyle(plant.needsToBeWatered ? Color("textColorInverted") : Color("textColor").opacity(0.7))
+                                        .padding(12)                                        
+                                        .background {
+                                            Circle()
+                                                .fill(isClicked ? Color("secondaryColor") :  (plant.needsToBeWatered ? Color("textColor") : Color("textColor").opacity(0.2)) )
                                     }
-                                    .padding(.vertical, 8)
-                                    .frame(width: 170)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .fill(
-                                                isClicked
-                                                    ? Color("secondaryPetrol")
-                                                    : (plant.needsToBeWatered
-                                                        ? Color("signalColor")
-                                                        : Color(
-                                                            "secondaryPetrol"))
-                                            )
-                                            .stroke(
-                                                isClicked
-                                                    ? Color("secondaryPetrol")
-                                                    : (plant.needsToBeWatered
-                                                        ? Color("signalColor")
-                                                            .opacity(0.2)
-                                                        : Color(
-                                                            "secondaryPetrol"
-                                                        ).opacity(0.2)),
-                                                lineWidth: 3
-                                            )
-                                    }
-                                    .shadow(
-                                        color: isClicked
-                                            ? Color("secondaryPetrol")
-                                            : (plant.needsToBeWatered
-                                                ? Color("signalColor").opacity(
-                                                    0.4)
-                                                : Color("secondaryPetrol")
-                                                    .opacity(0.4)),
-                                        radius: 1, x: 2, y: 2
-                                    )
                                 }
+                                .padding(10)
                                 .scaleEffect(isClicked ? 1.2 : 1.0)
                                 .animation(
                                     .spring(
@@ -147,92 +108,37 @@ struct FavDetailView: View {
                                     )
                                 }
                                 .padding(.trailing, 20)
-                                .padding(.bottom, 5)
+                                .padding(.bottom, 10)
                             }
-
-                            // --- Plant Names & Category Picker ---
-                            VStack(alignment: .leading, spacing: 5) {
-                                HStack(alignment: .center) {
-                                    VStack(alignment: .leading) {
-                                        Text(
-                                            plant.commonName.lowercased()
-                                                .trimmingCharacters(
-                                                    in: .whitespacesAndNewlines
-                                                ).capitalized
-                                        )
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.7)
-                                        .foregroundStyle(.primary)
-                                        Text(
-                                            plant.scientificName.joined(
-                                                separator: ", ")
-                                        )
-                                        .font(.subheadline)
-                                        .italic()
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(2)
-                                    }
-                                    Spacer()
-
-                                    Picker(
-                                        "Title", selection: $selectedCategory
-                                    ) {
-                                        ForEach(
-                                            UserCategory.allCases.filter {
-                                                $0 != .all
-                                            }
-                                        ) { category in
-                                            HStack {
-                                                Text(category.rawValue)
-                                                Image(systemName: category.icon)
-                                                    .padding(.trailing, 5)
-                                            }
-                                            .tag(category)
-                                        }
-                                    }
-                                    .onChange(of: selectedCategory) {
-                                        oldValue, newValue in
-                                        Task {
-                                            var updatedPlant = plant
-                                            updatedPlant.userCategory = newValue
-                                            await favPlantViewModel.updatePlant(
-                                                for: updatedPlant,
-                                                with: updatedPlant.id)
-                                        }
-                                    }
-                                    .tint(Color("primaryPetrol"))
-                                    .padding(.horizontal, 2)
-                                    .padding(.vertical, 1)
-                                    .background(
-                                        Color("secondaryPetrol").opacity(0.1)
-                                    )
-                                    .clipShape(
-                                        RoundedRectangle(cornerRadius: 15)
-                                    )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(
-                                                Color("secondaryPetrol")
-                                                    .opacity(0.2), lineWidth: 2)
-                                    )
-                                }
-                            }
-                            .padding(.horizontal)
 
                             // --- Description ---
-                            if let description = plant.description,
-                                !description.isEmpty
-                            {
-                                SectionHeader(
-                                    title: "Description",
-                                    icon: "info.bubble.fill.rtl")
+                            if let description = plant.description, !description.isEmpty {
+                                SectionHeader(title: "Description", icon: "info.bubble.fill.rtl")
+
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(description)
                                         .font(.body)
-                                        .foregroundStyle(.primary)
+                                        .foregroundStyle(Color("textColor").opacity(0.8))
                                         .lineSpacing(4)
+                                        .lineLimit(isDescriptionExpanded ? nil : 5)
+                                        .truncationMode(.tail)
+                                        .animation(.easeInOut(duration: 0.2), value: isDescriptionExpanded)
+
+                                    Button {
+                                        isDescriptionExpanded.toggle()
+                                    } label: {
+                                        HStack(spacing: 6) {
+                                            Text(isDescriptionExpanded ? "Show less" : "Read more")
+                                                .font(.subheadline)
+                                                .fontWeight(.semibold)
+
+                                            Image(systemName: isDescriptionExpanded ? "chevron.up" : "chevron.down")
+                                                .font(.subheadline)
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .foregroundStyle(.gray)
+                                    .padding(.top, 4)
                                 }
                                 .padding(.horizontal)
                             }
@@ -368,6 +274,35 @@ struct FavDetailView: View {
                             .padding(.horizontal)
                         }
                         .padding(.bottom, 20)
+                    }
+                    .navigationTitle(plant.commonName.lowercased()
+                        .trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        ).capitalized)
+                    .foregroundStyle(Color("textColor"))
+                    .navigationBarTitleDisplayMode(.large)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Menu {
+                                ForEach(UserCategory.allCases.filter { $0 != .all }) { category in
+                                    Button {
+                                        selectedCategory = category
+                                        Task {
+                                            var updatedPlant = plant
+                                            updatedPlant.userCategory = category
+                                            await favPlantViewModel.updatePlant(for: updatedPlant, with: updatedPlant.id)
+                                        }
+                                    } label: {
+                                        Label(category.rawValue, systemImage: category.icon)
+                                    }
+                                    .tint(Color("textColor"))
+                                }
+                            } label: {
+                                Image(systemName: selectedCategory?.icon ?? "tag")
+                            }
+                            .tint(Color("textColor"))
+
+                        }
                     }
                 }
             }

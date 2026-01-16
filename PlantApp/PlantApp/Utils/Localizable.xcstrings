@@ -38,16 +38,7 @@
     "🌳" : {
 
     },
-    "🏆 Milestones 🏆" : {
-
-    },
     "🏠" : {
-
-    },
-    "Add plants to your Garden" : {
-
-    },
-    "Add to garden" : {
 
     },
     "App settings" : {
@@ -98,7 +89,13 @@
     "Explore" : {
 
     },
+    "Explore Plants" : {
+
+    },
     "Fehler. %@" : {
+
+    },
+    "Find your plant" : {
 
     },
     "Garden Milestones" : {
@@ -110,13 +107,7 @@
     "Hey %@!👋" : {
 
     },
-    "Hey, %@!" : {
-
-    },
     "How should we call you?" : {
-
-    },
-    "In your garden" : {
 
     },
     "Loading Plant Details..." : {
@@ -126,6 +117,9 @@
 
     },
     "Logout" : {
+
+    },
+    "Milestones" : {
 
     },
     "My Garden" : {
@@ -179,6 +173,12 @@
     "Profile" : {
 
     },
+    "Profile Settings" : {
+
+    },
+    "Read more" : {
+
+    },
     "Register" : {
 
     },
@@ -191,13 +191,13 @@
     "Remove this plant?" : {
 
     },
-    "Search" : {
-
-    },
     "Select Language" : {
 
     },
     "Set Time" : {
+
+    },
+    "Show less" : {
 
     },
     "Smart plant care made simple" : {
@@ -221,10 +221,10 @@
     "Tipe in a name" : {
 
     },
-    "Title" : {
+    "Username" : {
 
     },
-    "Username" : {
+    "Watering Calendar" : {
 
     },
     "Watering Milestones" : {
@@ -237,9 +237,6 @@
 
     },
     "Welcome to" : {
-
-    },
-    "When’s Watering Day?" : {
 
     },
     "You can NOT undo this action." : {

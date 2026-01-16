@@ -5,8 +5,8 @@
 //  Created by Alexandra Jäger on 13.06.25.
 //
 
-import SwiftUI
 import FirebaseCore
+import SwiftUI
 
 struct FavListItemView: View {
     
@@ -26,22 +26,23 @@ struct FavListItemView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .frame(width: 80, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
                         .shadow(color: .black.opacity(0.2), radius: 2, x: 3, y: 3)
                 } placeholder: {
                     Image("placeholderPlant")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .frame(width: 80, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
                         .foregroundColor(.gray)
                 }
+                .padding(5)
                 VStack(alignment: .leading, spacing: 5) {
                     Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
-                        .foregroundStyle(Color("primaryPetrol"))
+                        .foregroundStyle(Color("textColor"))
                     
                     Text(plant.userCategory?.rawValue ?? "")
                         .padding(.bottom, 3)
@@ -49,15 +50,14 @@ struct FavListItemView: View {
                         .foregroundStyle(.gray)
                     
                     HStack {
-                        Image(systemName: plant.needsToBeWatered ? "drop.triangle" : "drop.fill")
                         Text(plant.wateringStatusText)
                     }
-                    .font(.system(size: 16))
+                    .font(.system(size: 12))
                     .padding(.vertical, 5)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(plant.needsToBeWatered ? Color("textColorInverted") : Color("textColor").opacity(0.7))
                     .padding(.horizontal, 10)
-                    .background(plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(1))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .background(plant.needsToBeWatered ? Color("textColor") : Color("textColor").opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 .padding(.leading, 10)
                 
@@ -73,17 +73,16 @@ struct FavListItemView: View {
                         }
                     }
                 } label: {
-                    Image(plant.needsToBeWatered ? "canSignal" : "canPetrol")
+                    Image(systemName: plant.needsToBeWatered ? "drop.fill" : "checkmark")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 35, height: 35)
+                        .frame(width: 25, height: 25)
+                        .foregroundStyle(plant.needsToBeWatered ? Color("textColorInverted") : Color("textColor").opacity(0.7))
                         .padding(12)
                         .background {
-                            RoundedRectangle(cornerRadius: 18)
-                                .fill(isClicked ? Color("secondaryPetrol") :  (plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol").opacity(0.6)) )
-                                .stroke(isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? Color("signalColor").opacity(0.2) : Color("secondaryPetrol").opacity(0.2)), lineWidth: 3)
-                        }
-                        .shadow(color: isClicked ? Color("secondaryPetrol") : (plant.needsToBeWatered ? .yellow.opacity(0.4) : Color("secondaryPetrol").opacity(0.4)), radius: 1, x: 2, y: 2)
+                            Circle()
+                                .fill(isClicked ? Color("secondaryColor") :  (plant.needsToBeWatered ? Color("textColor") : Color("textColor").opacity(0.2)) )
+                    }
                 }
                 .padding(.trailing, 10)
                 .scaleEffect(isClicked ? 1.2 : 1.0)
@@ -106,6 +105,7 @@ struct FavListItemView: View {
         }
     }
 
+
 #Preview {
     FavListItemView(
         plant: FirePlant(
@@ -116,16 +116,23 @@ struct FavListItemView: View {
             family: "",
             genus: "Abies",
             type: "tree",
-            dimensions: [DimensionItem(minValue: 1, maxValue: 1.5, unit: "feet")],
+            dimensions: [
+                DimensionItem(minValue: 1, maxValue: 1.5, unit: "feet")
+            ],
             watering: .Frequent,
             sunlight: ["Part shade"],
             cycle: "Perennial",
             defaultImage: PlantImages(
-                originalUrl: "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/og/49255768_df596553_b.jpg",
-                regularUrl: "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/regular/4925769768f55596553_b.jpg",
-                mediumUrl: "https://perenual.com/storage/species_image/882_abies_alba_pyramidalis/medium/4925576768_f55596553_b.jpg",
-                smallUrl: "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/small/492557668_df55596553_b.jpg",
-                thumbnail: "https://perenual.com/storage/species_image/2786_abies_alba_pyramidalis/thumbnail/4929768_df55553_b.jpg"
+                originalUrl:
+                    "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/og/49255768_df596553_b.jpg",
+                regularUrl:
+                    "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/regular/4925769768f55596553_b.jpg",
+                mediumUrl:
+                    "https://perenual.com/storage/species_image/882_abies_alba_pyramidalis/medium/4925576768_f55596553_b.jpg",
+                smallUrl:
+                    "https://perenual.com/storage/species_image/2678_abies_alba_pyramidalis/small/492557668_df55596553_b.jpg",
+                thumbnail:
+                    "https://perenual.com/storage/species_image/2786_abies_alba_pyramidalis/thumbnail/4929768_df55553_b.jpg"
             ),
             indoor: false,
             cuisine: false,
@@ -149,4 +156,3 @@ struct FavListItemView: View {
     )
     .environmentObject(FavPlantViewModel())
 }
-

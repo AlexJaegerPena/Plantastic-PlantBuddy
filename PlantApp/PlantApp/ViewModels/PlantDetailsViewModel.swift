@@ -15,6 +15,7 @@ class PlantDetailsViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let plantId: Int
+    // private let plantRepository: PlantRepository = LocalPlantRepository()
     private let plantRepository: PlantRepository = RemotePlantRepository()
     
 

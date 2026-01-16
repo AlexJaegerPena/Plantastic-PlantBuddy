@@ -32,7 +32,7 @@ struct PlantSearchView: View {
                 HStack {
                     HStack {
                         TextField(
-                            "Search", text: $plantListViewModel.searchTerm
+                            "Find your plant", text: $plantListViewModel.searchTerm
                         )
                         .padding(8)
                         .onChange(of: plantListViewModel.searchTerm) {
@@ -50,19 +50,22 @@ struct PlantSearchView: View {
                                 }
                             }
                         }
-                        Button {
-                            plantListViewModel.searchTerm = ""
-                        } label: {
-                            Image(systemName: "xmark.circle")
+                        if !plantListViewModel.searchTerm.isEmpty {
+                            Button {
+                                plantListViewModel.searchTerm = ""
+                            } label: {
+                                Image(systemName: "xmark.circle")
+                            }
+                            .tint(.gray)
+                            .padding(.trailing, 10)
                         }
-                        .tint(Color("myLightGrayColor"))
-                        .padding(.trailing, 10)
+                    
                     }
-                    .background(Color("bgColor"))
-                    .cornerRadius(10)
+                    //.background(Color("bgColor"))
+                    .cornerRadius(20)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color("primaryPetrol"), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color("textColor"), lineWidth: 1)
                     )
                 }
                 .padding(.horizontal)
@@ -87,7 +90,7 @@ struct PlantSearchView: View {
                                     .opacity(0)
                                 )
                         }
-                        .frame(width: .infinity, height: 100)
+                        .frame(height: 100)
                         .padding(.horizontal, 7)
                         .padding(.vertical, 7)
                         .background(Color("cardBg"))
@@ -96,16 +99,13 @@ struct PlantSearchView: View {
                             EdgeInsets(
                                 top: 5, leading: 10, bottom: 5, trailing: 10)
                         )
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(
-                            color: .black.opacity(0.2), radius: 3, x: 3, y: 3)
+                        .clipShape(RoundedRectangle(cornerRadius: 35))
+                       .shadow(color: .black.opacity(0.2), radius: 3, x: 3, y: 3)
                     }
                     .listStyle(.plain)
                 }
             }
         }
-        .navigationTitle("Add plants to your Garden")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
