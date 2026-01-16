@@ -68,3 +68,7 @@ xcuserdata/
 # Secrets / API Keys
 ############################################
 PlantApp/PlantApp/Utils/apiKeys.swift
+
+#Firebase
+GoogleService-Info.plist
+
