@@ -77,50 +77,18 @@ struct FavDetailView: View {
                                         }
                                     }
                                 } label: {
-                                    VStack(alignment: .center, spacing: 8) {
-                                        Image("canBW")
+                                    Image(systemName: plant.needsToBeWatered ? "drop.fill" : "checkmark")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 45, height: 45)
-                                    }
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal, 16)
-                                    .background {
-                                        if #available(iOS 26.0, *) {
+                                        .frame(width: 35, height: 35)
+                                        .foregroundStyle(plant.needsToBeWatered ? Color("textColorInverted") : Color("textColor").opacity(0.7))
+                                        .padding(12)                                        
+                                        .background {
                                             Circle()
-                                                .fill(Color.clear)
-                                                .glassEffect(in: Circle())
-                                                .overlay {
-                                                    Circle().stroke(
-                                                        plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol"),
-                                                        lineWidth: isClicked ? 4 : 3
-                                                    )
-                                                    .opacity(isClicked ? 1.0 : 0.35)
-                                                }
-                                        } else {
-                                            Circle()
-                                                .fill(.ultraThinMaterial)
-                                                .overlay {
-                                                    Circle().stroke(
-                                                        plant.needsToBeWatered ? Color("signalColor") : Color("secondaryPetrol"),
-                                                        lineWidth: isClicked ? 4 : 3
-                                                    )
-                                                    .opacity(isClicked ? 1.0 : 0.35)
-                                                }
-                                        }
+                                                .fill(isClicked ? Color("secondaryColor") :  (plant.needsToBeWatered ? Color("textColor") : Color("textColor").opacity(0.2)) )
                                     }
-
-                                    .shadow(
-                                        color: isClicked
-                                            ? Color("secondaryPetrol")
-                                            : (plant.needsToBeWatered
-                                                ? Color("signalColor").opacity(
-                                                    0.4)
-                                                : Color("secondaryPetrol")
-                                                    .opacity(0.4)),
-                                        radius: 1, x: 2, y: 2
-                                    )
                                 }
+                                .padding(10)
                                 .scaleEffect(isClicked ? 1.2 : 1.0)
                                 .animation(
                                     .spring(
@@ -150,7 +118,7 @@ struct FavDetailView: View {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(description)
                                         .font(.body)
-                                        .foregroundStyle(Color("textColor"))
+                                        .foregroundStyle(Color("textColor").opacity(0.8))
                                         .lineSpacing(4)
                                         .lineLimit(isDescriptionExpanded ? nil : 5)
                                         .truncationMode(.tail)
@@ -169,7 +137,7 @@ struct FavDetailView: View {
                                         }
                                     }
                                     .buttonStyle(.plain)
-                                    .foregroundStyle(Color("primaryPetrol"))
+                                    .foregroundStyle(.gray)
                                     .padding(.top, 4)
                                 }
                                 .padding(.horizontal)

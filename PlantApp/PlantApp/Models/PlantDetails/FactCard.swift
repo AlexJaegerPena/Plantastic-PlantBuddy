@@ -35,7 +35,7 @@ struct FactCard<Icon: View>: View {
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color("secondaryPetrol").opacity(0.5), lineWidth: 1)
+                .stroke(Color.black.opacity(0.5), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
     }

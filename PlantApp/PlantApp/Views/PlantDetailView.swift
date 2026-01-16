@@ -104,7 +104,7 @@ struct PlantDetailView: View {
                                         }
                                     }
                                     .buttonStyle(.plain)
-                                    .foregroundStyle(Color("primaryPetrol"))
+                                    .foregroundStyle(Color(.gray))
                                     .padding(.top, 4)
                                 }
                                 .padding(.horizontal)
@@ -261,7 +261,7 @@ struct PlantDetailView: View {
                                     systemName: isFavorite
                                     ? "trash" : "plus"
                                 )
-                                .foregroundStyle(Color("secondaryPetrol"))
+                                .foregroundStyle(Color("textColor"))
                             }
                             .buttonStyle(.plain)
                         }
@@ -309,7 +309,7 @@ struct PlantDetailView: View {
                 isFavorite = false
                 showDelSuccessAlert = true
             }
-            .tint(Color("primaryPetrol"))
+            .tint(Color("primaryColor"))
         } message: {
             Text("Are you sure you want to remove this plant from your garden?")
         }

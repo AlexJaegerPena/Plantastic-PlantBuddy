@@ -11,30 +11,45 @@ struct NavView: View {
 
     @State private var weatherViewModel = WeatherViewModel()
     @State private var hasAppeared = false
-    
+
     @StateObject private var notificationsViewModel = NotificationsViewModel()
     @StateObject private var favPlantViewModel = FavPlantViewModel()
-    
+
     @EnvironmentObject var userViewModel: UserViewModel
 
-    
     var body: some View {
         TabView {
             Tab("My Garden", systemImage: "leaf.fill") {
+                NavigationStack {
                     HomeView()
                         .environmentObject(userViewModel)
                         .environmentObject(favPlantViewModel)
+                        .navigationTitle("My Garden")
+                        .navigationBarTitleDisplayMode(.inline)
+                }
             }
             Tab("Explore", systemImage: "magnifyingglass") {
-                PlantSearchView(plantListViewModel: PlantListViewModel())
-                    .environmentObject(favPlantViewModel)
+                NavigationStack {
+                    PlantSearchView(plantListViewModel: PlantListViewModel())
+                        .environmentObject(favPlantViewModel)
+                        .navigationTitle("Explore Plants")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar(.visible, for: .navigationBar)
+                        .toolbarBackground(.visible, for: .navigationBar)
+                }
             }
             Tab("Calendar", systemImage: "calendar") {
-                CalendarView()
-                    .environmentObject(favPlantViewModel)
+                NavigationStack {
+                    CalendarView()
+                        .environmentObject(favPlantViewModel)
+                        .navigationTitle("Watering Calendar")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar(.visible, for: .navigationBar)
+                        .toolbarBackground(.visible, for: .navigationBar)
+                }
             }
         }
-        .tint(Color("primaryPetrol"))
+        .tint(Color("secondaryColor"))
         .onAppear {
             if !hasAppeared {
                 notificationsViewModel.requestPermission()
@@ -42,10 +57,7 @@ struct NavView: View {
             }
         }
     }
-  
 }
-
-
 
 #Preview {
     NavView()

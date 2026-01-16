@@ -88,7 +88,7 @@ struct SettingsView: View {
                                         .foregroundStyle(.white)
                                         .padding(.vertical, 6)
                                         .padding(.horizontal, 20)
-                                        .background(Color("primaryPetrol"))
+                                        .background(Color("primaryColor"))
                                         .clipShape(
                                             RoundedRectangle(cornerRadius: 10))
                                 }
@@ -136,6 +136,8 @@ struct SettingsView: View {
                 Text("Delete Account")
             }
         }
+        .navigationTitle("Profile Settings")
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

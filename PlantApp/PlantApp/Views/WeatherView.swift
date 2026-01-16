@@ -22,9 +22,9 @@ struct WeatherView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(height: 80)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .clipShape(RoundedRectangle(cornerRadius: 35))
             } else {
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 35)
                     .fill(Color.gray.opacity(0.3))
                     .frame(maxWidth: .infinity, maxHeight: 80)
             }
@@ -57,23 +57,15 @@ struct WeatherView: View {
                         Spacer()
                         VStack(alignment: .trailing) {
                             Text(weather.location.name)
-                            HStack {
-//                                if let weatherForecast = weatherViewModel.weatherForecastResponse {
-//                                    
-//                                }
-                            }
+                                .font(.system(size: 25))
                         }
                         .padding(.trailing, 35)
                     }
                     .frame(maxWidth: .infinity, maxHeight: 80)
                     .background(.ultraThinMaterial.opacity(0.7))
-                    .cornerRadius(20)
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 20)
-//                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
-//                    )
+                    .cornerRadius(35)
                 }
-                .foregroundStyle(Color("primaryPetrol"))
+                .foregroundStyle(Color.white)
 
             } else if weatherViewModel.isLoading {
                 ProgressView("Weather is loading...")
@@ -87,7 +79,7 @@ struct WeatherView: View {
                     .padding()
                     .frame(width: .infinity, height: 80)
                     .background(
-                        RoundedRectangle(cornerRadius: 20).fill(
+                        RoundedRectangle(cornerRadius: 35).fill(
                             Color.white.opacity(0.8)))
             }
         }

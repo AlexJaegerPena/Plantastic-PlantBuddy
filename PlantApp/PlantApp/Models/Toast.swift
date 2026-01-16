@@ -25,7 +25,7 @@ extension ToastStyle {
   var themeColor: Color {
     switch self {
     case .error: return Color("signalColor")
-    case .success: return Color("secondaryPetrol")
+    case .success: return Color("secondaryColor")
     }
   }
   

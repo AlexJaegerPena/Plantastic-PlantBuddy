@@ -39,11 +39,13 @@ struct PlantListItemView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                         .foregroundColor(Color("textColor"))
                 }
+                .padding(5)
+                
                 VStack(alignment: .leading, spacing: 5) {
                     Text(plant.commonName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).capitalized)
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
-                        .foregroundColor(.black)
+                        .foregroundColor(Color("textColor"))
                     Text(plant.scientificName.first ?? "")
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
@@ -54,9 +56,9 @@ struct PlantListItemView: View {
                             .font(.system(size: 14))
                             .padding(.vertical, 4)
                             .padding(.horizontal, 10)
-                            .foregroundStyle(.white)
-                            .background(Color("secondaryPetrol"))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .foregroundStyle(Color("textColorInverted").opacity(0.7))
+                            .background(Color("textColor"))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
                 }
                 .padding(.leading, 10)

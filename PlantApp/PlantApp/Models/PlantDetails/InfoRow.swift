@@ -17,14 +17,14 @@ struct InfoRow: View {
             if let icon = icon {
                 Image(systemName: icon)
                     .font(.body)
-                    .foregroundStyle(Color("secondaryPetrol"))
+                    .foregroundStyle(Color("textColor").opacity(0.6))
                     .frame(width: 25, alignment: .leading)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundStyle(Color("secondaryPetrol"))
+                    .fontWeight(.light)
+                    .foregroundStyle(Color("textColor").opacity(0.6))
                 Text(value ?? "no information")
                     .font(.body)
                     .foregroundStyle(Color("textColor"))

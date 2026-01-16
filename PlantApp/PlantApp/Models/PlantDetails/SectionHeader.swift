@@ -13,11 +13,11 @@ struct SectionHeader: View {
 
     var body: some View {
         HStack {
-            Image(systemName: icon)
-                .foregroundStyle(Color("primaryPetrol"))
-                .font(.system(size: 20))
+//            Image(systemName: icon)
+//                .foregroundStyle(Color("primaryColor"))
+//                .font(.system(size: 20))
             Text(title)
-                .foregroundStyle(Color("primaryPetrol"))
+                .foregroundStyle(Color("textColor"))
                 .font(.title3)
                 .fontWeight(.semibold)
             Spacer()

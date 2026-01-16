@@ -26,7 +26,7 @@ struct FavListView: View {
             // Firebase
             return favPlantViewModel.favPlantsList
             // Dummy
-//            return favPlantViewModel.dummyFavPlants
+        // return favPlantViewModel.dummyFavPlants
 
         } else {
             return favPlantViewModel.favPlantsList.filter {
@@ -38,8 +38,6 @@ struct FavListView: View {
 
     var body: some View {
         NavigationStack {
-             
-                
                 List(plantsByCategory.sorted(by: {
                     // wenn $0 nil, dann $0 vor $1 - früher
                     guard let date0 = $0.nextWaterDate else { return true }
@@ -58,36 +56,32 @@ struct FavListView: View {
                                 showDeleteAlert = true
                                 selectedPlantId = plant.id ?? "0"
                             }
+                            .tint(Color("signalColor"))
                         }
                         .padding(.horizontal, 8)
                         .padding(.vertical, 4)
                         .background(Color("cardBg"))
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .clipShape(RoundedRectangle(cornerRadius: 35))
                         .shadow(color: .black.opacity(0.2), radius: 3, x: 3, y: 3)
                 }
                     .listStyle(.plain)
                         .safeAreaInset(edge: .top) {
                             HStack {
-                                Text("My Garden")
-                                    .font(.system(size: 26, weight: .light))
-                                    .foregroundStyle(Color("textColor"))
-
                                 Spacer()
-
                                 Picker("", selection: $selectedCategory) {
                                     ForEach(UserCategory.allCases) { category in
                                         Label(category.rawValue, systemImage: category.icon)
                                             .tag(category)
                                     }
                                 }
+                                .glassEffect()
                                 .labelsHidden()
                                 .tint(Color("textColor"))
                             }
                             .padding(.horizontal, 20)
                             .padding(.vertical, 8)
-                            .background(.white)
                         }
                 
             

@@ -19,17 +19,10 @@ struct CalendarView: View {
 
     var body: some View {
         VStack {
-            Text("When’s Watering Day?")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.top, 20)
-                .padding(.bottom, 30)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(Color("primaryPetrol"))
-            
             CalendarHeaderView(displayedMonth: $displayedMonth)
-            let days = generateMonthGrid()
+                .padding(.top, 20)
             
+            let days = generateMonthGrid()
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 7), spacing: 2) {
                 ForEach(days, id: \.self) { date in
@@ -43,7 +36,7 @@ struct CalendarView: View {
                             .font(.system(size: 15))
                             .frame(maxWidth: .infinity, minHeight: 45)
                             .foregroundStyle(isSelected ? .white : (isCurrentMonth ? .primary : .gray))
-                            .background(isSelected ? Color("primaryPetrol") : isCurrentMonth ? Color("bgColor") : Color("bgColor").opacity((0.2)))
+                            .background(isSelected ? Color("primaryColor") : isCurrentMonth ? Color("bgColor") : Color("bgColor").opacity((0.2)))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 8)
@@ -64,7 +57,7 @@ struct CalendarView: View {
                                         Image(systemName: "drop.fill")
                                             .font(.system(size: 12))
                                             .padding(.bottom, 2)
-                                            .foregroundStyle(isSelected ? .white : Color("secondaryPetrol"))
+                                            .foregroundStyle(isSelected ? .white : Color("secondaryColor"))
                                     }
                                 }
                             }
@@ -80,6 +73,7 @@ struct CalendarView: View {
                 Spacer()
             }
             .padding(.horizontal, 5)
+
             Spacer()
         }
     }
