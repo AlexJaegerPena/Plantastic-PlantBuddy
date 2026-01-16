@@ -288,7 +288,7 @@ struct PlantDetailView: View {
                 }
         }
         .alert("Your Garden Grows! 🪴", isPresented: $showAddFavAlert) {
-            Button("Ok", role: .cancel) {}
+            Button("OK", role: .cancel) {}
         } message: {
             Text("Congratulations! This plant is now part of your collection.")
         }
@@ -314,7 +314,7 @@ struct PlantDetailView: View {
             Text("Are you sure you want to remove this plant from your garden?")
         }
         .alert("Plant Removed", isPresented: $showDelSuccessAlert) {
-            Button("Ok", role: .cancel) { }
+            Button("OK", role: .cancel) { }
         } message: {
             Text("The plant has been successfully removed from your garden.")
         }
