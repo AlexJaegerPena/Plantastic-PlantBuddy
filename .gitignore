@@ -1,47 +1,49 @@
+############################################
 # Swift Package Manager
+############################################
 .build/
 
+############################################
 # Xcode
+############################################
 .DS_Store
-*.xcodeproj/
-!*.xcodeproj/*.xcworkspace/
-!*.xcodeproj/xcuserdata/
-!*.xcodeproj/*.pbxproj
-*.xcworkspace/
-!*.xcworkspace/xcshareddata/
-!*.xcworkspace/xcuserdata/
-xcshareddata/
-!xcshareddata/xcschemes/
 DerivedData/
 Build/
+
+# Xcode user-specific data (niemals committen)
+xcuserdata/
+*.xcuserstate
+
+# Archives / SCM
 *.xcarchive/
 *.xccheckout
-# Optional: Wenn du den .xcodeproj-Ordner nicht verfolgen möchtest, aber die .pbxproj-Datei
-# *.xcodeproj/
-# !*.xcodeproj/project.pbxproj
 
+############################################
+# Workspaces (optional)
+############################################
+*.xcworkspace/
+!*.xcworkspace/xcshareddata/
+!*.xcworkspace/xcshareddata/xcschemes/
 
-
+############################################
 # General
+############################################
 .swift-version
 .vscode/
 .idea/
-# Personal settings and temporary files
+
+# Personal / temp files
 *.bak
 *.orig
-# User Interface State
-*.xcuserstate
-# Crashlytics/Fabric
-Crashlytics/
-# Fastlane
-fastlane/report.xml
-fastlane/screenshots/
-fastlane/test_output/
 
+############################################
 # Logs
+############################################
 *.log
 
-# Debugging
+############################################
+# Debugging / Binaries
+############################################
 *.dSYM
 *.o
 *.lo
@@ -49,7 +51,9 @@ fastlane/test_output/
 *.so
 *.dylib
 
-
+############################################
+# Editors
+############################################
 # Emacs
 *.elc
 ~*.swift
@@ -60,6 +64,7 @@ fastlane/test_output/
 *.swo
 *.swn
 
-# Meine API-Keys
+############################################
+# Secrets / API Keys
+############################################
 PlantApp/PlantApp/Utils/apiKeys.swift
-
