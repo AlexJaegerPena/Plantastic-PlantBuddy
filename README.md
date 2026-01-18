@@ -5,6 +5,12 @@ The app combines plant-specific care information with location-based weather dat
 
 > Built as a 6-week iOS graduation project, from concept to finished app, using SwiftUI.
 
+<p align="center">
+<img width="230" alt="Group 5" src="https://github.com/user-attachments/assets/32c0b1f3-7452-4f2a-b9c1-c2631a402314" />
+<img width="230" alt="Group 2" src="https://github.com/user-attachments/assets/34b4520d-2699-401a-8614-3c32d63c6ed7" />
+<img width="230" alt="Group 3" src="https://github.com/user-attachments/assets/ade31f99-b591-4a2d-9ee6-d01133902c68" />
+</p>
+
 ---
 
 ### ✨ Features
