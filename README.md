@@ -105,5 +105,5 @@ Track upcoming watering activities in the calendar and stay motivated by unlocki
 ### 👤 Author
 
 **Alexandra Jäger Peña**  
-- Portfolio: https://appsbyalex.com
+https://appsbyalex.com
 
