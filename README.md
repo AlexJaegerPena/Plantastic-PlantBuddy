@@ -1,4 +1,6 @@
 # 🌱 Plantastic (iOS)
+[![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clones&query=count&url=https://gist.githubusercontent.com/AlexJaegerPena/bab59766ffb0ec5333a80347cb85c327/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge)
+
 
 Plantastic is a clean and user-friendly plant care app that helps users build a personal digital garden and stay on top of watering schedules.  
 The app combines plant-specific care information with location-based weather data to support smarter and more mindful plant care.
