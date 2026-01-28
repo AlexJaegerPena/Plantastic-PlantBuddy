@@ -93,6 +93,8 @@ struct FavListItemView: View {
                 } message: {
                     Text(!plant.needsToBeWatered ? "The timing wasn't ideal. Keep an eye on the next watering date." : "Perfect timing! The watering was just right.")
                 }
+                .tint(Color("textColor"))
+
             }
         }
         .background(

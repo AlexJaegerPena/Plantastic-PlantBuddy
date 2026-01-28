@@ -101,11 +101,15 @@ struct FavListView: View {
             } message: {
                 Text("Are you sure you want to remove this plant from your garden?")
             }
+            .tint(Color("textColor"))
+
             .alert("Plant Removed",isPresented: $showDelSuccessAlert) {
                 Button("Ok", role: .cancel) { }
             } message: {
                 Text("The plant has been successfully removed from your garden.")
             }
+            .tint(Color("textColor"))
+
         }
         .onAppear {
             Task {

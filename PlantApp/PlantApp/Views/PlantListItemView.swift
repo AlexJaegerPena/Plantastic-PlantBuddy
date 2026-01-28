@@ -29,14 +29,14 @@ struct PlantListItemView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(minWidth: 100, maxWidth: 100, minHeight: 100, maxHeight: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
                         .shadow(color: .black.opacity(0.2), radius: 2, x:3, y: 3)
                 } placeholder: {
                     Image("placeholderPlant")
                         .resizable()
                         .scaledToFit()
                         .frame(minWidth: 100, maxWidth: 100, minHeight: 100, maxHeight: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
                         .foregroundColor(Color("textColor"))
                 }
                 .padding(5)

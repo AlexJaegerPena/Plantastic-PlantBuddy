@@ -61,7 +61,7 @@ struct PlantDetailView: View {
                                             maxHeight: 250
                                         )
                                         .clipped()
-                                        .cornerRadius(20)
+                                        .cornerRadius(35)
                                         .shadow(
                                             color: .black.opacity(0.2),
                                             radius: 10, x: 0, y: 5)
@@ -72,7 +72,7 @@ struct PlantDetailView: View {
                                             maxWidth: .infinity, minHeight: 250,
                                             maxHeight: 300
                                         )
-                                        .cornerRadius(20)
+                                        .cornerRadius(35)
                                         .overlay(ProgressView())
                                 }
                                 .padding(.horizontal, 15)
@@ -287,11 +287,13 @@ struct PlantDetailView: View {
                     await plantDetailsViewModel.fetchPlantByID(selectedPlantId)
                 }
         }
-        .alert("Your Garden Grows! 🪴", isPresented: $showAddFavAlert) {
+        .alert("Your Garden Grows!", isPresented: $showAddFavAlert) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Congratulations! This plant is now part of your collection.")
         }
+        .tint(Color("textColor"))
+
         .alert("Remove this plant?", isPresented: $showDelFavAlert) {
             Button("Cancel", role: .cancel) { showDelFavAlert = false }
             Button("Remove", role: .destructive) {
@@ -309,15 +311,18 @@ struct PlantDetailView: View {
                 isFavorite = false
                 showDelSuccessAlert = true
             }
-            .tint(Color("primaryColor"))
         } message: {
             Text("Are you sure you want to remove this plant from your garden?")
         }
+        .tint(Color("textColor"))
+
         .alert("Plant Removed", isPresented: $showDelSuccessAlert) {
             Button("OK", role: .cancel) { }
         } message: {
             Text("The plant has been successfully removed from your garden.")
         }
+        .tint(Color("textColor"))
+
     }
 
     // Hilfsfunktion, um Favoritenstatus zu überprüfen

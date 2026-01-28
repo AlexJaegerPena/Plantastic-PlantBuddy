@@ -50,7 +50,7 @@ struct FavDetailView: View {
                                             minHeight: 250, maxHeight: 250
                                         )
                                         .clipped()
-                                        .cornerRadius(20)
+                                        .cornerRadius(35)
                                         .shadow(
                                             color: .black.opacity(0.2),
                                             radius: 10, x: 0, y: 5)
@@ -61,7 +61,7 @@ struct FavDetailView: View {
                                             maxWidth: .infinity,
                                             minHeight: 250, maxHeight: 300
                                         )
-                                        .cornerRadius(20)
+                                        .cornerRadius(35)
                                         .overlay(ProgressView())
                                 }
                                 .padding(.horizontal, 15)
@@ -80,7 +80,7 @@ struct FavDetailView: View {
                                     Image(systemName: plant.needsToBeWatered ? "drop.fill" : "checkmark")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 35, height: 35)
+                                        .frame(width: 40, height: 40)
                                         .foregroundStyle(plant.needsToBeWatered ? Color("textColorInverted") : Color("textColor").opacity(0.7))
                                         .padding(12)                                        
                                         .background {
