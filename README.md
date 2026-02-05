@@ -66,9 +66,9 @@ Get an overview of all saved plants and instantly see which ones need watering. 
 Customize app preferences such as notifications and appearance to match your personal plant care routine.
 
 <p align="center">
+<img width="230" alt="Group 14" src="https://github.com/user-attachments/assets/a518b347-8e3e-4702-8b1d-8cc9e53e3cb4" />
 <img width="230" alt="Group 13" src="https://github.com/user-attachments/assets/f794adbb-b323-47c5-806d-da2224d6586e" />
 <img width="230" alt="Group 15" src="https://github.com/user-attachments/assets/c7fc2c92-4e1a-4039-8fdb-ac71169d83c9" />
-<img width="230" alt="Group 14" src="https://github.com/user-attachments/assets/a518b347-8e3e-4702-8b1d-8cc9e53e3cb4" />
 </p>
 
 ---
